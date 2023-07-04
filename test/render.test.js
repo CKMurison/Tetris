@@ -13,8 +13,8 @@ describe('Render class', () => {
     it('creates the correct div blocks', () => {
         const render = new Render();
         render.drawGrid([[0, 0], [0, 1]]);
-        const emptyBlocks = document.querySelector('.empty');
-        const iBlocks = document.querySelector('.iBlock');
+        const emptyBlocks = document.querySelectorAll('.empty');
+        const iBlocks = document.querySelectorAll('.iBlock');
 
         expect(emptyBlocks.length).toBe(3);
         expect(iBlocks.length).toBe(1);

@@ -1,7 +1,7 @@
 const Player = require('./player');
 
 class Game {
-  constructor(render){
+  constructor(render) {
     this.grid = Array(20).fill(Array(10).fill(0)); //first number = rows, second number = columns
     this.shape = [
       // I-Block
@@ -23,3 +23,5 @@ class Game {
     this.players = [new Player(), new Player()];
   };
 };
+
+module.exports = Game;
