@@ -1,14 +1,19 @@
 const Tetromino = require("../src/tetromino");
 const Game = require("../src/game");
 
+let game, mockTetromino;
+
 describe("tetromino", () => {
-  test("Updates the position of the I-Block for Player 1", () => {
-    const game = new Game()
-    const mockTetromino = { position: [[0, 0], [0, 1], [0, 2], [0, 3]], value: 7 }
+  beforeEach(() => {
+    game = new Game()
+    mockTetromino = { position: [[2, 0], [2, 1], [2, 2], [2, 3]], value: 7 }
     game.activeTetromino = mockTetromino;
     game.activePlayer = 'player1'
+  })
+
+  test("Updates the position of the I-Block for Player 1", () => {
     game.moveVertical();
-    expect(game.activeTetromino.position).toEqual([[1, 0], [1, 1], [1, 2], [1, 3]]);
+    expect(game.activeTetromino.position).toEqual([[3, 0], [3, 1], [3, 2], [3, 3]]);
   });
   // test("Updates the position of the I-Block for Player 1", () => {
   //   const tetromino = new Tetromino();
