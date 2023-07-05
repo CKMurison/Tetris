@@ -19,4 +19,16 @@ describe('Render class', () => {
         expect(emptyBlocks.length).toBe(3);
         expect(iBlocks.length).toBe(1);
     });
+
+    it('assigns correct class to block', () => {
+        const render = new Render();
+        render.drawGrid([[1, 2, 3, 4, 5, 6, 7]])
+        
+        expect(document.querySelectorAll('.jBlock').length).toBe(1);
+        expect(document.querySelectorAll('.lBlock').length).toBe(1);
+        expect(document.querySelectorAll('.oBlock').length).toBe(1);
+        expect(document.querySelectorAll('.sBlock').length).toBe(1);
+        expect(document.querySelectorAll('.tBlock').length).toBe(1);
+        expect(document.querySelectorAll('.zBlock').length).toBe(1);
+    })
 });
