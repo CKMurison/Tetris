@@ -2,7 +2,8 @@ const Player = require('./player');
 
 class Game {
   constructor(){
-  const grid = Array(20).fill(Array(10).fill(0)); //first number = rows, second number = columns
+    const grid = Array(20).fill(Array(10).fill(0)); //first number = rows, second number = columns
+    
   const shape = [
     // I-Block
     [1, 1, 1, 1],
@@ -22,3 +23,6 @@ class Game {
   const players = [new Player(), new Player()]
   };
 };
+
+
+console.log(Array(20).fill(Array(10).fill(0)));
