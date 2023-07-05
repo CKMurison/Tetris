@@ -23,23 +23,25 @@ class Game {
     this.render = render;
     this.players = [new Player(), new Player()];
     this.activePlayer = this.players[0];
-    this.activeTetromino = new Tetromino;
   };
 
   moveVertical() {
     this.activeTetromino.position.forEach((eachCoordinate) => {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0 
-    })
+    });
+
     this.activeTetromino.position.forEach((blockPosition) => {
       if (this.activePlayer === 'player1') {
         blockPosition[0] += 1;
       } else {
         blockPosition[0] -= 1;
-      };
+      }
+    });
+
     this.activeTetromino.position.forEach((eachCoordinate) => {
         this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value  
     })
-  });
+  };
 
   #createGrid(rows, columns) {
     let grid = [];

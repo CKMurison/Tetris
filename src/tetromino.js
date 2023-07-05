@@ -1,4 +1,3 @@
-const Game = require('./game');
 
 class Tetromino {
   constructor() {
