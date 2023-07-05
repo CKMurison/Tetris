@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "esbuild index.js --bundle --outfile=bundle.js --watch"
+    "test": "jest --coverage",
+    "build": "esbuild index.js --bundle --outfile=bundle.js --watch",
+    "open" : "open index.html"
   },
   "keywords": [],
   "author": "",

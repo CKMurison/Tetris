@@ -6,6 +6,9 @@ class Render {
   drawGrid(grid) {
     let gridContainer = document.createElement('div');
     gridContainer.className = 'gridContainer';
+    // gridContainer.style.aspectRatio = `${grid[0].length} / ${grid.length}`
+    gridContainer.style.height = "95vh"
+    gridContainer.style.width = `calc(95vh / ${grid.length} * ${grid[0].length}`
     
     grid.forEach((row, rowNum) => {
       let rowContainer = document.createElement('div');

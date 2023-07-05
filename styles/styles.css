@@ -2,35 +2,35 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
 }
 
 div {
     border: 1px solid black;
-    min-width: 10px;
-    min-height: 10px;
     display: flex;
 }
 
 #main-container {
     justify-content: center;
     border: none;
-    flex: 0.9;
+    max-height: 90%;
 }
 
 .gridContainer {
     flex-direction: column;
-    width: 25%;
-    
+    width: 40vw;
+    object-fit: contain;
 }
 
-.cellContainer,
 .rowContainer {
     flex: 1;
 }
 
-.empty {
+.cellContainer {
+    flex: 1;
+}
 
+.empty {
+    background-color: lightgray;
 }
 
 .iBlock {
