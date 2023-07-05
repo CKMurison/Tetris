@@ -10,10 +10,11 @@ class Render {
     grid.forEach((row, rowNum) => {
       let rowContainer = document.createElement('div');
       rowContainer.className = 'rowContainer';
-
+      
       row.forEach((cell, colNum) => {
         let cellContainer = document.createElement('div');
-        cellContainer.className = this.#findClassName(cell);
+        cellContainer.className = "cellContainer";
+        cellContainer.className += ` ${this.#findClassName(cell)}`;
         cellContainer.id = `${rowNum}.${colNum}`;
 
         rowContainer.append(cellContainer);

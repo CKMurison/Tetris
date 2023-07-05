@@ -2,7 +2,7 @@ const Player = require('./player');
 
 class Game {
   constructor(render) {
-    this.grid = Array(20).fill(Array(10).fill(0)); //first number = rows, second number = columns
+    this.grid = this.#createGrid(20, 10)
     this.shape = [
       // I-Block
       [1, 1, 1, 1],
@@ -22,6 +22,16 @@ class Game {
     this.render = render;
     this.players = [new Player(), new Player()];
   };
+
+  #createGrid(rows, columns) {
+    let grid = [];
+    let row = new Array(10).fill(0);
+    for (let i = 0 ; i < rows ; i++) {
+      let row = new Array(10).fill(0);
+      grid.push(row)
+    }
+    return grid;
+  }
 };
 
 module.exports = Game;
