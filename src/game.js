@@ -2,7 +2,7 @@ const Player = require('./player');
 
 class Game {
   constructor(){
-  const grid = Array(20).fill(Array(10).fill(0)); //first number = rows, second number = columns
+  this.grid = Array.from({ length: 20 }, () => Array(10).fill(0));; //first number = rows, second number = columns
   this.activeTetromino = null;
   this.shape = [
     // I-Block
@@ -36,7 +36,9 @@ class Game {
   generateTetromino() {
     let randomIndex = Math.floor(Math.random() * 7)
     
-    grid[row][column] = this.shape[randomIndex]
+    game.position.i.p1.forEach(arr => 
+      this.grid[arr[0]][arr[1]] = 1 // randomIndex + 1
+      )
 
     this.activeTetromino = this.shape[randomIndex]
     return this.activeTetromino;
@@ -44,10 +46,15 @@ class Game {
 };
 
 const game = new Game();
+game.generateTetromino()
+console.log(game.grid)
 
-game.position.i.p1.forEach(arr => 
-  console.log(arr[0] + "<- row\n" + arr[1] + "<- column\n")
-  )
+// game.position.i.p1.forEach(arr => 
+//   console.log(arr[0] + "<- row\n" + arr[1] + "<- column\n")
+//   )
 
+// game.position.i.p1.forEach(arr => 
+//   this.grid[arr[0]][arr[1]] = randomIndex + 1
+//   )
 
 //this.shape ==> position 
