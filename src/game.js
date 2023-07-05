@@ -34,15 +34,20 @@ class Game {
   };
 
   generateTetromino() {
+    let randomIndex = Math.floor(Math.random() * 7)
+    
+    grid[row][column] = this.shape[randomIndex]
 
-    this.activeTetromino = this.shape[Math.floor(Math.random() * 7)]
+    this.activeTetromino = this.shape[randomIndex]
     return this.activeTetromino;
   }
 };
 
 const game = new Game();
 
-console.log(game.generateTetromino());
+game.position.i.p1.forEach(arr => 
+  console.log(arr[0] + "<- row\n" + arr[1] + "<- column\n")
+  )
 
 
 //this.shape ==> position 
