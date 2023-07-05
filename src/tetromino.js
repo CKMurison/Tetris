@@ -1,14 +1,11 @@
+const Game = require('./game');
+
 class Tetromino {
-  moveVertical(player, tetromino) {
-    tetromino.position.forEach((blockPosition) => {
-      if (player === 'player1') {
-        blockPosition[0] += 1;
-      } else {
-        blockPosition[0] -= 1;
-      };
-    });
+  constructor() {
+    this.position = [0, 0]
+    this.value = 1
   }
+  
 }
 
 module.exports = Tetromino;
-
