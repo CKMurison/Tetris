@@ -31,7 +31,7 @@ describe('Grid', () => {
 })
 
 describe('Tetrominos', () => {
-    it('', () => {
+    it('spawns the I', () => {
 
     })
 })
