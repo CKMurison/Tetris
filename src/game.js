@@ -112,6 +112,16 @@ class Game {
   }
 
   // Makes the grid
+  removeCompleteLines() {
+    this.grid.forEach((row, index) => {
+      if (row.every(cell => cell !== 0)) {
+        const halfPoint = this.grid.length / 2;
+        this.grid.splice(index, 1);
+        this.grid.splice(index < halfPoint ? halfPoint - 1 : halfPoint, 0, new Array(this.grid[0].length).fill(0));
+      }
+    })
+  }
+
   #createGrid(rows, columns) {
     let grid = [];
     let row = new Array(10).fill(0);
