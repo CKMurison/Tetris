@@ -15,12 +15,36 @@ class Tetromino {
         return collision;
     }
 
+    checkCollisionUp(grid) {
+        let collision = false;
+        this.positions.forEach((position) => {
+            if (position[0] === 0) {
+                collision = true;
+            } else if (grid[position[0] - 1][position[1]] !== 0) {
+                collision = true;
+            }
+        })
+        return collision;
+    }
+
     checkCollisionRight(grid) {
         let collision = false;
         this.positions.forEach((position) => {
-            if (position[0] >= grid[0].length - 1) {
+            if (position[1] >= grid[0].length - 1) {
                 collision = true;
             } else if (grid[position[0]][position[1] + 1] !== 0) {
+                collision = true;
+            }
+        })
+        return collision;
+    }
+
+    checkCollisionLeft(grid) {
+        let collision = false;
+        this.positions.forEach((position) => {
+            if (position[1] === 0) {
+                collision = true;
+            } else if (grid[position[0]][position[1] - 1] !== 0) {
                 collision = true;
             }
         })
