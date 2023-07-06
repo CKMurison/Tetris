@@ -41,7 +41,7 @@ class Game {
 
   moveVertical() {
     this.activeTetromino.position.forEach((eachCoordinate) => {
-      this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0 
+      this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
     });
 
     this.activeTetromino.position.forEach((blockPosition) => {
@@ -53,7 +53,7 @@ class Game {
     });
 
     this.activeTetromino.position.forEach((eachCoordinate) => {
-        this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value  
+      this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value
     })
   };
 
