@@ -71,5 +71,36 @@ describe("tetromino", () => {
     game.moveVertical();
     expect(game.activeTetromino.position).toEqual([[0, 0], [0, 1], [1, 0], [1, 1]])
   });
-
+  
+  test("Updates the position of the s-block for player 1", () => {
+    mockTetromino = { position:[[1, 1], [1, 2], [2, 0], [2, 1]] }
+    game.activeTetromino = mockTetromino
+    game.activePlayer = 'player1'
+    game.moveVertical();
+    expect(game.activeTetromino.position).toEqual([[2, 1], [2, 2], [3, 0], [3, 1]])
+  });
+  
+  test("Updates the position of the s-block for player 2", () => {
+    mockTetromino = { position:[[1, 1], [1, 2], [2, 0], [2, 1]] }
+    game.activeTetromino = mockTetromino
+    game.activePlayer = 'player2'
+    game.moveVertical();
+    expect(game.activeTetromino.position).toEqual([[0, 1], [0, 2], [1, 0], [1, 1]])
+  });
+  
+  test("Updates the position of the t-block for player 1", () => {
+    mockTetromino = { position:[[1, 1], [2, 0], [2, 1], [2, 2]] }
+    game.activeTetromino = mockTetromino
+    game.activePlayer = 'player1'
+    game.moveVertical();
+    expect(game.activeTetromino.position).toEqual([[2, 1], [3, 0], [3, 1], [3, 2]])
+  });
+  
+  test("Updates the position of the t-block for player 2", () => {
+    mockTetromino = { position:[[1, 1], [2, 0], [2, 1], [2, 2]] }
+    game.activeTetromino = mockTetromino
+    game.activePlayer = 'player2'
+    game.moveVertical();
+    expect(game.activeTetromino.position).toEqual([[0, 1], [1, 0], [1, 1], [1, 2]])
+  });
 });
