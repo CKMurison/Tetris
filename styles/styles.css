@@ -1,0 +1,62 @@
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+div {
+    border: 1px solid black;
+    display: flex;
+}
+
+#main-container {
+    justify-content: center;
+    border: none;
+    max-height: 90%;
+}
+
+.gridContainer {
+    flex-direction: column;
+    width: 40vw;
+    object-fit: contain;
+}
+
+.rowContainer {
+    flex: 1;
+}
+
+.cellContainer {
+    flex: 1;
+}
+
+.empty {
+    background-color: lightgray;
+}
+
+.iBlock {
+    background-color: blue;
+}
+
+.jBlock {
+    background-color: red;
+}
+
+.lBlock {
+    background-color: green;
+}
+
+.oBlock {
+    background-color: yellow;
+}
+
+.sBlock {
+    background-color: purple;
+}
+
+.tBlock {
+    background-color: orange;
+}
+
+.zBlock {
+    background-color: brown;
+}
