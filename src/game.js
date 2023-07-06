@@ -48,7 +48,6 @@ class Game {
     });
 
     this.activeTetromino.position.forEach((blockPosition) => {
-      console.log(blockPosition);
       if (input === 'right') {
         blockPosition[1] += 1;
       } else if (input === 'left' ) {
