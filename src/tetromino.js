@@ -20,6 +20,8 @@ class Tetromino {
     checkCollisionUp(grid) {
         let collision = false;
         this.positions.forEach((position) => {
+            const filter = this.positions.filter(e => e[0] === position[0] - 1 && e[1] === position[1]);
+            if (filter.length === 1) return;
             if (position[0] === 0) {
                 collision = true;
             } else if (grid[position[0] - 1][position[1]] !== 0) {
@@ -32,6 +34,8 @@ class Tetromino {
     checkCollisionRight(grid) {
         let collision = false;
         this.positions.forEach((position) => {
+            const filter = this.positions.filter(e => e[0] === position[0] && e[1] === position[1] + 1);
+            if (filter.length === 1) return;
             if (position[1] >= grid[0].length - 1) {
                 collision = true;
             } else if (grid[position[0]][position[1] + 1] !== 0) {
@@ -44,6 +48,8 @@ class Tetromino {
     checkCollisionLeft(grid) {
         let collision = false;
         this.positions.forEach((position) => {
+            const filter = this.positions.filter(e => e[0] === position[0] && e[1] === position[1] - 1);
+            if (filter.length === 1) return;
             if (position[1] === 0) {
                 collision = true;
             } else if (grid[position[0]][position[1] - 1] !== 0) {

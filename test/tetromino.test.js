@@ -1,7 +1,7 @@
 const Tetromino = require('../src/tetromino');
 
 describe('Tetromino', () => {
-    xit('checks for collision with wall for a single block moving down', () => {
+    it('checks for collision with wall for a single block moving down', () => {
         const tetromino = new Tetromino();
         tetromino.positions = [[0, 0]];
 
@@ -9,7 +9,7 @@ describe('Tetromino', () => {
         expect(tetromino.checkCollisionDown([[1, 0],[0, 0]])).toBe(false);
     });
 
-    xit('checks for collision with another piece for a single block moving down', () => {
+    it('checks for collision with another piece for a single block moving down', () => {
         const tetromino = new Tetromino();
         tetromino.positions = [[0, 0]];
 
@@ -71,5 +71,29 @@ describe('Tetromino', () => {
         let grid = [[1, 1, 0], [0, 1, 1], [0, 0, 0]];
 
         expect(tetromino.checkCollisionDown(grid)).toBe(false);
+    })
+
+    it('ignores irrelevant pieces when moving up', () => {
+        const tetromino = new Tetromino();
+        tetromino.positions = [[1, 0], [1, 1], [2, 1], [2, 2]];
+        let grid = [[0, 0, 0], [1, 1, 0], [0, 1, 1]];
+
+        expect(tetromino.checkCollisionUp(grid)).toBe(false);
+    })
+
+    it('ignores irrelevant pieces when moving right', () => {
+        const tetromino = new Tetromino();
+        tetromino.positions = [[0, 1], [0, 2], [1, 2], [1, 3]];
+        let grid = [[0, 1, 1, 0, 0], [0, 0, 1, 1, 0]];
+
+        expect(tetromino.checkCollisionLeft(grid)).toBe(false);
+    })
+
+    it('ignores irrelevant pieces when moving left', () => {
+        const tetromino = new Tetromino();
+        tetromino.positions = [[0, 1], [0, 2], [1, 2], [1, 3]];
+        let grid = [[0, 1, 1, 0], [0, 0, 1, 1]];
+
+        expect(tetromino.checkCollisionLeft(grid)).toBe(false);
     })
 });

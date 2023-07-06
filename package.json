@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --verbose",
     "build": "esbuild index.js --bundle --outfile=bundle.js --watch",
     "open" : "open index.html"
   },
