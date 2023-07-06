@@ -57,8 +57,8 @@ class Game {
     })
   };
 
-  generateTetromino() {
-    this.randomIndex = Math.floor(Math.random() * 7);
+  generateTetromino(random) {
+    this.randomIndex = (random === undefined ? Math.floor(Math.random() * 7) : random)
     let key = null;
 
     switch (this.randomIndex) {

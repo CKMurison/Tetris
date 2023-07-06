@@ -30,9 +30,13 @@ describe('Grid', () => {
     })
 })
 
-describe('Tetrominos', () => {
-    it('spawns the I', () => {
-
+describe('generateTetromino', () => {
+    it('spawns the I-Block', () => {
+        const game = new Game()
+        const random = 0
+        game.generateTetromino(random)
+        
+        expect(game.generateTetromino(random)).toEqual("a big array")
     })
 })
 
