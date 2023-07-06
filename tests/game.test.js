@@ -14,7 +14,7 @@ describe("tetromino", () => {
     game.activePlayer = 'player1'
     game.moveVertical();
     expect(game.activeTetromino.position).toEqual([[3, 0], [3, 1], [3, 2], [3, 3]]);
-    expect(game.grid[2][0]).toEqual(0)
+    expect(game.grid[2]).not.toContain(1)
     console.log(game.grid)
   });
   
