@@ -35,11 +35,12 @@ class Game {
     }
     this.render = render;
     this.players = [new Player(), new Player()];
+    this.activePlayer = this.players[0];
   };
 
   generateTetromino() {
-    this.randomIndex = Math.floor(Math.random() * 7)
-    let key = null
+    this.randomIndex = Math.floor(Math.random() * 7);
+    let key = null;
 
     switch (this.randomIndex) {
       case 0:
@@ -66,7 +67,7 @@ class Game {
     }
 
     if (key === "i") {
-      if (true) {
+      if (this.activePlayer = this.players[0]) {
         this.position.i.p1.forEach(arr =>
           this.grid[arr[0]][arr[1]] = this.randomIndex + 1
         );
@@ -83,7 +84,7 @@ class Game {
       );
     }
 
-    this.activeTetromino = this.shape[this.randomIndex]
+    this.activeTetromino = this.shape[this.randomIndex];
     return this.activeTetromino;
   }
 
@@ -100,16 +101,6 @@ class Game {
 
 module.exports = Game;
 
-const game = new Game();
-game.generateTetromino()
-console.log(game.grid)
-
-// game.position.i.p1.forEach(arr => 
-//   console.log(arr[0] + "<- row\n" + arr[1] + "<- column\n")
-//   )
-
-// game.position.i.p1.forEach(arr => 
-//   this.grid[arr[0]][arr[1]] = randomIndex + 1
-//   )
-
-//this.shape ==> position 
+// const game = new Game();
+// game.generateTetromino()
+// console.log(game.grid)
