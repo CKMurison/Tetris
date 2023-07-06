@@ -43,6 +43,15 @@ class Game {
     })
   };
 
+  removeCompleteLines() {
+    this.grid.forEach((row, index) => {
+      if (row.every(cell => cell !== 0)) {
+        this.grid.splice(index, 1);
+        this.grid.splice(index < 10 ? 9 : 10, 0, new Array(this.grid[0].length).fill(0));
+      }
+    })
+  }
+
   #createGrid(rows, columns) {
     let grid = [];
     let row = new Array(10).fill(0);
