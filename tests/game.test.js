@@ -6,7 +6,7 @@ let game, mockTetromino;
 describe("tetromino", () => {
   beforeEach(() => {
     game = new Game()
-  })
+  });
 
   test("Updates the position of the I-Block for Player 1", () => {
     mockTetromino = { position: [[2, 0], [2, 1], [2, 2], [2, 3]], value: 1 }
@@ -111,18 +111,43 @@ describe("tetromino", () => {
   });
   
   test("Updates the position of the z-block for player 1", () => {
-  mockTetromino = { position:[[1, 0], [1, 1], [2, 1], [2, 2]], value: 1 }
-  game.activeTetromino = mockTetromino
-  game.activePlayer = 'player1'
-  game.moveVertical();
-  expect(game.activeTetromino.position).toEqual([[2, 0], [2, 1], [3, 1], [3, 2]])
+    mockTetromino = { position:[[1, 0], [1, 1], [2, 1], [2, 2]], value: 1 }
+    game.activeTetromino = mockTetromino
+    game.activePlayer = 'player1'
+    game.moveVertical();
+    expect(game.activeTetromino.position).toEqual([[2, 0], [2, 1], [3, 1], [3, 2]])
   });
  
   test("Updates the position of the z-block for player 2", () => {
-  mockTetromino = { position:[[1, 0], [1, 1], [2, 1], [2, 2]], value: 1 }
-  game.activeTetromino = mockTetromino
-  game.activePlayer = 'player2'
-  game.moveVertical();
-  expect(game.activeTetromino.position).toEqual([[0, 0], [0, 1], [1, 1], [1, 2]])
+    mockTetromino = { position:[[1, 0], [1, 1], [2, 1], [2, 2]], value: 1 }
+    game.activeTetromino = mockTetromino
+    game.activePlayer = 'player2'
+    game.moveVertical();
+    expect(game.activeTetromino.position).toEqual([[0, 0], [0, 1], [1, 1], [1, 2]])
+  });
+
+  test("Clears full lines from grid", () => {
+    game.grid = [[0, 0], [1, 2]];
+    game.removeCompleteLines();
+    expect(game.grid.length).toBe(2);
+    expect(game.grid).toEqual([[0, 0], [0, 0]]);
+  });
+
+  test("Moves remaining lines to the end", () => {
+    game.grid = [[0, 0], [1, 2], [0, 0], [0, 1]];
+    game.removeCompleteLines();
+    expect(game.grid.length).toBe(4);
+    expect(game.grid).toEqual([[0, 0], [0, 0], [0, 0], [0, 1]]);
+  });
+
+  test("Moves relevant pieces towards both players", () => {
+    game.grid = [[1,1], [0,1], [1,1], [1,0], [0,1], [1,0]];
+    game.removeCompleteLines();
+    expect(game.grid).toEqual([[0,1], [0,0], [0,0], [1,0], [0,1], [1,0]]);
+    game.grid = [[1,0], [0,1], [0,1], [1,1], [0,1], [1,1]];
+    game.removeCompleteLines();
+    console.log(game.grid);
+    expect(game.grid).toEqual([[1,0], [0,1], [0,1], [0,0], [0,0], [0,1]]);
+
   });
 }); 
