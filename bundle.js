@@ -13,10 +13,24 @@
     }
   });
 
+  // src/tetromino.js
+  var require_tetromino = __commonJS({
+    "src/tetromino.js"(exports, module) {
+      var Tetromino = class {
+        constructor() {
+          this.position = [0, 0];
+          this.value = 1;
+        }
+      };
+      module.exports = Tetromino;
+    }
+  });
+
   // src/game.js
   var require_game = __commonJS({
     "src/game.js"(exports, module) {
       var Player = require_player();
+      var Tetromino = require_tetromino();
       var Game2 = class {
         constructor(render2) {
           this.grid = this.#createGrid(20, 10);
@@ -38,6 +52,22 @@
           ];
           this.render = render2;
           this.players = [new Player(), new Player()];
+          this.activePlayer = this.players[0];
+        }
+        moveVertical() {
+          this.activeTetromino.position.forEach((eachCoordinate) => {
+            this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0;
+          });
+          this.activeTetromino.position.forEach((blockPosition) => {
+            if (this.activePlayer === "player1") {
+              blockPosition[0] += 1;
+            } else {
+              blockPosition[0] -= 1;
+            }
+          });
+          this.activeTetromino.position.forEach((eachCoordinate) => {
+            this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value;
+          });
         }
         #createGrid(rows, columns) {
           let grid = [];
