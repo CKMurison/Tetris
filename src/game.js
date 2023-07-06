@@ -3,7 +3,7 @@ const Tetromino = require('./tetromino');
 
 class Game {
   constructor(render) {
-    this.grid = this.#createGrid(20, 10)
+    this.grid = this.#createGrid(20, 10) // Generate grid made of 20 arrays, each array being made of 10 zeros.
     this.activeTetromino = null;
     this.shape = [
       // I-Block
@@ -22,6 +22,7 @@ class Game {
       [[7, 7, 0], [0, 7, 7]],
 
     ]
+    // Hard-coded initial spawn points based upon 20x10 grid
     this.position = {
       i: {
         p1: [[10, 3], [10, 4], [10, 5], [10, 6]],
@@ -36,7 +37,7 @@ class Game {
     }
     this.render = render;
     this.players = [new Player(), new Player()];
-    this.activePlayer = this.players[0];
+    this.activePlayer = this.players[0]; // Default player is player 1
   };
 
   moveVertical() {
@@ -58,9 +59,10 @@ class Game {
   };
 
   generateTetromino(random) {
-    this.randomIndex = (random === undefined ? Math.floor(Math.random() * 7) : random)
+    this.randomIndex = (random === undefined ? Math.floor(Math.random() * 7) : random) // Ternary (random) used for testing purposes 
     let key = null;
 
+    // Switch statement decides which key based upon the random number given
     switch (this.randomIndex) {
       case 0:
         key = "i";
@@ -85,6 +87,7 @@ class Game {
         break;
     }
 
+    // If statement receives key and adds the corresponding tetromino to the grid
     if (key === "i") {
       if (this.activePlayer = this.players[0]) {
         this.position.i.p1.forEach(arr =>
@@ -103,10 +106,12 @@ class Game {
       );
     }
 
+    // Assigns the correct shape to the active tetromino
     this.activeTetromino = this.shape[this.randomIndex];
     return this.activeTetromino;
   }
 
+  // Makes the grid
   #createGrid(rows, columns) {
     let grid = [];
     let row = new Array(10).fill(0);
@@ -119,7 +124,3 @@ class Game {
 };
 
 module.exports = Game;
-
-// const game = new Game();
-// game.generateTetromino()
-// console.log(game.grid)
