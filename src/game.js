@@ -42,6 +42,24 @@ class Game {
         this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value  
     })
   };
+  moveHorizontal(input) {
+    this.activeTetromino.position.forEach((eachCoordinate) => {
+      this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0 
+    });
+
+    this.activeTetromino.position.forEach((blockPosition) => {
+      console.log(blockPosition);
+      if (input === 'right') {
+        blockPosition[1] += 1;
+      } else if (input === 'left' ) {
+        blockPosition[1] -= 1;
+      }
+    });
+
+    this.activeTetromino.position.forEach((eachCoordinate) => {
+        this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value  
+    })
+  };
 
   #createGrid(rows, columns) {
     let grid = [];
