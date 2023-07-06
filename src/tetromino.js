@@ -14,6 +14,18 @@ class Tetromino {
         })
         return collision;
     }
+
+    checkCollisionRight(grid) {
+        let collision = false;
+        this.positions.forEach((position) => {
+            if (position[0] >= grid[0].length - 1) {
+                collision = true;
+            } else if (grid[position[0]][position[1] + 1] !== 0) {
+                collision = true;
+            }
+        })
+        return collision;
+    }
 }
 
 module.exports = Tetromino;
