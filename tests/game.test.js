@@ -133,5 +133,21 @@ describe("tetromino", () => {
     expect(game.grid).toEqual([[0, 0], [0, 0]]);
   });
 
-  
+  test("Moves remaining lines to the end", () => {
+    game.grid = [[0, 0], [1, 2], [0, 0], [0, 1]];
+    game.removeCompleteLines();
+    expect(game.grid.length).toBe(4);
+    expect(game.grid).toEqual([[0, 0], [0, 0], [0, 0], [0, 1]]);
+  });
+
+  test("Moves relevant pieces towards both players", () => {
+    game.grid = [[1,1], [0,1], [1,1], [1,0], [0,1], [1,0]];
+    game.removeCompleteLines();
+    expect(game.grid).toEqual([[0,1], [0,0], [0,0], [1,0], [0,1], [1,0]]);
+    game.grid = [[1,0], [0,1], [0,1], [1,1], [0,1], [1,1]];
+    game.removeCompleteLines();
+    console.log(game.grid);
+    expect(game.grid).toEqual([[1,0], [0,1], [0,1], [0,0], [0,0], [0,1]]);
+
+  });
 }); 

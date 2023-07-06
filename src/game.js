@@ -46,8 +46,9 @@ class Game {
   removeCompleteLines() {
     this.grid.forEach((row, index) => {
       if (row.every(cell => cell !== 0)) {
+        const halfPoint = this.grid.length / 2;
         this.grid.splice(index, 1);
-        this.grid.splice(index < 10 ? 9 : 10, 0, new Array(this.grid[0].length).fill(0));
+        this.grid.splice(index < halfPoint ? halfPoint - 1 : halfPoint, 0, new Array(this.grid[0].length).fill(0));
       }
     })
   }
