@@ -41,45 +41,50 @@ class Game {
     this.randomIndex = Math.floor(Math.random() * 7)
     let key = null
 
-    switch (3) {
+    switch (this.randomIndex) {
       case 0:
-        if (true) {
-          game.position.i.p1.forEach(arr =>
-            this.grid[arr[0]][arr[1]] = this.randomIndex + 1
-          )
-        } else { // Needs to interact with current player
-          game.position.i.p2.forEach(arr =>
-            this.grid[arr[0]][arr[1]] = this.randomIndex + 1
-          )
-        }
+        key = "i";
+        break;
       case 1:
-        key = "j"
-        this.spawnNonIBlock(key)
+        key = "j";
+        break;
       case 2:
-        key = "l"
-        this.spawnNonIBlock(key)
+        key = "l";
+        break;
       case 3:
-        key = "o"
-        this.spawnNonIBlock(key)
+        key = "o";
+        break;
       case 4:
-        key = "s"
-        this.spawnNonIBlock(key)
+        key = "s";
+        break;
       case 5:
-        key = "t"
-        this.spawnNonIBlock(key)
+        key = "t";
+        break;
       case 6:
-        key = "z"
-        this.spawnNonIBlock(key)
+        key = "z";
+        break;
+    }
+
+    if (key === "i") {
+      if (true) {
+        this.position.i.p1.forEach(arr =>
+          this.grid[arr[0]][arr[1]] = this.randomIndex + 1
+        );
+      } else {
+        this.position.i.p2.forEach(arr =>
+          this.grid[arr[0]][arr[1]] = this.randomIndex + 1
+        );
+      }
+    } else {
+      const tetromino = this.shape[this.randomIndex];
+      const position = this.position[key];
+      position.forEach(arr =>
+        this.grid[arr[0]][arr[1]] = this.randomIndex + 1
+      );
     }
 
     this.activeTetromino = this.shape[this.randomIndex]
     return this.activeTetromino;
-  }
-
-  spawnNonIBlock(key) {
-    game.position[key].forEach(arr =>
-      this.grid[arr[0]][arr[1]] = 3
-    )
   }
 
   #createGrid(rows, columns) {
