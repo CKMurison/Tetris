@@ -129,7 +129,7 @@ describe("Game", () => {
   })
 
   describe('horizantal movement', () => {
-    test("Updates the position of the I-Block for Player 1", () => {
+    test("Move the position of the I-Block to the right", () => {
       mockTetromino = { position: [[2, 0], [2, 1], [2, 2], [2, 3]], value: 1 }
       game.activeTetromino = mockTetromino;
       game.moveHorizontal('right');
@@ -137,21 +137,46 @@ describe("Game", () => {
       expect(game.grid[2][0]).not.toContain(1)
     });
     
-    test("Updates the position of the I-block for player 2", () => {
-      mockTetromino = { position:[[2, 0], [2, 1], [2, 2], [2, 3]], value: 1 }
-      game.activeTetromino = mockTetromino
-      game.moveVertical();
-      expect(game.activeTetromino.position).toEqual([[1, 0], [1, 1], [1, 2], [1, 3]])
+    test("Move the position of the I-Block to the left", () => {
+      mockTetromino = { position:[[2, 1], [2, 2], [2, 3], [2, 4]], value: 1 }
+      game.activeTetromino = mockTetromino;
+      game.moveHorizontal('left');
+      expect(game.activeTetromino.position).toEqual([[2, 0], [2, 1], [2, 2], [2, 3]])
       console.log(game.grid)
     });
+
+    test("Move the position of the J-Block to the right", () => {
+      mockTetromino = { position:[[1, 0], [2, 0], [2, 1], [2, 2]], value: 1 }
+      game.activeTetromino = mockTetromino;
+      game.moveHorizontal('right');
+      expect(game.activeTetromino.position).toEqual([[1, 1], [2, 1], [2, 2], [2, 3]]);
+      expect(game.grid[2][0]).not.toContain(1)
+    });
+
+    test("Move the position of the J-Block to the left", () => {
+      mockTetromino = { position:[[1, 1], [2, 1], [2, 2], [2, 3]], value: 1 }
+      game.activeTetromino = mockTetromino;
+      game.moveHorizontal('left');
+      expect(game.activeTetromino.position).toEqual([[1, 0], [2, 0], [2, 1], [2, 2]]);
+      expect(game.grid[2][0]).not.toContain(1)
+    });
     
-    // test("Updates the position of the J-block for player 1", () => {
-    //   mockTetromino = { position:[[1, 0], [2, 0], [2, 1], [2, 2]], value: 1 }
-    //   game.activeTetromino = mockTetromino
-    //   game.activePlayer = 'player1'
-    //   game.moveVertical();
-    //   expect(game.activeTetromino.position).toEqual([[2, 0], [3, 0], [3, 1], [3, 2]])
-    //   expect(game.grid[1]).not.toContain(1)
+    test("Move the position of the L-Block to the right", () => {
+      mockTetromino = { position:[[1, 0], [2, 0], [2, 1], [2, 2]], value: 1 }
+      game.activeTetromino = mockTetromino;
+      game.moveHorizontal('right');
+      expect(game.activeTetromino.position).toEqual([[1, 1], [2, 1], [2, 2], [2, 3]]);
+      expect(game.grid[2][0]).not.toContain(1)
+    });
+
+    test("Move the position of the L-Block to the left", () => {
+      mockTetromino = { position:[[1, 1], [2, 1], [2, 2], [2, 3]], value: 1 }
+      game.activeTetromino = mockTetromino;
+      game.moveHorizontal('left');
+      expect(game.activeTetromino.position).toEqual([[1, 0], [2, 0], [2, 1], [2, 2]]);
+      expect(game.grid[2][0]).not.toContain(1)
+    });
+    
 
     // });
 
