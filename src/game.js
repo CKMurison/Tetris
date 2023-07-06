@@ -111,7 +111,6 @@ class Game {
     return this.activeTetromino;
   }
 
-  // Makes the grid
   removeCompleteLines() {
     this.grid.forEach((row, index) => {
       if (row.every(cell => cell !== 0)) {
