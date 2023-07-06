@@ -52,6 +52,16 @@ class Game {
     }
     return grid;
   }
+
+  #createGrid(rows, columns) {
+    let grid = [];
+    let row = new Array(10).fill(0);
+    for (let i = 0 ; i < rows ; i++) {
+      let row = new Array(10).fill(0);
+      grid.push(row)
+    }
+    return grid;
+  }
 };
 
 module.exports = Game; 
