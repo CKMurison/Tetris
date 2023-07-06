@@ -1,4 +1,3 @@
-const Tetromino = require("../src/tetromino");
 const Game = require("../src/game");
 
 let game, mockTetromino;
