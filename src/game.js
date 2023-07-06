@@ -1,8 +1,8 @@
 const Player = require('./player');
 
 class Game {
-  constructor() {
-    this.grid = Array.from({ length: 20 }, () => Array(10).fill(0));; //first number = rows, second number = columns
+  constructor(render) {
+    this.grid = this.#createGrid(20, 10)
     this.activeTetromino = null;
     this.shape = [
       // I-Block
@@ -19,6 +19,7 @@ class Game {
       [[0, 6, 0], [6, 6, 6]],
       // Z-Block
       [[7, 7, 0], [0, 7, 7]],
+
     ]
     this.position = {
       i: {
@@ -32,7 +33,8 @@ class Game {
       t: [[9, 4], [10, 3], [10, 4], [10, 5]],
       z: [[9, 3], [9, 4], [10, 4], [10, 5]]
     }
-    const players = [new Player(), new Player()]
+    this.render = render;
+    this.players = [new Player(), new Player()];
   };
 
   generateTetromino() {
@@ -74,14 +76,24 @@ class Game {
     return this.activeTetromino;
   }
 
-  private
-
   spawnNonIBlock(key) {
     game.position[key].forEach(arr =>
       this.grid[arr[0]][arr[1]] = 3
     )
   }
+
+  #createGrid(rows, columns) {
+    let grid = [];
+    let row = new Array(10).fill(0);
+    for (let i = 0; i < rows; i++) {
+      let row = new Array(10).fill(0);
+      grid.push(row)
+    }
+    return grid;
+  }
 };
+
+module.exports = Game;
 
 const game = new Game();
 game.generateTetromino()
