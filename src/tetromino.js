@@ -6,6 +6,8 @@ class Tetromino {
     checkCollisionDown(grid) {
         let collision = false;
         this.positions.forEach((position) => {
+            const filter = this.positions.filter(e => e[0] === position[0] + 1 && e[1] === position[1]);
+            if (filter.length === 1) return; 
             if (position[0] >= grid.length - 1) {
                 collision = true;
             } else if (grid[position[0] + 1][position[1]] !== 0) {
