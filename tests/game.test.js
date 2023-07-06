@@ -15,7 +15,6 @@ describe("tetromino", () => {
     game.moveVertical();
     expect(game.activeTetromino.position).toEqual([[3, 0], [3, 1], [3, 2], [3, 3]]);
     expect(game.grid[2]).not.toContain(1)
-    console.log(game.grid)
   });
   
   test("Updates the position of the I-block for player 2", () => {
@@ -24,6 +23,7 @@ describe("tetromino", () => {
     game.activePlayer = 'player2'
     game.moveVertical();
     expect(game.activeTetromino.position).toEqual([[1, 0], [1, 1], [1, 2], [1, 3]])
+    console.log(game.grid)
   });
   
   test("Updates the position of the J-block for player 1", () => {
@@ -32,6 +32,8 @@ describe("tetromino", () => {
     game.activePlayer = 'player1'
     game.moveVertical();
     expect(game.activeTetromino.position).toEqual([[2, 0], [3, 0], [3, 1], [3, 2]])
+    expect(game.grid[1]).not.toContain(1)
+
   });
 
   test("Updates the position of the J-block for player 2", () => {
@@ -56,6 +58,8 @@ describe("tetromino", () => {
     game.activePlayer = 'player2'
     game.moveVertical();
     expect(game.activeTetromino.position).toEqual([[0, 0], [0, 1], [0, 2], [1, 0]])
+    expect(game.grid[2]).not.toContain(1)
+
   });
   
   test("Updates the position of the 0-block for player 1", () => {
