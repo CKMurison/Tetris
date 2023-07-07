@@ -4,7 +4,8 @@ let game, mockTetromino;
 
 describe("Game", () => {
   beforeEach(() => {
-    game = new Game()
+    let render = {drawGrid: fn()}
+    game = new Game(render)
   });
 
   describe('move vertical', () => {

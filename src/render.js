@@ -4,6 +4,10 @@ class Render {
   }
 
   drawGrid(grid) {
+    if (document.querySelector('.gridContainer') !== null) {
+      document.querySelector('.gridContainer').remove();
+    }
+
     let gridContainer = document.createElement('div');
     gridContainer.className = 'gridContainer';
     gridContainer.style.height = "95vh"

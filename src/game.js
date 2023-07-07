@@ -5,23 +5,6 @@ class Game {
   constructor(render) {
     this.grid = this.#createGrid(20, 10) // Generate grid made of 20 arrays, each array being made of 10 zeros.
     this.activeTetromino = null;
-    this.shape = [
-      // I-Block
-      [1, 1, 1, 1],
-      // J-Block
-      [[2, 0, 0], [2, 2, 2]],
-      // L-Block
-      [[0, 0, 3], [3, 3, 3]],
-      //  O-Block
-      [[4, 4], [4, 4]],
-      // S-Block
-      [[0, 5, 5], [5, 5, 0]],
-      // T-Block
-      [[0, 6, 0], [6, 6, 6]],
-      // Z-Block
-      [[7, 7, 0], [0, 7, 7]],
-
-    ]
     // Hard-coded initial spawn points based upon 20x10 grid
     this.position = {
       i: {
@@ -40,17 +23,32 @@ class Game {
     this.activePlayer = this.players[0]; // Default player is player 1
   };
 
-  playLoop() {
-    this.swapPlayer();
-    let success = this.generateTetromino();
+  async playLoop() {
+    let gameOver = false;
+    let turnInProgress = false;
 
-    if (success) {
-      if (this.activePlayer = this.players[0]) {
-        this.activeTetromino.checkCollisionDown(this.grid)
-      } else {
-        this.activeTetromino.checkCollisionUp(this.grid)
+    while (!turnInProgress && !gameOver) {
+      turnInProgress = true;
+      let generated = this.generateTetromino();
+      console.log(generated);
+      console.log(this.grid);
+
+      if (generated) {
+        let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
+        this.render.drawGrid(this.grid);
+        while (!collided) {
+          this.moveVertical();
+          console.log("piece moved");
+          this.render.drawGrid(this.grid);
+          await new Promise(resolve => setTimeout(resolve, 100));
+          collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
+        }
+        turnInProgress = false;
+        this.swapPlayer();
       }
     }
+
+    console.log("Game over");
   }
 
   moveVertical() {
@@ -96,6 +94,7 @@ class Game {
 
     this.randomIndex = (random === undefined ? Math.floor(Math.random() * 7) : random) // Ternary (random) used for testing purposes 
     let key = null;
+    console.log(this.randomIndex);
 
     // Switch statement decides which key based upon the random number given
     switch (this.randomIndex) {
@@ -125,30 +124,29 @@ class Game {
     // If statement receives key and adds the corresponding tetromino to the grid
     // checkIfGameOver condition will stop the function from drawing on the grid
     if (key === "i") {
-      if (this.activePlayer = this.players[0]) {
+      if (this.activePlayer === this.players[0]) {
         if (this.checkIfGameOver(this.position.i.p1)) return false;
 
         this.position.i.p1.forEach(arr =>
           this.grid[arr[0]][arr[1]] = this.randomIndex + 1
         );
-        this.activeTetromino = new Tetromino(this.position.i.p1);
+        this.activeTetromino = new Tetromino([...this.position.i.p1]);
       } else {
         if (this.checkIfGameOver(this.position.i.p2)) return false;
 
         this.position.i.p2.forEach(arr =>
           this.grid[arr[0]][arr[1]] = this.randomIndex + 1
         );
-        this.activeTetromino = new Tetromino(this.position.i.p2);
+        this.activeTetromino = new Tetromino([...this.position.i.p2]);
       }
     } else {
-      const tetromino = this.shape[this.randomIndex];
       const position = this.position[key];
       if (this.checkIfGameOver(position)) return false;
 
       position.forEach(arr =>
         this.grid[arr[0]][arr[1]] = this.randomIndex + 1
       );
-      this.activeTetromino = new Tetromino(position)
+      this.activeTetromino = new Tetromino([...position])
     }
     return true;
   }
@@ -158,7 +156,7 @@ class Game {
     // space taken on the grid
     // Returns false otherwise
 
-    return tetrominoPositions.some((position) => {
+    return tetrominoPositions.every((position) => {
       // position = [row, column]
       let row = position[0]
       let column = position[1]
