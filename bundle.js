@@ -8,6 +8,28 @@
   var require_player = __commonJS({
     "src/player.js"(exports, module) {
       var Player = class {
+        constructor(player) {
+          this.activePlayer = player;
+        }
+        controls() {
+          document.addEventListener("keydown", (e) => {
+            if (this.activePlayer === 1) {
+              if (e.key === "ArrowLeft") {
+                moveHorizontal("left");
+              } else if (e.key === "ArrowRight") {
+                moveHorizontal("right");
+              }
+              ;
+            } else {
+              if (e.key === "a") {
+                moveHorizontal("left");
+              } else if (e.key === "d") {
+                moveHorizontal("right");
+              }
+              ;
+            }
+          });
+        }
       };
       module.exports = Player;
     }
@@ -17,9 +39,8 @@
   var require_tetromino = __commonJS({
     "src/tetromino.js"(exports, module) {
       var Tetromino = class {
-        constructor() {
-          this.positions = null;
-          this.position = [0, 0];
+        constructor(positions) {
+          this.positions = positions;
           this.value = 1;
         }
         checkCollisionDown(grid) {
@@ -91,7 +112,7 @@
       var Game2 = class {
         constructor(render2) {
           this.grid = this.#createGrid(20, 10);
-          this.activeTetromino = { position: null };
+          this.activeTetromino = null;
           this.shape = [
             // I-Block
             [1, 1, 1, 1],
@@ -125,32 +146,32 @@
           this.activePlayer = this.players[0];
         }
         moveVertical() {
-          this.activeTetromino.position.forEach((eachCoordinate) => {
+          this.activeTetromino.positions.forEach((eachCoordinate) => {
             this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0;
           });
-          this.activeTetromino.position.forEach((blockPosition) => {
+          this.activeTetromino.positions.forEach((blockPosition) => {
             if (this.activePlayer === "player1") {
               blockPosition[0] += 1;
             } else {
               blockPosition[0] -= 1;
             }
           });
-          this.activeTetromino.position.forEach((eachCoordinate) => {
+          this.activeTetromino.positions.forEach((eachCoordinate) => {
             this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value;
           });
         }
         moveHorizontal(input) {
-          this.activeTetromino.position.forEach((eachCoordinate) => {
+          this.activeTetromino.positions.forEach((eachCoordinate) => {
             this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0;
           });
-          this.activeTetromino.position.forEach((blockPosition) => {
+          this.activeTetromino.positions.forEach((blockPosition) => {
             if (input === "right") {
               blockPosition[1] += 1;
             } else if (input === "left") {
               blockPosition[1] -= 1;
             }
           });
-          this.activeTetromino.position.forEach((eachCoordinate) => {
+          this.activeTetromino.positions.forEach((eachCoordinate) => {
             this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value;
           });
         }
@@ -180,28 +201,39 @@
               key = "z";
               break;
           }
-          let spawnPoint = [];
           if (key === "i") {
             if (this.activePlayer = this.players[0]) {
-              spawnPoint = this.position.i.p1;
+              if (this.checkIfGameOver(this.position.i.p1))
+                return false;
               this.position.i.p1.forEach(
                 (arr) => this.grid[arr[0]][arr[1]] = this.randomIndex + 1
               );
+              this.activeTetromino = new Tetromino(this.position.i.p1);
             } else {
-              spawnPoint = this.position.i.p2;
+              if (this.checkIfGameOver(this.position.i.p2))
+                return false;
               this.position.i.p2.forEach(
                 (arr) => this.grid[arr[0]][arr[1]] = this.randomIndex + 1
               );
+              this.activeTetromino = new Tetromino(this.position.i.p2);
             }
           } else {
-            spawnPoint = this.position[key];
             const position = this.position[key];
+            if (this.checkIfGameOver(position))
+              return false;
             position.forEach(
               (arr) => this.grid[arr[0]][arr[1]] = this.randomIndex + 1
             );
+            this.activeTetromino = new Tetromino(position);
           }
-          this.activeTetromino = spawnPoint;
-          return this.activeTetromino;
+          return true;
+        }
+        checkIfGameOver(tetrominoPositions) {
+          return tetrominoPositions.some((position) => {
+            let row = position[0];
+            let column = position[1];
+            return this.grid[row][column] !== 0;
+          });
         }
         removeCompleteLines() {
           this.grid.forEach((row, index) => {
