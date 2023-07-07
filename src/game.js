@@ -26,6 +26,7 @@ class Game {
   async playLoop(test) {
     let gameOver = false;
     let turnInProgress = false;
+    let timer = 100; // time between ticks in ms
 
     while (!turnInProgress && !gameOver) {
       turnInProgress = true;
@@ -37,7 +38,7 @@ class Game {
         while (!collided) {
           this.moveVertical();
           this.render.drawGrid(this.grid);
-          if (!test) await new Promise(resolve => setTimeout(resolve, 100));
+          if (!test) await this.#delay(timer);
           collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         }
         turnInProgress = false;
@@ -176,6 +177,10 @@ class Game {
       grid.push(row)
     }
     return grid;
+  }
+
+  async #delay(time) {
+    await new Promise(resolve => setTimeout(resolve, time));
   }
 };
 
