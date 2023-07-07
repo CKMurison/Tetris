@@ -20,16 +20,25 @@ relation.forEach(rel => {
   if (Math.abs(diff) % 2 === 0) { // for distance from anchor of sqrt(2)
     switch (diff) {
       case -2:
-        // tf to 0,+2
+        'tf to 0,+2'
         break
       case 0: 
-        (Math.sign(rel[0]) === 1 ? /* tf to -2,0 */ -2 : /* tf to +2,0 */ 2 )
+        (Math.sign(rel[0]) === 1 ? "tf to -2,0" : "tf to +2,0" )
         break
       case 2:
-        // tf to 0,-2
+        'tf to 0,-2'
         break
     }
-  } else { // for distance from anchor of 1
-    
+  } else if (Math.abs(diff) === 1){ // for distance from anchor of 1
+    switch(diff){
+      case -1:
+        (Math.sign(rel[0]) === -1 ? "tf to +1,+1": "tf to -1,+1")
+        break
+      case 1:
+        (Math.sign(rel[0]) === 1 ? "tf to -1,-1": "tf to +1,-1")
+        break
+    }
+  } else if (Math.abs(rel[0]) === 2 || Math.abs(rel[1]) === 2){
+    // edge case tf for i block
   }
 })
