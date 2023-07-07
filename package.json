@@ -6,12 +6,13 @@
   "scripts": {
     "test": "jest --coverage --verbose",
     "build": "esbuild index.js --bundle --outfile=bundle.js --watch",
-    "open" : "open index.html"
+    "open": "open index.html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "esbuild": "^0.18.11",
     "jest-environment-jsdom": "^29.6.0"
   },
   "directories": {
@@ -19,6 +20,5 @@
   },
   "devDependencies": {
     "jest": "^29.6.0"
-  },
-  "description": ""
+  }
 }
