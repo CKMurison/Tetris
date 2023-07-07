@@ -42,7 +42,15 @@ class Game {
 
   playLoop() {
     this.swapPlayer();
-    this.generateTetromino();
+    let success = this.generateTetromino();
+
+    if (success) {
+      if (this.activePlayer = this.players[0]) {
+        this.activeTetromino.checkCollisionDown(this.grid)
+      } else {
+        this.activeTetromino.checkCollisionUp(this.grid)
+      }
+    }
   }
 
   moveVertical() {
@@ -51,7 +59,7 @@ class Game {
     });
 
     this.activeTetromino.positions.forEach((blockPosition) => {
-      if (this.activePlayer === 'player1') {
+      if (this.activePlayer === this.players[0]) {
         blockPosition[0] += 1;
       } else {
         blockPosition[0] -= 1;
@@ -65,19 +73,19 @@ class Game {
 
   moveHorizontal(input) {
     this.activeTetromino.positions.forEach((eachCoordinate) => {
-      this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0 
+      this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
     });
 
     this.activeTetromino.positions.forEach((blockPosition) => {
       if (input === 'right') {
         blockPosition[1] += 1;
-      } else if (input === 'left' ) {
+      } else if (input === 'left') {
         blockPosition[1] -= 1;
       }
     });
 
     this.activeTetromino.position.forEach((eachCoordinate) => {
-        this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value  
+      this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value
     })
   };
 
@@ -149,7 +157,7 @@ class Game {
     // Returns true if any of the pieces at given coordinates are blocked by a
     // space taken on the grid
     // Returns false otherwise
-    
+
     return tetrominoPositions.some((position) => {
       // position = [row, column]
       let row = position[0]
