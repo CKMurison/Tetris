@@ -63,8 +63,9 @@ describe('generateTetromino', () => {
     })
 
     // Waiting for the playLoop to be written in order to be able to select player 2 as the active player
-    xit('spawns the I-Block if player 2 is the active player', () => {
+    it('spawns the I-Block if player 2 is the active player', () => {
         const game = new Game()
+        game.activePlayer = game.players[1];
         const random = 0
         game.generateTetromino(random)
         expect(game.grid).toEqual(

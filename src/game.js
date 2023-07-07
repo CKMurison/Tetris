@@ -23,32 +23,27 @@ class Game {
     this.activePlayer = this.players[0]; // Default player is player 1
   };
 
-  async playLoop() {
+  async playLoop(test) {
     let gameOver = false;
     let turnInProgress = false;
 
     while (!turnInProgress && !gameOver) {
       turnInProgress = true;
       let generated = this.generateTetromino();
-      console.log(generated);
-      console.log(this.grid);
 
       if (generated) {
         let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         this.render.drawGrid(this.grid);
         while (!collided) {
           this.moveVertical();
-          console.log("piece moved");
           this.render.drawGrid(this.grid);
-          await new Promise(resolve => setTimeout(resolve, 100));
+          if (!test) await new Promise(resolve => setTimeout(resolve, 100));
           collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         }
         turnInProgress = false;
         this.swapPlayer();
       }
     }
-
-    console.log("Game over");
   }
 
   moveVertical() {
@@ -82,7 +77,7 @@ class Game {
       }
     });
 
-    this.activeTetromino.position.forEach((eachCoordinate) => {
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value
     })
   };
@@ -94,7 +89,6 @@ class Game {
 
     this.randomIndex = (random === undefined ? Math.floor(Math.random() * 7) : random) // Ternary (random) used for testing purposes 
     let key = null;
-    console.log(this.randomIndex);
 
     // Switch statement decides which key based upon the random number given
     switch (this.randomIndex) {
@@ -126,28 +120,20 @@ class Game {
     if (key === "i") {
       if (this.activePlayer === this.players[0]) {
         if (this.checkIfGameOver(this.position.i.p1)) return false;
-
-        this.position.i.p1.forEach(arr =>
-          this.grid[arr[0]][arr[1]] = this.randomIndex + 1
-        );
-        this.activeTetromino = new Tetromino([...this.position.i.p1]);
+        this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(this.position.i.p1)));
       } else {
         if (this.checkIfGameOver(this.position.i.p2)) return false;
-
-        this.position.i.p2.forEach(arr =>
-          this.grid[arr[0]][arr[1]] = this.randomIndex + 1
-        );
-        this.activeTetromino = new Tetromino([...this.position.i.p2]);
+        this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(this.position.i.p2)));
       }
     } else {
       const position = this.position[key];
       if (this.checkIfGameOver(position)) return false;
-
-      position.forEach(arr =>
-        this.grid[arr[0]][arr[1]] = this.randomIndex + 1
-      );
-      this.activeTetromino = new Tetromino([...position])
+      this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)))
     }
+    
+    this.activeTetromino.positions.forEach(arr =>
+      this.grid[arr[0]][arr[1]] = this.randomIndex + 1
+    );
     return true;
   }
 
@@ -156,7 +142,7 @@ class Game {
     // space taken on the grid
     // Returns false otherwise
 
-    return tetrominoPositions.every((position) => {
+    return tetrominoPositions.some((position) => {
       // position = [row, column]
       let row = position[0]
       let column = position[1]
