@@ -110,10 +110,12 @@ class Game {
         this.position.i.p1.forEach(arr =>
           this.grid[arr[0]][arr[1]] = this.randomIndex + 1
         );
+        this.activeTetromino = new Tetromino(this.position.i.p1);
       } else {
         this.position.i.p2.forEach(arr =>
           this.grid[arr[0]][arr[1]] = this.randomIndex + 1
         );
+        this.activeTetromino = new Tetromino(this.position.i.p2);
       }
     } else {
       const tetromino = this.shape[this.randomIndex];
@@ -121,10 +123,8 @@ class Game {
       position.forEach(arr =>
         this.grid[arr[0]][arr[1]] = this.randomIndex + 1
       );
+      this.activeTetromino = new Tetromino(position)
     }
-
-    // Assigns the correct shape to the active tetromino
-    this.activeTetromino = this.shape[this.randomIndex];
     return this.activeTetromino;
   }
 
