@@ -128,6 +128,10 @@ class Game {
     return this.activeTetromino;
   }
 
+  checkIfGameOver(tetrominoPositions) {
+    return false
+  }
+
   removeCompleteLines() {
     this.grid.forEach((row, index) => {
       if (row.every(cell => cell !== 0)) {

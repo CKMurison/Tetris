@@ -280,6 +280,18 @@ describe('generateTetromino', () => {
     })
 })
 
+describe("game over function", () => {
+    it("checks if individual block can be spawned in an unocuppied position", () => {
+        const game = new Game();
+        expect(game.checkIfGameOver([[0, 0]])).toEqual(false);
+        
+    });
+    it("checks if individual block can be spawned in an occupied position", () => {
+        const game = new Game();
+
+    });
+});
+
 /*
 test for grid
 
