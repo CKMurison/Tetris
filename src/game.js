@@ -41,11 +41,11 @@ class Game {
   };
 
   moveVertical() {
-    this.activeTetromino.position.forEach((eachCoordinate) => {
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
     });
 
-    this.activeTetromino.position.forEach((blockPosition) => {
+    this.activeTetromino.positions.forEach((blockPosition) => {
       if (this.activePlayer === 'player1') {
         blockPosition[0] += 1;
       } else {
@@ -53,16 +53,16 @@ class Game {
       }
     });
 
-    this.activeTetromino.position.forEach((eachCoordinate) => {
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value
     })
   };
   moveHorizontal(input) {
-    this.activeTetromino.position.forEach((eachCoordinate) => {
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0 
     });
 
-    this.activeTetromino.position.forEach((blockPosition) => {
+    this.activeTetromino.positions.forEach((blockPosition) => {
       if (input === 'right') {
         blockPosition[1] += 1;
       } else if (input === 'left' ) {
