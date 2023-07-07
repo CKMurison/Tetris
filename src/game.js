@@ -41,11 +41,11 @@ class Game {
   };
 
   moveVertical() {
-    this.activeTetromino.position.forEach((eachCoordinate) => {
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
     });
 
-    this.activeTetromino.position.forEach((blockPosition) => {
+    this.activeTetromino.positions.forEach((blockPosition) => {
       if (this.activePlayer === 'player1') {
         blockPosition[0] += 1;
       } else {
@@ -53,16 +53,17 @@ class Game {
       }
     });
 
-    this.activeTetromino.position.forEach((eachCoordinate) => {
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value
     })
   };
+
   moveHorizontal(input) {
-    this.activeTetromino.position.forEach((eachCoordinate) => {
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0 
     });
 
-    this.activeTetromino.position.forEach((blockPosition) => {
+    this.activeTetromino.positions.forEach((blockPosition) => {
       if (input === 'right') {
         blockPosition[1] += 1;
       } else if (input === 'left') {
@@ -76,6 +77,10 @@ class Game {
   };
 
   generateTetromino(random) {
+    // Returns true if a tetromino has been generated successfully
+    // Returns false if the tetromino to be generated is blocked by another piece
+    // And the game is over
+
     this.randomIndex = (random === undefined ? Math.floor(Math.random() * 7) : random) // Ternary (random) used for testing purposes 
     let key = null;
 
@@ -105,29 +110,49 @@ class Game {
     }
     let spawnPoint = [];
     // If statement receives key and adds the corresponding tetromino to the grid
+    // checkIfGameOver condition will stop the function from drawing on the grid
     if (key === "i") {
       if (this.activePlayer = this.players[0]) {
         spawnPoint = this.position.i.p1;
+        if (this.checkIfGameOver(this.position.i.p1)) return false;
+
         this.position.i.p1.forEach(arr =>
           this.grid[arr[0]][arr[1]] = this.randomIndex + 1
         );
+        this.activeTetromino = new Tetromino(this.position.i.p1);
       } else {
         spawnPoint = this.position.i.p2
+        if (this.checkIfGameOver(this.position.i.p2)) return false;
+
         this.position.i.p2.forEach(arr =>
           this.grid[arr[0]][arr[1]] = this.randomIndex + 1
         );
+        this.activeTetromino = new Tetromino(this.position.i.p2);
       }
     } else {
       spawnPoint = this.position[key];
       const position = this.position[key];
+      if (this.checkIfGameOver(position)) return false;
+
       position.forEach(arr =>
         this.grid[arr[0]][arr[1]] = this.randomIndex + 1
       );
+      this.activeTetromino = new Tetromino(position)
     }
+    return true;
+  }
 
-    // Assigns the correct shape to the active tetromino
-    this.activeTetromino.position = spawnPoint;
-    return this.activeTetromino.position;
+  checkIfGameOver(tetrominoPositions) {
+    // Returns true if any of the pieces at given coordinates are blocked by a
+    // space taken on the grid
+    // Returns false otherwise
+    
+    return tetrominoPositions.some((position) => {
+      // position = [row, column]
+      let row = position[0]
+      let column = position[1]
+      return this.grid[row][column] !== 0;
+    });
   }
 
   removeCompleteLines() {

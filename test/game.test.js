@@ -283,6 +283,40 @@ describe('generateTetromino', () => {
     })
 })
 
+describe("game over function", () => {
+    it("checks if individual block can be spawned in an unocuppied position", () => {
+        const game = new Game();
+        expect(game.checkIfGameOver([[0, 0]])).toEqual(false);
+    });
+
+    it("checks if individual block can be spawned in an occupied position", () => {
+        const game = new Game();
+        game.grid[0][0] = 1
+        expect(game.checkIfGameOver([[0, 0]])).toEqual(true);
+    });
+
+    it("checks if a complex block can be spawned in an unoccupied position", () => {
+        const game = new Game();
+        const blockPositions = [[0,0], [0,1], [1,1], [1,2]];
+        expect(game.checkIfGameOver(blockPositions)).toEqual(false);
+    });
+
+    it("checks if a complex block can be spawned in a single occupied position", () => {
+        const game = new Game();
+        game.grid[0][1] = 1;
+        const blockPositions = [[0,0], [0,1], [1,1], [1,2]];
+        expect(game.checkIfGameOver(blockPositions)).toEqual(true);
+    });
+
+    it("checks if a complex block can be spawned for multiple occupied positions", () => {
+        const game = new Game();
+        game.grid[0][1] = 1;
+        game.grid[1][2] = 1;
+        const blockPositions = [[0,0], [0,1], [1,1], [1,2]];
+        expect(game.checkIfGameOver(blockPositions)).toEqual(true);
+    });
+});
+
 /*
 test for grid
 
