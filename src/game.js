@@ -141,6 +141,10 @@ class Game {
   }
 
   checkIfGameOver(tetrominoPositions) {
+    // Returns true if any of the pieces at given coordinates are blocked by a
+    // space taken on the grid
+    // Returns false otherwise
+    
     return tetrominoPositions.some((position) => {
       // position = [row, column]
       let row = position[0]
