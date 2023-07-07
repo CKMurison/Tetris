@@ -103,19 +103,22 @@ class Game {
         key = "z";
         break;
     }
-
+    let spawnPoint = [];
     // If statement receives key and adds the corresponding tetromino to the grid
     if (key === "i") {
       if (this.activePlayer = this.players[0]) {
+        spawnPoint = this.position.i.p1;
         this.position.i.p1.forEach(arr =>
           this.grid[arr[0]][arr[1]] = this.randomIndex + 1
         );
       } else {
+        spawnPoint = this.position.i.p2
         this.position.i.p2.forEach(arr =>
           this.grid[arr[0]][arr[1]] = this.randomIndex + 1
         );
       }
     } else {
+      spawnPoint = this.position[key];
       const position = this.position[key];
       position.forEach(arr =>
         this.grid[arr[0]][arr[1]] = this.randomIndex + 1
@@ -123,7 +126,7 @@ class Game {
     }
 
     // Assigns the correct shape to the active tetromino
-    this.activeTetromino = this.shape[this.randomIndex];
+    this.activeTetromino = spawnPoint;
     return this.activeTetromino;
   }
 
