@@ -41,11 +41,11 @@ class Game {
   };
 
   moveVertical() {
-    this.activeTetromino.position.forEach((eachCoordinate) => {
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
     });
 
-    this.activeTetromino.position.forEach((blockPosition) => {
+    this.activeTetromino.positions.forEach((blockPosition) => {
       if (this.activePlayer === 'player1') {
         blockPosition[0] += 1;
       } else {
@@ -53,17 +53,17 @@ class Game {
       }
     });
 
-    this.activeTetromino.position.forEach((eachCoordinate) => {
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value
     })
   };
 
   moveHorizontal(input) {
-    this.activeTetromino.position.forEach((eachCoordinate) => {
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0 
     });
 
-    this.activeTetromino.position.forEach((blockPosition) => {
+    this.activeTetromino.positions.forEach((blockPosition) => {
       if (input === 'right') {
         blockPosition[1] += 1;
       } else if (input === 'left' ) {
@@ -118,12 +118,14 @@ class Game {
         this.position.i.p1.forEach(arr =>
           this.grid[arr[0]][arr[1]] = this.randomIndex + 1
         );
+        this.activeTetromino = new Tetromino(this.position.i.p1);
       } else {
         if (this.checkIfGameOver(this.position.i.p2)) return false;
 
         this.position.i.p2.forEach(arr =>
           this.grid[arr[0]][arr[1]] = this.randomIndex + 1
         );
+        this.activeTetromino = new Tetromino(this.position.i.p2);
       }
     } else {
       const tetromino = this.shape[this.randomIndex];
@@ -133,10 +135,8 @@ class Game {
       position.forEach(arr =>
         this.grid[arr[0]][arr[1]] = this.randomIndex + 1
       );
+      this.activeTetromino = new Tetromino(position)
     }
-
-    // Assigns the correct shape to the active tetromino
-    this.activeTetromino = this.shape[this.randomIndex];
     return true;
   }
 

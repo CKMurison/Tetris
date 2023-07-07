@@ -1,7 +1,6 @@
 class Tetromino {
-    constructor() {
-        this.positions = null;
-        this.position = [0, 0]
+    constructor(positions) {
+        this.positions = positions;
         this.value = 1
     }
 
