@@ -42,7 +42,7 @@ class Game {
 
   playLoop() {
     this.swapPlayer();
-
+    this.generateTetromino();
   }
 
   moveVertical() {

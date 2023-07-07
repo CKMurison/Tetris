@@ -166,5 +166,11 @@ describe("tetromino", () => {
       expect(swapPlayerSpy).toHaveBeenCalledTimes(1);
       expect(game.activePlayer).toEqual(game.players[1]);
     })
+
+    test("The game loop will generate a peice on each run of the loop", () => {
+      const generateTetrominoSpy = jest.spyOn(Game.prototype, 'generateTetromino')
+      game.playLoop();
+      expect(generateTetrominoSpy).toHaveBeenCalledTimes(1);
+    });
   });
 });
