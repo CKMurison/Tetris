@@ -1,8 +1,10 @@
 const Game = require('../src/game')
 
 describe('Grid', () => {
+    beforeEach(() => {
+        game = new Game()
+      });
     it('displays the grid of 20 row and 10 columns, containing 0', () => {
-        const game = new Game()
         expect(game.grid).toEqual(
             [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -31,8 +33,10 @@ describe('Grid', () => {
 })
 
 describe('generateTetromino', () => {
+    beforeEach(() => {
+        game = new Game()
+      });
     it('spawns the I-Block if player 1 is the active player', () => {
-        const game = new Game()
         const random = 0
         game.generateTetromino(random)
 
@@ -64,7 +68,6 @@ describe('generateTetromino', () => {
 
     // Waiting for the playLoop to be written in order to be able to select player 2 as the active player
     xit('spawns the I-Block if player 2 is the active player', () => {
-        const game = new Game()
         const random = 0
         game.generateTetromino(random)
         expect(game.grid).toEqual(
@@ -94,7 +97,6 @@ describe('generateTetromino', () => {
     })
 
     it('spawns the J-Block', () => {
-        const game = new Game()
         const random = 1
         game.generateTetromino(random)
 
@@ -125,7 +127,6 @@ describe('generateTetromino', () => {
     })
 
     it('spawns the L-Block', () => {
-        const game = new Game()
         const random = 2
         game.generateTetromino(random)
 
@@ -156,7 +157,6 @@ describe('generateTetromino', () => {
     })
 
     it('spawns the O-Block', () => {
-        const game = new Game()
         const random = 3
         game.generateTetromino(random)
 
@@ -187,7 +187,6 @@ describe('generateTetromino', () => {
     })
 
     it('spawns the S-Block', () => {
-        const game = new Game()
         const random = 4
         game.generateTetromino(random)
 
@@ -218,7 +217,6 @@ describe('generateTetromino', () => {
     })
 
     it('spawns the T-Block', () => {
-        const game = new Game()
         const random = 5
         game.generateTetromino(random)
 
@@ -249,7 +247,6 @@ describe('generateTetromino', () => {
     })
 
     it('spawns the Z-Block', () => {
-        const game = new Game()
         const random = 6
         game.generateTetromino(random)
 
@@ -280,7 +277,6 @@ describe('generateTetromino', () => {
     })
 
     it('checks if activeTetromino equals the spawnPoint coordinates', () => {
-        const game = new Game()
         const random = 6
 
         expect(game.generateTetromino(random)).toEqual([[9, 3], [9, 4], [10, 4], [10, 5]])

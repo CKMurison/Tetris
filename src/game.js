@@ -126,8 +126,8 @@ class Game {
     }
 
     // Assigns the correct shape to the active tetromino
-    this.activeTetromino = spawnPoint;
-    return this.activeTetromino;
+    this.activeTetromino.position = spawnPoint;
+    return this.activeTetromino.position;
   }
 
   removeCompleteLines() {

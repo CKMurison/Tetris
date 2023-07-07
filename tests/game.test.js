@@ -123,4 +123,16 @@ describe("Game", () => {
       expect(game.activeTetromino.position).toEqual([[0, 0], [0, 1], [1, 1], [1, 2]])
     });
   });
+
+  describe('move horizontal (with key bindings)', () => {
+    beforeEach(() => {
+      game = new Game()
+    });
+    test('Updates movement left I Block for player 1', () => {
+      const random = 0
+      game.generateTetromino(random)
+      game.moveHorizontal("right")
+      expect(game.activeTetromino.position).toEqual([[10, 4], [10, 5], [10, 6], [10, 7]])
+    })
+  })
 }); 
