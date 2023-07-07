@@ -4,7 +4,7 @@ const Tetromino = require('./tetromino');
 class Game {
   constructor(render) {
     this.grid = this.#createGrid(20, 10) // Generate grid made of 20 arrays, each array being made of 10 zeros.
-    this.activeTetromino = {position : null};
+    this.activeTetromino = null;
     this.shape = [
       // I-Block
       [1, 1, 1, 1],
@@ -71,7 +71,7 @@ class Game {
       }
     });
 
-    this.activeTetromino.position.forEach((eachCoordinate) => {
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
         this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value  
     })
   };
@@ -108,12 +108,10 @@ class Game {
         key = "z";
         break;
     }
-    let spawnPoint = [];
     // If statement receives key and adds the corresponding tetromino to the grid
     // checkIfGameOver condition will stop the function from drawing on the grid
     if (key === "i") {
       if (this.activePlayer = this.players[0]) {
-        spawnPoint = this.position.i.p1;
         if (this.checkIfGameOver(this.position.i.p1)) return false;
 
         this.position.i.p1.forEach(arr =>
@@ -121,7 +119,6 @@ class Game {
         );
         this.activeTetromino = new Tetromino(this.position.i.p1);
       } else {
-        spawnPoint = this.position.i.p2
         if (this.checkIfGameOver(this.position.i.p2)) return false;
 
         this.position.i.p2.forEach(arr =>
@@ -130,7 +127,6 @@ class Game {
         this.activeTetromino = new Tetromino(this.position.i.p2);
       }
     } else {
-      spawnPoint = this.position[key];
       const position = this.position[key];
       if (this.checkIfGameOver(position)) return false;
 

@@ -278,8 +278,9 @@ describe('generateTetromino', () => {
 
     it('checks if activeTetromino equals the spawnPoint coordinates', () => {
         const random = 6
+        game.generateTetromino(random)
 
-        expect(game.generateTetromino(random)).toEqual([[9, 3], [9, 4], [10, 4], [10, 5]])
+        expect(game.activeTetromino.positions).toEqual([[9, 3], [9, 4], [10, 4], [10, 5]])
     })
 })
 

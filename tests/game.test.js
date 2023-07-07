@@ -128,11 +128,11 @@ describe("Game", () => {
     beforeEach(() => {
       game = new Game()
     });
-    test('Updates movement left I Block for player 1', () => {
+    test('Updates movement right I Block for player 1', () => {
       const random = 0
       game.generateTetromino(random)
       game.moveHorizontal("right")
-      expect(game.activeTetromino.position).toEqual([[10, 4], [10, 5], [10, 6], [10, 7]])
+      expect(game.activeTetromino.positions).toEqual([[10, 4], [10, 5], [10, 6], [10, 7]])
     })
   })
 }); 
