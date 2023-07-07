@@ -4,7 +4,7 @@ const Tetromino = require('./tetromino');
 class Game {
   constructor(render) {
     this.grid = this.#createGrid(20, 10) // Generate grid made of 20 arrays, each array being made of 10 zeros.
-    this.activeTetromino = null;
+    this.activeTetromino = {position : null};
     this.shape = [
       // I-Block
       [1, 1, 1, 1],
@@ -65,7 +65,7 @@ class Game {
     this.activeTetromino.position.forEach((blockPosition) => {
       if (input === 'right') {
         blockPosition[1] += 1;
-      } else if (input === 'left' ) {
+      } else if (input === 'left') {
         blockPosition[1] -= 1;
       }
     });
@@ -116,7 +116,6 @@ class Game {
         );
       }
     } else {
-      const tetromino = this.shape[this.randomIndex];
       const position = this.position[key];
       position.forEach(arr =>
         this.grid[arr[0]][arr[1]] = this.randomIndex + 1
