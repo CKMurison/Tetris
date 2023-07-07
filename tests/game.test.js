@@ -123,4 +123,11 @@ describe("Game", () => {
       expect(game.activeTetromino.position).toEqual([[0, 0], [0, 1], [1, 1], [1, 2]])
     });
   });
+
+  describe('game loop', () => {
+    test('initially Player2 is the active player', () => {
+      const game = new Game();
+      expect(game.activePlayer).toEqual(game.players[1]);
+    })
+  });
 }); 
