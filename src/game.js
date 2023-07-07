@@ -40,6 +40,11 @@ class Game {
     this.activePlayer = this.players[0]; // Default player is player 1
   };
 
+  playLoop() {
+    this.swapPlayer();
+
+  }
+
   moveVertical() {
     this.activeTetromino.position.forEach((eachCoordinate) => {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
@@ -119,6 +124,14 @@ class Game {
         this.grid.splice(index < halfPoint ? halfPoint - 1 : halfPoint, 0, new Array(this.grid[0].length).fill(0));
       }
     })
+  }
+
+  swapPlayer() { // Could be refactored to a ternary operator
+    if (this.activePlayer === this.players[1]) {
+      this.activePlayer = this.players[0]
+    } else {
+      this.activePlayer = this.players[1]
+    }
   }
 
   #createGrid(rows, columns) {
