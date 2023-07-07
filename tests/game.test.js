@@ -152,9 +152,19 @@ describe("tetromino", () => {
   });
 
   describe('game loop', () => {
+    beforeEach(() => {
+      game = new Game()
+    });
+
     test('initially Player2 is the active player', () => {
-      const game = new Game();
       expect(game.activePlayer).toEqual(game.players[1]);
+    })
+
+    test('after running the loop the player swaps to Player1', () => {
+      game.playLoop();
+      expect(game.swapPlayer()).toHaveBeenCalledOnce();
+      expect(game.activePlayer).toEqual(game.players[0]);
+
     })
   });
 }); 
