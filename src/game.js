@@ -129,7 +129,10 @@ class Game {
   }
 
   checkIfGameOver(tetrominoPositions) {
-    return false
+    let blockCordinate = tetrominoPositions[0]
+    let row = blockCordinate[0]
+    let column = blockCordinate[1]
+    return this.grid[row][column] !== 0
   }
 
   removeCompleteLines() {

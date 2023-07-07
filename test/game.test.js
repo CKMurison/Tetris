@@ -288,6 +288,8 @@ describe("game over function", () => {
     });
     it("checks if individual block can be spawned in an occupied position", () => {
         const game = new Game();
+        game.grid[0][0] = 1
+        expect(game.checkIfGameOver([[0, 0]])).toEqual(true);
 
     });
 });
