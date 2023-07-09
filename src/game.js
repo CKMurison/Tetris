@@ -59,7 +59,7 @@ class Game {
     this.randomIndex = (random === undefined ? Math.floor(Math.random() * 7) : random) // Ternary (random) used for testing purposes 
     let key = null;
 
-    // Instantiate letter keys for each tetromino and assign to the object keyMap
+    // Instantiate letters as keys for each tetromino and assign to the object keyMap
     const keyMap = {
       0: "i",
       1: "j",
@@ -75,18 +75,15 @@ class Game {
     // If statement receives key and adds the corresponding tetromino to the grid
     // checkIfGameOver condition will stop the function from drawing on the grid
     if (key === "i") {
-      if (this.activePlayer === this.players[0]) {
-        if (this.checkIfGameOver(this.position.i.p1)) return false;
-        this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(this.position.i.p1)));
-      } else {
-        if (this.checkIfGameOver(this.position.i.p2)) return false;
-        this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(this.position.i.p2)));
-      }
+      const position = this.activePlayer === this.players[0] ? this.position.i.p1 : this.position.i.p2;
+      if (this.checkIfGameOver(position)) return false;
+      this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)));
     } else {
       const position = this.position[key];
       if (this.checkIfGameOver(position)) return false;
-      this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)))
+      this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)));
     }
+
 
     this.activeTetromino.positions.forEach(arr =>
       this.grid[arr[0]][arr[1]] = this.randomIndex + 1
