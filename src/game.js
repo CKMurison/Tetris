@@ -104,9 +104,7 @@ class Game {
   }
 
   moveVertical() {
-    this.activeTetromino.positions.forEach((eachCoordinate) => {
-      this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
-    });
+    this.clearTetromino();
 
     this.activeTetromino.positions.forEach((blockPosition) => {
       if (this.activePlayer === this.players[0]) {
@@ -116,15 +114,11 @@ class Game {
       }
     });
 
-    this.activeTetromino.positions.forEach((eachCoordinate) => {
-      this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value
-    })
+    this.drawTetromino();
   };
 
   moveHorizontal(input) {
-    this.activeTetromino.positions.forEach((eachCoordinate) => {
-      this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
-    });
+    this.clearTetromino();
 
     this.activeTetromino.positions.forEach((blockPosition) => {
       if (input === 'right') {
@@ -134,10 +128,20 @@ class Game {
       }
     });
 
-    this.activeTetromino.positions.forEach((eachCoordinate) => {
-      this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value
-    })
+    this.drawTetromino();
   };
+
+  clearTetromino() {
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
+      this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
+    });
+  }
+
+  drawTetromino() {
+    this.activeTetromino.positions.forEach(coordinate => {
+      this.grid[coordinate[0]][coordinate[1]] = this.activeTetromino.value;
+    });
+  }
 
   swapPlayer() {
     this.activePlayer = (this.activePlayer === this.players[1]) ? this.players[0] : this.players[1];
