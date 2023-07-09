@@ -23,11 +23,14 @@ class Game {
     this.activePlayer = this.players[0]; // Default player is player 1
   };
 
+  // The playLoop runs the game
   async playLoop(test) {
     let gameOver = false;
     let turnInProgress = false;
     let timer = 100; // time between ticks in ms
 
+    // Instantiate a turn cycle loop, using the variable turnInProgress, that breaks to allow the game to switch players
+    // This only runs if the game is not over
     while (!turnInProgress && !gameOver) {
       turnInProgress = true;
       let generated = this.generateTetromino();
@@ -45,6 +48,21 @@ class Game {
         this.swapPlayer();
       }
     }
+  }
+
+  checkIfGameOver(tetrominoPositions) {
+    // Returns true if any of the pieces at given coordinates are blocked by a
+    // space taken on the grid
+    // Returns false otherwise
+
+    // Checks to see if 
+
+    return tetrominoPositions.some((position) => {
+      // position = [row, column]
+      let row = position[0]
+      let column = position[1]
+      return this.grid[row][column] !== 0;
+    });
   }
 
   moveVertical() {
@@ -131,25 +149,13 @@ class Game {
       if (this.checkIfGameOver(position)) return false;
       this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)))
     }
-    
+
     this.activeTetromino.positions.forEach(arr =>
       this.grid[arr[0]][arr[1]] = this.randomIndex + 1
     );
     return true;
   }
 
-  checkIfGameOver(tetrominoPositions) {
-    // Returns true if any of the pieces at given coordinates are blocked by a
-    // space taken on the grid
-    // Returns false otherwise
-
-    return tetrominoPositions.some((position) => {
-      // position = [row, column]
-      let row = position[0]
-      let column = position[1]
-      return this.grid[row][column] !== 0;
-    });
-  }
 
   removeCompleteLines() {
     this.grid.forEach((row, index) => {
