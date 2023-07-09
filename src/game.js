@@ -55,7 +55,7 @@ class Game {
     // Returns false if the tetromino to be generated is blocked by another piece
     // And the game is over
 
-    // Instantiate a random number between 0..6 and assign it to the variable this.randomIndex
+    // Instantiate a random number in the range 0..6 and assign it to the variable this.randomIndex
     this.randomIndex = (random === undefined ? Math.floor(Math.random() * 7) : random) // Ternary (random) used for testing purposes 
     let key = null;
 
@@ -84,12 +84,25 @@ class Game {
       this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)));
     }
 
-
     this.activeTetromino.positions.forEach(arr =>
       this.grid[arr[0]][arr[1]] = this.randomIndex + 1
     );
     return true;
   }
+
+  checkIfGameOver(tetrominoPositions) {
+    // Helper function used in generateTetromino 
+    // Compares the position of the tetromino to be spawned to this.grid to see if there is space to generate it
+    // Returns a boolean
+
+    return tetrominoPositions.some((position) => {
+      // position = [row, column]
+      let row = position[0]
+      let column = position[1]
+      return this.grid[row][column] !== 0;
+    });
+  }
+
   moveVertical() {
     this.activeTetromino.positions.forEach((eachCoordinate) => {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
@@ -107,19 +120,6 @@ class Game {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value
     })
   };
-
-  checkIfGameOver(tetrominoPositions) {
-    // Helper function used in generateTetromino 
-    // Compares the position of the tetromino to be spawned to this.grid to see if there is space to generate it
-    // Returns a boolean
-
-    return tetrominoPositions.some((position) => {
-      // position = [row, column]
-      let row = position[0]
-      let column = position[1]
-      return this.grid[row][column] !== 0;
-    });
-  }
 
   moveHorizontal(input) {
     this.activeTetromino.positions.forEach((eachCoordinate) => {
@@ -139,7 +139,9 @@ class Game {
     })
   };
 
-
+  swapPlayer() {
+    this.activePlayer = (this.activePlayer === this.players[1]) ? this.players[0] : this.players[1];
+  }
 
   removeCompleteLines() {
     this.grid.forEach((row, index) => {
@@ -149,10 +151,6 @@ class Game {
         this.grid.splice(index < halfPoint ? halfPoint - 1 : halfPoint, 0, new Array(this.grid[0].length).fill(0));
       }
     })
-  }
-
-  swapPlayer() {
-    this.activePlayer = (this.activePlayer === this.players[1]) ? this.players[0] : this.players[1];
   }
 
   #createGrid(rows, columns) {
