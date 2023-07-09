@@ -151,12 +151,8 @@ class Game {
     })
   }
 
-  swapPlayer() { // Could be refactored to a ternary operator
-    if (this.activePlayer === this.players[1]) {
-      this.activePlayer = this.players[0]
-    } else {
-      this.activePlayer = this.players[1]
-    }
+  swapPlayer() {
+    this.activePlayer = (this.activePlayer === this.players[1]) ? this.players[0] : this.players[1];
   }
 
   #createGrid(rows, columns) {
