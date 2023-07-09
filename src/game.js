@@ -3,8 +3,8 @@ const Tetromino = require('./tetromino');
 
 class Game {
   constructor(render) {
-    // Generate a grid; an array 20 arrays of binary positions, represented by zeros
-    // We will mutate this grid 
+    // Generate a grid; an array of 20 arrays, each of ten zeros. See grid in public.
+    // We will mutate this grid to show the positions of the tetrominoes. 
     this.grid = this.#createGrid(20, 10)
     this.activeTetromino = null;
     // Hard-coded initial spawn points based upon 20x10 grid

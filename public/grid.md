@@ -1,4 +1,5 @@
-This is what the grid look like when instantiated
+This is what the grid looks like when instantiated
+
 [
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
