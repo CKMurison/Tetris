@@ -28,11 +28,10 @@ class Game {
   // The playLoop runs the game
   // Using the boolean variable turnInProgress, instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
-    let gameOver = false;
     let turnInProgress = false;
     let timer = 100; // time between ticks in ms
 
-    while (!turnInProgress && !gameOver) {
+    while (!turnInProgress) {
       turnInProgress = true;
       let generated = this.generateTetromino();
 
@@ -49,23 +48,6 @@ class Game {
         this.swapPlayer();
       }
     }
-  }
-
-  checkIfGameOver(tetrominoPositions) {
-    // Returns true if any of the pieces at given coordinates are blocked by a
-    // space taken on the grid
-    // Returns false otherwise
-
-    // Helper function used in generateTetromino which compares this.grid to 
-
-    // Checks to see if 
-
-    return tetrominoPositions.some((position) => {
-      // position = [row, column]
-      let row = position[0]
-      let column = position[1]
-      return this.grid[row][column] !== 0;
-    });
   }
 
   generateTetromino(random) {
@@ -139,6 +121,19 @@ class Game {
       this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value
     })
   };
+
+  checkIfGameOver(tetrominoPositions) {
+    // Helper function used in generateTetromino 
+    // Compares the position of the tetromino to be spawned to this.grid to see if there is space to generate it
+    // Returns a boolean
+
+    return tetrominoPositions.some((position) => {
+      // position = [row, column]
+      let row = position[0]
+      let column = position[1]
+      return this.grid[row][column] !== 0;
+    });
+  }
 
   moveHorizontal(input) {
     this.activeTetromino.positions.forEach((eachCoordinate) => {
