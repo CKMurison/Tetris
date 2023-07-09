@@ -26,7 +26,7 @@ class Game {
   };
 
   // The playLoop runs the game
-  // Using the boolean variable turnInProgress, instantiate a turn-cycle loop, that breaks to allow the game to swap players
+  // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
     let turnInProgress = false;
     let timer = 100; // time between ticks in ms
@@ -55,33 +55,22 @@ class Game {
     // Returns false if the tetromino to be generated is blocked by another piece
     // And the game is over
 
+    // Instantiate a random number between 0..6 and assign it to the variable this.randomIndex
     this.randomIndex = (random === undefined ? Math.floor(Math.random() * 7) : random) // Ternary (random) used for testing purposes 
     let key = null;
 
-    // Switch statement decides which key based upon the random number given
-    switch (this.randomIndex) {
-      case 0:
-        key = "i";
-        break;
-      case 1:
-        key = "j";
-        break;
-      case 2:
-        key = "l";
-        break;
-      case 3:
-        key = "o";
-        break;
-      case 4:
-        key = "s";
-        break;
-      case 5:
-        key = "t";
-        break;
-      case 6:
-        key = "z";
-        break;
-    }
+    // Instantiate letter keys for each tetromino and assign to the object keyMap
+    const keyMap = {
+      0: "i",
+      1: "j",
+      2: "l",
+      3: "o",
+      4: "s",
+      5: "t",
+      6: "z"
+    };
+
+    key = keyMap[this.randomIndex];
 
     // If statement receives key and adds the corresponding tetromino to the grid
     // checkIfGameOver condition will stop the function from drawing on the grid
