@@ -3,7 +3,9 @@ const Tetromino = require('./tetromino');
 
 class Game {
   constructor(render) {
-    this.grid = this.#createGrid(20, 10) // Generate grid made of 20 arrays, each array being made of 10 zeros.
+    // Generate a grid; an array 20 arrays of binary positions, represented by zeros
+    // We will mutate this grid 
+    this.grid = this.#createGrid(20, 10)
     this.activeTetromino = null;
     // Hard-coded initial spawn points based upon 20x10 grid
     this.position = {
@@ -55,6 +57,8 @@ class Game {
     // space taken on the grid
     // Returns false otherwise
 
+    // Helper function used in generateTetromino which compares this.grid to 
+
     // Checks to see if 
 
     return tetrominoPositions.some((position) => {
@@ -64,42 +68,6 @@ class Game {
       return this.grid[row][column] !== 0;
     });
   }
-
-  moveVertical() {
-    this.activeTetromino.positions.forEach((eachCoordinate) => {
-      this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
-    });
-
-    this.activeTetromino.positions.forEach((blockPosition) => {
-      if (this.activePlayer === this.players[0]) {
-        blockPosition[0] += 1;
-      } else {
-        blockPosition[0] -= 1;
-      }
-    });
-
-    this.activeTetromino.positions.forEach((eachCoordinate) => {
-      this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value
-    })
-  };
-
-  moveHorizontal(input) {
-    this.activeTetromino.positions.forEach((eachCoordinate) => {
-      this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
-    });
-
-    this.activeTetromino.positions.forEach((blockPosition) => {
-      if (input === 'right') {
-        blockPosition[1] += 1;
-      } else if (input === 'left') {
-        blockPosition[1] -= 1;
-      }
-    });
-
-    this.activeTetromino.positions.forEach((eachCoordinate) => {
-      this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value
-    })
-  };
 
   generateTetromino(random) {
     // Returns true if a tetromino has been generated successfully
@@ -155,6 +123,42 @@ class Game {
     );
     return true;
   }
+  moveVertical() {
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
+      this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
+    });
+
+    this.activeTetromino.positions.forEach((blockPosition) => {
+      if (this.activePlayer === this.players[0]) {
+        blockPosition[0] += 1;
+      } else {
+        blockPosition[0] -= 1;
+      }
+    });
+
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
+      this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value
+    })
+  };
+
+  moveHorizontal(input) {
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
+      this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
+    });
+
+    this.activeTetromino.positions.forEach((blockPosition) => {
+      if (input === 'right') {
+        blockPosition[1] += 1;
+      } else if (input === 'left') {
+        blockPosition[1] -= 1;
+      }
+    });
+
+    this.activeTetromino.positions.forEach((eachCoordinate) => {
+      this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value
+    })
+  };
+
 
 
   removeCompleteLines() {
