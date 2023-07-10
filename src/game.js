@@ -5,7 +5,7 @@ class Game {
   constructor(render) {
     // Generate a grid; an array of 20 arrays, each of ten zeros. See public/grid for a visual
     // We mutate this grid to spawn and update the positions of the tetrominoes
-    this.grid = this.#createGrid(20, 10)
+    this.grid = this.#createGrid(30, 16)
     this.activeTetromino = null;
     // Hard-coded initial spawn points based upon 20x10 grid
     this.position = {
@@ -74,6 +74,8 @@ class Game {
 
     // If statement receives key and adds the corresponding tetromino to the grid
     // checkIfGameOver condition will stop the function from drawing on the grid
+
+    // TODO: randomIndex to be added as an argument to new Tetromino to change its value field
     if (key === "i") {
       const position = this.activePlayer === this.players[0] ? this.position.i.p1 : this.position.i.p2;
       if (this.checkIfGameOver(position)) return false;
@@ -159,9 +161,8 @@ class Game {
 
   #createGrid(rows, columns) {
     let grid = [];
-    let row = new Array(10).fill(0);
     for (let i = 0; i < rows; i++) {
-      let row = new Array(10).fill(0);
+      let row = new Array(columns).fill(0);
       grid.push(row)
     }
     return grid;
