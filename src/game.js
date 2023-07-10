@@ -26,7 +26,7 @@ class Game {
     this.players = [new Player(), new Player()];
     this.activePlayer = this.players[(Math.floor(Math.random() * 2))]; // Default player is random
   };
-  
+
   // The playLoop runs the game
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
@@ -36,7 +36,7 @@ class Game {
     while (!turnInProgress) {
       turnInProgress = true;
       let generated = this.generateTetromino();
-      
+
       if (generated) {
         let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         this.render.drawGrid(this.grid);
@@ -134,6 +134,31 @@ class Game {
 
     this.drawTetromino();
   };
+
+  rotateTetromino() {
+    // [10, 3] [10, 4] [11, 4] [11, 5]
+    let anchorPoint = this.activeTetromino.positions[1]
+    let relation = [] // [0,-1] [0,0] [1,0] [1,1]
+    this.activeTetromino.positions.forEach(arr => {
+      relation.push([arr[0] - anchorPoint[0], arr[1] - anchorPoint[1]])
+    })
+
+    const transformation = {
+      "[-1,0]": [0, 1],
+      "[0,1]": [1, 0],
+      "[1,0]": [0, -1],
+      "[0,-1]": [-1, 0],
+      "[-1,-1]": [-1, 1],
+      "[-1,1]": [1, 1],
+      "[1,1]": [1, -1],
+      "[1,-1]": [-1, -1],
+      "[-2,0]": [0, 2],
+      "[0,2]": [2, 0],
+      "[2,0]": [0, -2],
+      "[0,-2]": [-2, 0]
+    }
+
+  }
 
   clearTetromino() {
     this.activeTetromino.positions.forEach((eachCoordinate) => {
