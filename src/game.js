@@ -31,10 +31,11 @@ class Game {
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
     let turnInProgress = false;
-    let timer = 50; // time between ticks in ms
+    let timer = 5; // time between ticks in ms
 
     while (!turnInProgress) {
       turnInProgress = true;
+
       let generated = this.generateTetromino();
       
       if (generated) {
@@ -46,10 +47,12 @@ class Game {
           if (!test) await this.#delay(timer);
           collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         }
+        this.removeCompleteLines()
         turnInProgress = false;
         this.swapPlayer();
       }
     }
+    this.render.gameOver(this.activePlayer === this.players[0] ? 'Player2' : 'Player1');
   }
 
   generateTetromino(random) {

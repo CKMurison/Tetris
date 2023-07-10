@@ -40,5 +40,18 @@ describe('Render class', () => {
         render.drawGrid([[0], [0], [0], [0]]);
         render.findSpawnLine([[0], [0], [0], [0]]);
         expect(document.querySelector('.spawnRow').id).toBe("row1");
-    })
+    });
+    describe('Game over screen', () => {
+        it('should return a game over screen if player 1 wins', () => {
+        const render = new Render();
+        render.gameOver('Player1')
+        expect(document.querySelector('.gameOver').textContent).toBe('Player 1 Wins!')
+        });
+       
+        it('should return a game over screen once player 2 wins', () => {
+            const render = new Render();
+            render.gameOver('Player2')
+            expect(document.querySelector('.gameOver').textContent).toBe('Player 2 Wins!')
+        }); 
+    });
 });
