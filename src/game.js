@@ -117,14 +117,14 @@ class Game {
         this.position.i.p1.forEach(arr =>
           this.grid[arr[0]][arr[1]] = this.randomIndex + 1
         );
-        this.activeTetromino = new Tetromino(this.position.i.p1);
+        this.activeTetromino = new Tetromino(this.position.i.p1, this.randomIndex + 1);
       } else {
         if (this.checkIfGameOver(this.position.i.p2)) return false;
 
         this.position.i.p2.forEach(arr =>
           this.grid[arr[0]][arr[1]] = this.randomIndex + 1
         );
-        this.activeTetromino = new Tetromino(this.position.i.p2);
+        this.activeTetromino = new Tetromino(this.position.i.p2, this.randomIndex + 1);
       }
     } else {
       const position = this.position[key];
@@ -133,7 +133,7 @@ class Game {
       position.forEach(arr =>
         this.grid[arr[0]][arr[1]] = this.randomIndex + 1
       );
-      this.activeTetromino = new Tetromino(position)
+      this.activeTetromino = new Tetromino(position, this.randomIndex + 1)
     }
     return true;
   }
