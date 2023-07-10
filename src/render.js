@@ -59,6 +59,13 @@ class Render {
         return 'zBlock'
     }
   }
+
+  gameOver(player) {
+    let gameOverContainer = document.createElement('div')
+    gameOverContainer.className = 'gameOver'
+    gameOverContainer.textContent = 'Player 1 Wins!'
+    this.mainEl.append(gameOverContainer);
+  };
 }
 
 module.exports = Render;

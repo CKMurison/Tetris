@@ -49,8 +49,8 @@ class Game {
         turnInProgress = false;
         this.swapPlayer();
       }
-      this.render.gameOver();
     }
+    this.render.gameOver(this.activePlayer);
   }
 
   generateTetromino(random) {
