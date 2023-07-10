@@ -8,17 +8,19 @@ class Game {
     this.grid = this.#createGrid(20, 10)
     this.activeTetromino = null;
     // Hard-coded initial spawn points based upon 20x10 grid
+    let midRow = this.grid.length / 2 - 1;
+    let midCol = this.grid[0].length / 2 - 1;
     this.position = {
       i: {
-        p1: [[10, 3], [10, 4], [10, 5], [10, 6]],
-        p2: [[9, 3], [9, 4], [9, 5], [9, 6]]
+        p1: [[midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 1, midCol + 2]],
+        p2: [[midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1], [midRow, midCol + 2]]
       },
-      j: [[9, 3], [10, 3], [10, 4], [10, 5]],
-      l: [[9, 5], [10, 3], [10, 4], [10, 5]],
-      o: [[9, 4], [9, 5], [10, 4], [10, 5]],
-      s: [[9, 4], [9, 5], [10, 3], [10, 4]],
-      t: [[9, 4], [10, 3], [10, 4], [10, 5]],
-      z: [[9, 3], [9, 4], [10, 4], [10, 5]]
+      j: [[midRow, midCol - 1], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
+      l: [[midRow, midCol + 1], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
+      o: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
+      s: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol - 1], [midRow + 1, midCol]],
+      t: [[midRow, midCol], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
+      z: [[midRow, midCol - 1], [midRow, midCol], [midRow + 1, midCol], [midRow + 1, midCol + 1]]
     }
     this.render = render;
     this.players = [new Player(), new Player()];
@@ -29,7 +31,7 @@ class Game {
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
     let turnInProgress = false;
-    let timer = 100; // time between ticks in ms
+    let timer = 50; // time between ticks in ms
 
     while (!turnInProgress) {
       turnInProgress = true;

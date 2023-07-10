@@ -22,7 +22,7 @@ describe('Render class', () => {
 
     it('assigns correct class to block', () => {
         const render = new Render();
-        render.drawGrid([[1, 2, 3, 4, 5, 6, 7]])
+        render.drawGrid([[1, 2, 3, 4, 5, 6, 7], [0, 0, 0, 0, 0, 0, 0]])
         
         expect(document.querySelectorAll('.jBlock').length).toBe(1);
         expect(document.querySelectorAll('.lBlock').length).toBe(1);
