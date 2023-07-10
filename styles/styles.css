@@ -15,6 +15,24 @@ div {
     gap: 60px;
 }
 
+.gameOver {
+    background-color: red;
+    position: absolute;
+    animation-name: example;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-delay: calc(.1s * var(--i));
+  }
+  
+  @keyframes example {
+    0%,40%,100% {
+        transform: translateY(0)
+      }
+      20% {
+        transform: translateY(-20px)
+      }
+  }
+
 .instructionsContainer {
     flex-direction: column;
     margin-top: 3vh;
