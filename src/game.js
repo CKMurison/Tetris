@@ -31,7 +31,7 @@ class Game {
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
     let turnInProgress = false;
-    let timer = 50; // time between ticks in ms
+    let timer = 5; // time between ticks in ms
 
     while (!turnInProgress) {
       turnInProgress = true;
@@ -52,6 +52,7 @@ class Game {
         this.swapPlayer();
       }
     }
+    this.render.gameOver(this.activePlayer === this.players[0] ? 'Player2' : 'Player1');
   }
 
   generateTetromino(random) {
