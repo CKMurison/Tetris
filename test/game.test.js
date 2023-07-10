@@ -66,8 +66,9 @@ describe('generateTetromino', () => {
         )
     })
 
-    // Waiting for the playLoop to be written in order to be able to select player 2 as the active player
-    xit('spawns the I-Block if player 2 is the active player', () => {
+    it('spawns the I-Block if player 2 is the active player', () => {
+        const game = new Game()
+        game.activePlayer = game.players[1];
         const random = 0
         game.generateTetromino(random)
         expect(game.grid).toEqual(
@@ -298,14 +299,14 @@ describe("game over function", () => {
 
     it("checks if a complex block can be spawned in an unoccupied position", () => {
         const game = new Game();
-        const blockPositions = [[0,0], [0,1], [1,1], [1,2]];
+        const blockPositions = [[0, 0], [0, 1], [1, 1], [1, 2]];
         expect(game.checkIfGameOver(blockPositions)).toEqual(false);
     });
 
     it("checks if a complex block can be spawned in a single occupied position", () => {
         const game = new Game();
         game.grid[0][1] = 1;
-        const blockPositions = [[0,0], [0,1], [1,1], [1,2]];
+        const blockPositions = [[0, 0], [0, 1], [1, 1], [1, 2]];
         expect(game.checkIfGameOver(blockPositions)).toEqual(true);
     });
 
@@ -313,14 +314,7 @@ describe("game over function", () => {
         const game = new Game();
         game.grid[0][1] = 1;
         game.grid[1][2] = 1;
-        const blockPositions = [[0,0], [0,1], [1,1], [1,2]];
+        const blockPositions = [[0, 0], [0, 1], [1, 1], [1, 2]];
         expect(game.checkIfGameOver(blockPositions)).toEqual(true);
     });
 });
-
-/*
-test for grid
-
-test for individual tetrominos
-*/
-
