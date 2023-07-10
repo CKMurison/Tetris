@@ -9,7 +9,7 @@ describe("Game", () => {
   });
 
   test('it correctly assigns an active player', () => {
-    game.playLoop();
+    game.playLoop(test);
     expect(game.activePlayer).not.toEqual(null)
   })
 
