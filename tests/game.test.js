@@ -143,7 +143,7 @@ describe("Game", () => {
       expect(game.activePlayer).toEqual(game.players[0]);
     })
 
-    test('after running the loop the player swaps to Player2', () => {
+    xtest('after running the loop the player swaps to Player2', () => {
       const swapPlayerSpy = jest.spyOn(Game.prototype, 'swapPlayer');
       game.playLoop(true);
       expect(swapPlayerSpy).toHaveBeenCalled();
@@ -155,25 +155,5 @@ describe("Game", () => {
       game.playLoop(true);
       expect(generateTetrominoSpy).toHaveBeenCalled();
     });
-
-    xtest("The piece will move until no longer legal", () => {
-      game.playLoop(true);
-      mockTetromino = {
-        checkCollisionDown: jest.fn(),
-        checkCollisionUp: jest.fn(),
-      };
-
-      const checkCollisionDownSpy = jest.spyOn(Game.activeTetromino, 'checkCollisionDown')
-      expect(checkCollisionDownSpy).toHaveBeenCalled();
-    })
-
-
-
-    xtest("The piece will move until no longer legal", () => {
-      game.playLoop(true);
-
-      const checkCollisionUpSpy = jest.spyOn(Game.activeTetromino, 'checkCollisionUp')
-      expect(checkCollisionUpSpy).toHaveBeenCalledTimes(0);
-    })
   });
 

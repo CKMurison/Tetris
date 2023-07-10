@@ -26,7 +26,6 @@ describe('Player', () => {
         player = new Player(1, game);
 
         player.controls()
-        console.log(game.grid);
         expect(game.grid).toEqual(
             [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -73,7 +72,6 @@ describe('Player', () => {
         player = new Player(1, game);
 
         player.controls()
-        console.log(game.grid);
         expect(game.grid).toEqual(
             [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -120,7 +118,6 @@ describe('Player', () => {
         player = new Player(1, game);
 
         player.controls()
-        console.log(game.grid);
         expect(game.grid).toEqual(
             [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -167,7 +164,6 @@ describe('Player', () => {
         player = new Player(2, game);
 
         player.controls()
-        console.log(game.grid);
         expect(game.grid).toEqual(
             [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -214,7 +210,6 @@ describe('Player', () => {
         player = new Player(2, game);
 
         player.controls()
-        console.log(game.grid);
         expect(game.grid).toEqual(
             [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -262,7 +257,6 @@ describe('Player', () => {
 
         player.controls()
         player.controls()
-        console.log(game.grid);
         expect(game.grid).toEqual(
             [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
