@@ -50,24 +50,24 @@ class Game {
     };
   };
 
-  moveHorizontal(input) {
-    this.activeTetromino.positions.forEach((eachCoordinate) => {
-      this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0 
-    });
+  // moveHorizontal(input) {
+  //   this.activeTetromino.positions.forEach((eachCoordinate) => {
+  //     this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0 
+  //   });
 
-    this.activeTetromino.positions.forEach((blockPosition) => {
-      if (input === 'right') {
-        blockPosition[1] += 1;
-      } else if (input === 'left') {
-        blockPosition[1] -= 1;
-      }
-    });
+  //   this.activeTetromino.positions.forEach((blockPosition) => {
+  //     if (input === 'right') {
+  //       blockPosition[1] += 1;
+  //     } else if (input === 'left') {
+  //       blockPosition[1] -= 1;
+  //     }
+  //   });
 
-    this.activeTetromino.positions.forEach((eachCoordinate) => {
-        this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value  
-    })
-    this.render.drawGrid(this.grid);
-  };
+  //   this.activeTetromino.positions.forEach((eachCoordinate) => {
+  //       this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value  
+  //   })
+  //   this.render.drawGrid(this.grid);
+  // };
 
   generateTetromino(random) {
     // Returns true if a tetromino has been generated successfully
@@ -140,7 +140,7 @@ class Game {
 
   moveHorizontal(input) {
     this.clearTetromino();
-
+    
     this.activeTetromino.positions.forEach((blockPosition) => {
       if (input === 'right') {
         blockPosition[1] += 1;
@@ -148,8 +148,9 @@ class Game {
         blockPosition[1] -= 1;
       }
     });
-
+    
     this.drawTetromino();
+    this.render.drawGrid(this.grid);
   };
 
   clearTetromino() {

@@ -2,10 +2,18 @@
  * @jest-environment jsdom
  */
 
+// Integration tests
+
 const Player = require('../src/player')
 const Game = require('../src/game')
+const Render = require('../src/render')
 
 describe('Player', () => {
+    beforeEach(() => {
+        render = new Render()
+        game = new Game(render)
+    });
+
     test('press left p1', () => {
         const mockPressLeft = { key: "ArrowLeft"}
         document.addEventListener = jest.fn((event, callback) => {
@@ -17,15 +25,14 @@ describe('Player', () => {
         document.body.appendChild(inputField);
         inputField.focus();
 
-        expect(mockPressLeft.key).toBe("ArrowLeft");
-
+        
         document.body.removeChild(inputField);
-        let game;
-        game = new Game();
         game.generateTetromino(0)
         player = new Player(1, game);
-
+        
         player.controls()
+
+        expect(mockPressLeft.key).toBe("ArrowLeft");
         expect(game.grid).toEqual(
             [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -63,15 +70,13 @@ describe('Player', () => {
         document.body.appendChild(inputField);
         inputField.focus();
 
-        expect(mockPressLeft.key).toBe("ArrowLeft");
-
+        
         document.body.removeChild(inputField);
-        let game;
-        game = new Game();
         game.generateTetromino(1)
         player = new Player(1, game);
-
+        
         player.controls()
+        expect(mockPressLeft.key).toBe("ArrowLeft");
         expect(game.grid).toEqual(
             [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -109,15 +114,13 @@ describe('Player', () => {
         document.body.appendChild(inputField);
         inputField.focus();
 
-        expect(mockPressRight.key).toBe("ArrowRight");
-
+        
         document.body.removeChild(inputField);
-        let game;
-        game = new Game();
         game.generateTetromino(2)
         player = new Player(1, game);
-
+        
         player.controls()
+        expect(mockPressRight.key).toBe("ArrowRight");
         expect(game.grid).toEqual(
             [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -155,15 +158,13 @@ describe('Player', () => {
         document.body.appendChild(inputField);
         inputField.focus();
 
-        expect(mockPressLeft.key).toBe("a");
-
+        
         document.body.removeChild(inputField);
-        let game;
-        game = new Game();
         game.generateTetromino(3)
         player = new Player(2, game);
-
+        
         player.controls()
+        expect(mockPressLeft.key).toBe("a");
         expect(game.grid).toEqual(
             [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -201,15 +202,13 @@ describe('Player', () => {
         document.body.appendChild(inputField);
         inputField.focus();
 
-        expect(mockPressRight.key).toBe("d");
-
+        
         document.body.removeChild(inputField);
-        let game;
-        game = new Game();
         game.generateTetromino(4)
         player = new Player(2, game);
-
+        
         player.controls()
+        expect(mockPressRight.key).toBe("d");
         expect(game.grid).toEqual(
             [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -247,16 +246,14 @@ describe('Player', () => {
         document.body.appendChild(inputField);
         inputField.focus();
 
-        expect(mockPressLeft.key).toBe("ArrowLeft");
-
+        
         document.body.removeChild(inputField);
-        let game;
-        game = new Game();
         game.generateTetromino(0)
         player = new Player(1, game);
-
+        
         player.controls()
         player.controls()
+        expect(mockPressLeft.key).toBe("ArrowLeft");
         expect(game.grid).toEqual(
             [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

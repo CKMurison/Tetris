@@ -1,10 +1,18 @@
+/**
+ * @jest-environment jsdom
+ */
+
+// Integration tests
+
+
 const Game = require("../src/game");
+const Render = require('../src/render')
 
 let game, mockTetromino;
 
 describe("Game", () => {
   beforeEach(() => {
-    let render = { drawGrid: () => { } }
+    let render = new Render()
     game = new Game(render)
   });
 
@@ -127,7 +135,8 @@ describe("Game", () => {
 
   describe('move horizontal (with key bindings)', () => {
     beforeEach(() => {
-      game = new Game()
+      render = new Render()
+      game = new Game(render)
     });
     test('Updates movement right I Block for player 1', () => {
       const random = 0

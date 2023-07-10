@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 const Tetromino = require('../src/tetromino');
 
 describe('Tetromino', () => {

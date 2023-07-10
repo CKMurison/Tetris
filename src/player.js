@@ -9,7 +9,6 @@ class Player{
         document.addEventListener('keydown', (e) => {    
             if (this.activePlayer === 1) {
                 if (e.key === 'ArrowLeft') {
-                    console.log('controls called')
                     this.game.moveHorizontal('left');
                 } else if (e.key === "ArrowRight") {
                     this.game.moveHorizontal('right');

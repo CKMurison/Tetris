@@ -1,8 +1,14 @@
+/**
+ * @jest-environment jsdom
+ */
+
 const Game = require('../src/game')
+const Render = require('../src/render')
 
 describe('Grid', () => {
     beforeEach(() => {
-        game = new Game()
+        render = new Render()
+        game = new Game(render)
       });
     it('displays the grid of 20 row and 10 columns, containing 0', () => {
         expect(game.grid).toEqual(
@@ -34,7 +40,8 @@ describe('Grid', () => {
 
 describe('generateTetromino', () => {
     beforeEach(() => {
-        game = new Game()
+        render = new Render()
+        game = new Game(render)
       });
     it('spawns the I-Block if player 1 is the active player', () => {
         const random = 0
