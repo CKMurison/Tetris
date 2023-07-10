@@ -18,6 +18,11 @@ describe("Game", () => {
     document.body.innerHTML = fs.readFileSync('./index.html');
   });
 
+  test('it correctly assigns an active player', () => {
+    game.playLoop(test);
+    expect(game.activePlayer).not.toEqual(null)
+  })
+
   describe('move vertical', () => {
     test("Updates the position of the I-Block for Player 1", () => {
       mockTetromino = { positions: [[2, 0], [2, 1], [2, 2], [2, 3]], value: 1 }
