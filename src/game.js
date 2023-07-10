@@ -29,7 +29,7 @@ class Game {
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
     let turnInProgress = false;
-    let timer = 100; // time between ticks in ms
+    let timer = 300; // time between ticks in ms
 
     while (!turnInProgress) {
       turnInProgress = true;
@@ -66,6 +66,7 @@ class Game {
     this.activeTetromino.positions.forEach((eachCoordinate) => {
         this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value  
     })
+    this.render.drawGrid(this.grid);
   };
 
   generateTetromino(random) {
