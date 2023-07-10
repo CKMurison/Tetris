@@ -33,6 +33,7 @@ class Game {
 
     while (!turnInProgress) {
       turnInProgress = true;
+
       let generated = this.generateTetromino();
       
       if (generated) {
@@ -44,6 +45,7 @@ class Game {
           if (!test) await this.#delay(timer);
           collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         }
+        this.removeCompleteLines
         turnInProgress = false;
         this.swapPlayer();
       }
