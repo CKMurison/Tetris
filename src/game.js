@@ -22,9 +22,9 @@ class Game {
     }
     this.render = render;
     this.players = [new Player(), new Player()];
-    this.activePlayer = this.players[0]; // Default player is player 1
+    this.activePlayer = this.players[(Math.floor(Math.random() * 2))]; // Default player is random
   };
-
+  
   // The playLoop runs the game
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
@@ -34,7 +34,7 @@ class Game {
     while (!turnInProgress) {
       turnInProgress = true;
       let generated = this.generateTetromino();
-
+      
       if (generated) {
         let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         this.render.drawGrid(this.grid);
