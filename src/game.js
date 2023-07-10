@@ -139,6 +139,7 @@ class Game {
   };
 
   moveHorizontal(input) {
+    if (this.activeTetromino === null) return;
     if (input == 'left' ? this.activeTetromino.checkCollisionLeft(this.grid) : this.activeTetromino.checkCollisionRight(this.grid)) return;
     
     this.clearTetromino();

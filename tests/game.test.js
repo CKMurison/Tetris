@@ -6,7 +6,8 @@
 
 
 const Game = require("../src/game");
-const Render = require('../src/render')
+const Render = require('../src/render');
+const fs = require('fs');
 
 let game, mockTetromino;
 
@@ -14,6 +15,7 @@ describe("Game", () => {
   beforeEach(() => {
     let render = new Render()
     game = new Game(render)
+    document.body.innerHTML = fs.readFileSync('./index.html');
   });
 
   describe('move vertical', () => {
@@ -137,6 +139,7 @@ describe("Game", () => {
     beforeEach(() => {
       render = new Render()
       game = new Game(render)
+      document.body.innerHTML = fs.readFileSync('./index.html');
     });
     test('Updates movement right I Block for player 1', () => {
       const random = 0

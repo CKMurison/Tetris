@@ -7,11 +7,13 @@
 const Player = require('../src/player')
 const Game = require('../src/game')
 const Render = require('../src/render')
+const fs = require('fs');
 
 describe('Player', () => {
     beforeEach(() => {
         render = new Render()
         game = new Game(render)
+        document.body.innerHTML = fs.readFileSync('./index.html');
     });
 
     test('press left p1', () => {
