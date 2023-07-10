@@ -4,11 +4,13 @@
 
 const Game = require('../src/game')
 const Render = require('../src/render')
+const fs = require('fs');
 
 describe('Grid', () => {
     beforeEach(() => {
         render = new Render()
         game = new Game(render)
+        document.body.innerHTML = fs.readFileSync('./index.html');
       });
     it('displays the grid of 20 row and 10 columns, containing 0', () => {
         expect(game.grid).toEqual(
