@@ -33,6 +33,7 @@ describe('Grid', () => {
 describe('generateTetromino', () => {
     it('spawns the I-Block if player 1 is the active player', () => {
         const game = new Game()
+        game.activePlayer = game.players[0];
         const random = 0
         game.generateTetromino(random)
 
@@ -62,9 +63,9 @@ describe('generateTetromino', () => {
         )
     })
 
-    // Waiting for the playLoop to be written in order to be able to select player 2 as the active player
-    xit('spawns the I-Block if player 2 is the active player', () => {
+    it('spawns the I-Block if player 2 is the active player', () => {
         const game = new Game()
+        game.activePlayer = game.players[1];
         const random = 0
         game.generateTetromino(random)
         expect(game.grid).toEqual(
@@ -280,9 +281,36 @@ describe('generateTetromino', () => {
     })
 })
 
-/*
-test for grid
+describe("game over function", () => {
+    it("checks if individual block can be spawned in an unocuppied position", () => {
+        const game = new Game();
+        expect(game.checkIfGameOver([[0, 0]])).toEqual(false);
+    });
 
-test for individual tetrominos
-*/
+    it("checks if individual block can be spawned in an occupied position", () => {
+        const game = new Game();
+        game.grid[0][0] = 1
+        expect(game.checkIfGameOver([[0, 0]])).toEqual(true);
+    });
 
+    it("checks if a complex block can be spawned in an unoccupied position", () => {
+        const game = new Game();
+        const blockPositions = [[0, 0], [0, 1], [1, 1], [1, 2]];
+        expect(game.checkIfGameOver(blockPositions)).toEqual(false);
+    });
+
+    it("checks if a complex block can be spawned in a single occupied position", () => {
+        const game = new Game();
+        game.grid[0][1] = 1;
+        const blockPositions = [[0, 0], [0, 1], [1, 1], [1, 2]];
+        expect(game.checkIfGameOver(blockPositions)).toEqual(true);
+    });
+
+    it("checks if a complex block can be spawned for multiple occupied positions", () => {
+        const game = new Game();
+        game.grid[0][1] = 1;
+        game.grid[1][2] = 1;
+        const blockPositions = [[0, 0], [0, 1], [1, 1], [1, 2]];
+        expect(game.checkIfGameOver(blockPositions)).toEqual(true);
+    });
+});
