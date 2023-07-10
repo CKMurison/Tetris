@@ -4,7 +4,7 @@ let game, mockTetromino;
 
 describe("Game", () => {
   beforeEach(() => {
-    let render = {drawGrid: () => {}}
+    let render = { drawGrid: () => { } }
     game = new Game(render)
   });
 
