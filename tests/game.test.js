@@ -156,6 +156,11 @@ describe("Game", () => {
 
 }); 
   describe('game loop', () => {
+    beforeEach(() => {
+      render = new Render()
+      game = new Game(render)
+      document.body.innerHTML = fs.readFileSync('./index.html');
+    });
     test('initially Player1 is the active player', () => {
       expect(game.activePlayer).toEqual(game.players[0]);
     })

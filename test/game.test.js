@@ -8,9 +8,9 @@ const fs = require('fs');
 
 describe('Grid', () => {
     beforeEach(() => {
+        document.body.innerHTML = fs.readFileSync('./index.html');
         render = new Render()
         game = new Game(render)
-        document.body.innerHTML = fs.readFileSync('./index.html');
       });
     it('displays the grid of 20 row and 10 columns, containing 0', () => {
         expect(game.grid).toEqual(
@@ -42,11 +42,11 @@ describe('Grid', () => {
 
 describe('generateTetromino', () => {
     beforeEach(() => {
+        document.body.innerHTML = fs.readFileSync('./index.html');
         render = new Render()
         game = new Game(render)
       });
     it('spawns the I-Block if player 1 is the active player', () => {
-        const game = new Game()
         game.activePlayer = game.players[0];
         const random = 0
         game.generateTetromino(random)
@@ -78,7 +78,6 @@ describe('generateTetromino', () => {
     })
 
     it('spawns the I-Block if player 2 is the active player', () => {
-        const game = new Game()
         game.activePlayer = game.players[1];
         const random = 0
         game.generateTetromino(random)
@@ -294,38 +293,31 @@ describe('generateTetromino', () => {
 
         expect(game.activeTetromino.positions).toEqual([[9, 3], [9, 4], [10, 4], [10, 5]])
     })
-})
-
-describe("game over function", () => {
     it("checks if individual block can be spawned in an unocuppied position", () => {
-        const game = new Game();
         expect(game.checkIfGameOver([[0, 0]])).toEqual(false);
     });
 
     it("checks if individual block can be spawned in an occupied position", () => {
-        const game = new Game();
         game.grid[0][0] = 1
         expect(game.checkIfGameOver([[0, 0]])).toEqual(true);
     });
 
     it("checks if a complex block can be spawned in an unoccupied position", () => {
-        const game = new Game();
         const blockPositions = [[0, 0], [0, 1], [1, 1], [1, 2]];
         expect(game.checkIfGameOver(blockPositions)).toEqual(false);
     });
 
     it("checks if a complex block can be spawned in a single occupied position", () => {
-        const game = new Game();
         game.grid[0][1] = 1;
         const blockPositions = [[0, 0], [0, 1], [1, 1], [1, 2]];
         expect(game.checkIfGameOver(blockPositions)).toEqual(true);
     });
 
     it("checks if a complex block can be spawned for multiple occupied positions", () => {
-        const game = new Game();
         game.grid[0][1] = 1;
         game.grid[1][2] = 1;
         const blockPositions = [[0, 0], [0, 1], [1, 1], [1, 2]];
         expect(game.checkIfGameOver(blockPositions)).toEqual(true);
     });
-});
+})
+
