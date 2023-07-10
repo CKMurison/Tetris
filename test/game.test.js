@@ -329,8 +329,15 @@ describe('generateTetromino', () => {
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             ]
-        )
-    })
+        ) 
+    });
+    it('removes a fully completed line', () => {
+        let render = { drawGrid: () => { } }
+        const game = new Game(render); 
+        const removeCompleteLinesSpy = jest.spyOn(Game.prototype, 'removeCompleteLines')
+        game.playLoop(true);
+        expect(removeCompleteLinesSpy).toHaveBeenCalled();
+    });
 })
 
 describe("game over function", () => {
