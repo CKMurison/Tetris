@@ -161,17 +161,28 @@
           });
         }
         moveHorizontal(input) {
+<<<<<<< HEAD
           this.activeTetromino.positions.forEach((eachCoordinate) => {
             this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0;
           });
           this.activeTetromino.positions.forEach((blockPosition) => {
+=======
+          this.activeTetromino.position.forEach((eachCoordinate) => {
+            this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0;
+          });
+          this.activeTetromino.position.forEach((blockPosition) => {
+>>>>>>> main
             if (input === "right") {
               blockPosition[1] += 1;
             } else if (input === "left") {
               blockPosition[1] -= 1;
             }
           });
+<<<<<<< HEAD
           this.activeTetromino.positions.forEach((eachCoordinate) => {
+=======
+          this.activeTetromino.position.forEach((eachCoordinate) => {
+>>>>>>> main
             this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value;
           });
         }
@@ -203,29 +214,41 @@
           }
           if (key === "i") {
             if (this.activePlayer = this.players[0]) {
+<<<<<<< HEAD
               if (this.checkIfGameOver(this.position.i.p1))
                 return false;
+=======
+>>>>>>> main
               this.position.i.p1.forEach(
                 (arr) => this.grid[arr[0]][arr[1]] = this.randomIndex + 1
               );
               this.activeTetromino = new Tetromino(this.position.i.p1);
             } else {
+<<<<<<< HEAD
               if (this.checkIfGameOver(this.position.i.p2))
                 return false;
+=======
+>>>>>>> main
               this.position.i.p2.forEach(
                 (arr) => this.grid[arr[0]][arr[1]] = this.randomIndex + 1
               );
               this.activeTetromino = new Tetromino(this.position.i.p2);
             }
           } else {
+<<<<<<< HEAD
             const position = this.position[key];
             if (this.checkIfGameOver(position))
               return false;
+=======
+            const tetromino = this.shape[this.randomIndex];
+            const position = this.position[key];
+>>>>>>> main
             position.forEach(
               (arr) => this.grid[arr[0]][arr[1]] = this.randomIndex + 1
             );
             this.activeTetromino = new Tetromino(position);
           }
+<<<<<<< HEAD
           return true;
         }
         checkIfGameOver(tetrominoPositions) {
@@ -234,6 +257,9 @@
             let column = position[1];
             return this.grid[row][column] !== 0;
           });
+=======
+          return this.activeTetromino;
+>>>>>>> main
         }
         removeCompleteLines() {
           this.grid.forEach((row, index) => {
