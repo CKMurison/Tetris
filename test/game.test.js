@@ -33,6 +33,7 @@ describe('Grid', () => {
 describe('generateTetromino', () => {
     it('spawns the I-Block if player 1 is the active player', () => {
         const game = new Game()
+        game.activePlayer = game.players[0];
         const random = 0
         game.generateTetromino(random)
 

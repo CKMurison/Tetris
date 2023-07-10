@@ -31,4 +31,14 @@ describe('Render class', () => {
         expect(document.querySelectorAll('.tBlock').length).toBe(1);
         expect(document.querySelectorAll('.zBlock').length).toBe(1);
     })
+
+    it('correctly finds a spawn line', () => {
+        const render = new Render();
+        render.drawGrid([[0], [0]])
+        render.findSpawnLine([[0], [0]]);
+        expect(document.querySelector('.spawnRow').id).toBe("row0");
+        render.drawGrid([[0], [0], [0], [0]]);
+        render.findSpawnLine([[0], [0], [0], [0]]);
+        expect(document.querySelector('.spawnRow').id).toBe("row1");
+    })
 });
