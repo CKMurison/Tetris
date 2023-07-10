@@ -5,7 +5,7 @@ class Game {
   constructor(render) {
     // Generate a grid; an array of 20 arrays, each of ten zeros. See public/grid for a visual
     // We mutate this grid to spawn and update the positions of the tetrominoes
-    this.grid = this.#createGrid(30, 16)
+    this.grid = this.#createGrid(20, 10)
     this.activeTetromino = null;
     // Hard-coded initial spawn points based upon 20x10 grid
     this.position = {
