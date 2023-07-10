@@ -1,21 +1,22 @@
 class Player{
-    constructor(player) {
+    constructor(player, game) {
         this.activePlayer = player;
+        this.game = game;
     }
 
     controls() {
         document.addEventListener('keydown', (e) => {    
             if (this.activePlayer === 1) {
                 if (e.key === 'ArrowLeft') {
-                    moveHorizontal('left');
+                    this.game.moveHorizontal('left');
                 } else if (e.key === "ArrowRight") {
-                    moveHorizontal('right');
+                    this.game.moveHorizontal('right');
                 };
             } else {
                 if (e.key === "a") {
-                    moveHorizontal('left');
+                    this.game.moveHorizontal('left');
                 } else if (e.key === "d") {
-                    moveHorizontal('right');
+                    this.game.moveHorizontal('right');
                 };
             }    
         }); 

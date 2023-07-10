@@ -36,7 +36,7 @@ class Game {
       z: [[9, 3], [9, 4], [10, 4], [10, 5]]
     }
     this.render = render;
-    this.players = [new Player(), new Player()];
+    this.players = [new Player(1, this), new Player(2, this)];
     this.activePlayer = this.players[0]; // Default player is player 1
   };
 
