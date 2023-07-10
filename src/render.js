@@ -16,6 +16,7 @@ class Render {
     grid.forEach((row, rowNum) => {
       let rowContainer = document.createElement('div');
       rowContainer.className = 'rowContainer';
+      rowContainer.id = `row${rowNum}`;
       
       row.forEach((cell, colNum) => {
         let cellContainer = document.createElement('div');
@@ -30,6 +31,12 @@ class Render {
     })
 
     this.mainEl.append(gridContainer);
+    this.findSpawnLine(grid);
+  }
+
+  findSpawnLine(grid) {
+    let spawnRow = document.querySelector(`#row${grid.length / 2 - 1}`);
+    spawnRow.className += " spawnRow"; 
   }
 
   #findClassName(cell) {
