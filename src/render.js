@@ -63,7 +63,7 @@ class Render {
   gameOver(player) {
     let gameOverContainer = document.createElement('div')
     gameOverContainer.className = 'gameOver'
-    gameOverContainer.textContent = 'Player 1 Wins!'
+    gameOverContainer.textContent = player === 'Player1' ? 'Player 1 Wins!' : 'Player 2 Wins!'; 
     this.mainEl.append(gameOverContainer);
   };
 }

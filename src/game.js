@@ -50,7 +50,7 @@ class Game {
         this.swapPlayer();
       }
     }
-    this.render.gameOver(this.activePlayer);
+    this.render.gameOver(this.activePlayer === this.players[0] ? 'Player2' : 'Player1');
   }
 
   generateTetromino(random) {
