@@ -19,7 +19,7 @@ class Game {
       l: [[midRow, midCol + 1], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
       o: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
       s: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol - 1], [midRow + 1, midCol]],
-      t: [[midRow, midCol], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
+      t: [[midRow, midCol], [midRow + 1, midCol], [midRow + 1, midCol - 1], [midRow + 1, midCol + 1]],
       z: [[midRow, midCol - 1], [midRow, midCol], [midRow + 1, midCol], [midRow + 1, midCol + 1]]
     }
     this.render = render;
@@ -136,10 +136,11 @@ class Game {
   };
 
   rotateTetromino() {
-    // [10, 3] [10, 4] [11, 4] [11, 5]
-    let anchorPoint = this.activeTetromino.positions[1]
+    const array = [[10, 4], [10, 5], [10, 6], [11, 5]]
+    let anchorPoint = array[1]
     let relation = [] // [0,-1] [0,0] [1,0] [1,1]
-    this.activeTetromino.positions.forEach(arr => {
+    let afterTF = []
+    array.forEach(arr => {
       relation.push([arr[0] - anchorPoint[0], arr[1] - anchorPoint[1]])
     })
 
@@ -155,9 +156,16 @@ class Game {
       "[-2,0]": [0, 2],
       "[0,2]": [2, 0],
       "[2,0]": [0, -2],
-      "[0,-2]": [-2, 0]
+      "[0,-2]": [-2, 0],
+      "[0,0]" : [0, 0]
     }
 
+    relation.forEach(arr => {
+      let newArr = transformation[JSON.stringify(arr)]
+      afterTF.push([newArr[0] + anchorPoint[0],newArr[1] + anchorPoint[1]])
+    })
+
+    return afterTF
   }
 
   clearTetromino() {
@@ -201,3 +209,6 @@ class Game {
 };
 
 module.exports = Game;
+
+game = new Game();
+console.log(game.rotateTetromino())
