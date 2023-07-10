@@ -22,7 +22,6 @@ class Game {
     }
     this.render = render;
     this.players = [new Player(), new Player()];
-    // this.activePlayer = this.players[0]; // Default player is player 1
     this.activePlayer = this.players[(Math.floor(Math.random() * 2))]; // Default player is random
   };
   
