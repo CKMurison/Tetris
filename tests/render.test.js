@@ -41,4 +41,10 @@ describe('Render class', () => {
         render.findSpawnLine([[0], [0], [0], [0]]);
         expect(document.querySelector('.spawnRow').id).toBe("row1");
     })
+    describe('Game over screen', () => {
+        it('should return a game over screen once the game ends')
+        const render = new Render();
+        render.gameOver('player1')
+        expect(document.querySelector('.gameOver').textContent).toBe('Player 1 Wins!')
+    });
 });

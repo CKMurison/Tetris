@@ -49,6 +49,7 @@ class Game {
         turnInProgress = false;
         this.swapPlayer();
       }
+      this.render.gameOver();
     }
   }
 
