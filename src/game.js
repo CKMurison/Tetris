@@ -143,11 +143,10 @@ class Game {
   };
 
   rotateTetromino() {
-    const array = [[10, 4], [10, 5], [10, 6], [11, 5]]
-    let anchorPoint = array[1]
+    let anchorPoint = this.activeTetromino.positions[1]
     let relation = [] // [0,-1] [0,0] [1,0] [1,1]
     let afterTF = []
-    array.forEach(arr => {
+    this.activeTetromino.positions.forEach(arr => {
       relation.push([arr[0] - anchorPoint[0], arr[1] - anchorPoint[1]])
     })
 
@@ -171,8 +170,9 @@ class Game {
       let newArr = transformation[JSON.stringify(arr)]
       afterTF.push([newArr[0] + anchorPoint[0],newArr[1] + anchorPoint[1]])
     })
-
-    return afterTF
+    this.activeTetromino.positions = afterTF;
+    console.log(this.activeTetromino.positions);
+    return this.activeTetromino.positions;
   }
 
   clearTetromino() {

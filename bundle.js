@@ -8,6 +8,31 @@
   var require_player = __commonJS({
     "src/player.js"(exports, module) {
       var Player = class {
+        constructor(player, game2) {
+          this.activePlayer = player;
+          this.game = game2;
+          this.controls();
+        }
+        controls() {
+          document.addEventListener("keydown", (e) => {
+            if (this.activePlayer === 1) {
+              if (e.key === "ArrowLeft") {
+                this.game.moveHorizontal("left");
+              } else if (e.key === "ArrowRight") {
+                this.game.moveHorizontal("right");
+              } else if (e.key === "ArrowUp") {
+                this.game.rotateTetromino();
+              }
+            } else {
+              if (e.key === "a") {
+                this.game.moveHorizontal("left");
+              } else if (e.key === "d") {
+                this.game.moveHorizontal("right");
+              }
+              ;
+            }
+          });
+        }
       };
       module.exports = Player;
     }
@@ -17,9 +42,9 @@
   var require_tetromino = __commonJS({
     "src/tetromino.js"(exports, module) {
       var Tetromino = class {
-        constructor(positions) {
+        constructor(positions, value) {
           this.positions = positions;
-          this.value = 1;
+          this.value = value;
         }
         checkCollisionDown(grid) {
           let collision = false;
@@ -106,14 +131,14 @@
             z: [[midRow, midCol - 1], [midRow, midCol], [midRow + 1, midCol], [midRow + 1, midCol + 1]]
           };
           this.render = render2;
-          this.players = [new Player(), new Player()];
+          this.players = [new Player(1, this), new Player(2, this)];
           this.activePlayer = this.players[Math.floor(Math.random() * 2)];
         }
         // The playLoop runs the game
         // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
         async playLoop(test) {
           let turnInProgress = false;
-          let timer = 50;
+          let timer = 100;
           while (!turnInProgress) {
             turnInProgress = true;
             let generated = this.generateTetromino();
@@ -127,10 +152,12 @@
                   await this.#delay(timer);
                 collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
               }
+              this.removeCompleteLines();
               turnInProgress = false;
               this.swapPlayer();
             }
           }
+          this.render.gameOver(this.activePlayer === this.players[0] ? "Player2" : "Player1");
         }
         generateTetromino(random) {
           this.randomIndex = random === void 0 ? Math.floor(Math.random() * 7) : random;
@@ -149,12 +176,12 @@
             const position = this.activePlayer === this.players[0] ? this.position.i.p1 : this.position.i.p2;
             if (this.checkIfGameOver(position))
               return false;
-            this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)));
+            this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)), this.randomIndex + 1);
           } else {
             const position = this.position[key];
             if (this.checkIfGameOver(position))
               return false;
-            this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)));
+            this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)), this.randomIndex + 1);
           }
           this.activeTetromino.positions.forEach(
             (arr) => this.grid[arr[0]][arr[1]] = this.randomIndex + 1
@@ -180,6 +207,10 @@
           this.drawTetromino();
         }
         moveHorizontal(input) {
+          if (this.activeTetromino === null)
+            return;
+          if (input == "left" ? this.activeTetromino.checkCollisionLeft(this.grid) : this.activeTetromino.checkCollisionRight(this.grid))
+            return;
           this.clearTetromino();
           this.activeTetromino.positions.forEach((blockPosition) => {
             if (input === "right") {
@@ -189,13 +220,13 @@
             }
           });
           this.drawTetromino();
+          this.render.drawGrid(this.grid);
         }
         rotateTetromino() {
-          const array = [[10, 4], [10, 5], [10, 6], [11, 5]];
-          let anchorPoint = array[1];
+          let anchorPoint = this.activeTetromino.positions[1];
           let relation = [];
           let afterTF = [];
-          array.forEach((arr) => {
+          this.activeTetromino.positions.forEach((arr) => {
             relation.push([arr[0] - anchorPoint[0], arr[1] - anchorPoint[1]]);
           });
           const transformation = {
@@ -217,7 +248,9 @@
             let newArr = transformation[JSON.stringify(arr)];
             afterTF.push([newArr[0] + anchorPoint[0], newArr[1] + anchorPoint[1]]);
           });
-          return afterTF;
+          this.activeTetromino.positions = afterTF;
+          console.log(this.activeTetromino.positions);
+          return this.activeTetromino.positions;
         }
         clearTetromino() {
           this.activeTetromino.positions.forEach((eachCoordinate) => {
@@ -254,8 +287,6 @@
         }
       };
       module.exports = Game2;
-      game = new Game2();
-      console.log(game.rotateTetromino());
     }
   });
 
@@ -292,7 +323,8 @@
         }
         findSpawnLine(grid) {
           let spawnRow = document.querySelector(`#row${grid.length / 2 - 1}`);
-          spawnRow.className += " spawnRow";
+          if (spawnRow !== null)
+            spawnRow.className += " spawnRow";
         }
         #findClassName(cell) {
           switch (cell) {
@@ -314,6 +346,15 @@
               return "zBlock";
           }
         }
+        gameOver(player) {
+          let gameOverContainer = document.createElement("div");
+          gameOverContainer.className = "gameOver";
+          gameOverContainer.textContent = player === "Player1" ? "Player 1 Wins!" : "Player 2 Wins!";
+          this.mainEl.append(gameOverContainer);
+          document.querySelectorAll(".cellContainer").forEach((el) => {
+            el.style.animationName = "cellAnimation";
+          });
+        }
       };
       module.exports = Render2;
     }
@@ -323,6 +364,6 @@
   var Game = require_game();
   var Render = require_render();
   var render = new Render();
-  var game2 = new Game(render);
-  game2.playLoop();
+  var game = new Game(render);
+  game.playLoop();
 })();

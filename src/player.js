@@ -12,7 +12,9 @@ class Player{
                     this.game.moveHorizontal('left');
                 } else if (e.key === "ArrowRight") {
                     this.game.moveHorizontal('right');
-                };
+                } else if (e.key === "ArrowUp") {
+                    this.game.rotateTetromino();
+                }
             } else {
                 if (e.key === "a") {
                     this.game.moveHorizontal('left');
