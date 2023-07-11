@@ -25,3 +25,5 @@ class Player{
 };
 
 module.exports = Player;
+
+// Add stop gap so button is only active when the right player is interacting with the right controls (run if player = 1)
