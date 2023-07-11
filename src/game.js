@@ -31,10 +31,11 @@ class Game {
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
     let turnInProgress = false;
-    let timer = 50; // time between ticks in ms
+    let timer = 5; // time between ticks in ms
 
     while (!turnInProgress) {
       turnInProgress = true;
+
       let generated = this.generateTetromino();
       
       if (generated) {
@@ -46,30 +47,14 @@ class Game {
           if (!test) await this.#delay(timer);
           collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         }
+        this.removeCompleteLines()
         turnInProgress = false;
         this.swapPlayer();
       }
-    };
-  };
 
-  // moveHorizontal(input) {
-  //   this.activeTetromino.positions.forEach((eachCoordinate) => {
-  //     this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0 
-  //   });
-
-  //   this.activeTetromino.positions.forEach((blockPosition) => {
-  //     if (input === 'right') {
-  //       blockPosition[1] += 1;
-  //     } else if (input === 'left') {
-  //       blockPosition[1] -= 1;
-  //     }
-  //   });
-
-  //   this.activeTetromino.positions.forEach((eachCoordinate) => {
-  //       this.grid[eachCoordinate[0]][eachCoordinate[1]] = this.activeTetromino.value  
-  //   })
-  //   this.render.drawGrid(this.grid);
-  // };
+      this.render.gameOver(this.activePlayer === this.players[0] ? 'Player2' : 'Player1');
+    }
+  }
 
   generateTetromino(random) {
     // Returns true if a tetromino has been generated successfully
