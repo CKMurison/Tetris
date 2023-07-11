@@ -2,10 +2,21 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
 }
 
 div {
     display: flex;
+}
+
+.image-container {
+    left: 1em;
+    width: 200px;
+    height: 200px;
+    flex-direction: column;
+    margin-top: 3vh;
+    height: fit-content;
+    padding: 5px;
 }
 
 #main-container {
