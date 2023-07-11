@@ -20,16 +20,16 @@ class Game {
         p2: [[midRow - 1, midCol - 1], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
       },
       l: {
-        p1: [[midRow + 1, midCol + 1], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
-        p2: [[midRow - 1, midCol + 1], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
+        p1: [[midRow + 1, midCol + 1], [midRow + 2, midCol + 1], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
+        p2: [[midRow - 1, midCol + 1], [midRow, midCol + 1], [midRow, midCol - 1], [midRow, midCol]]
       },
       o: {
         p1: [[midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
         p2: [[midRow - 1, midCol], [midRow - 1, midCol + 1], [midRow, midCol], [midRow, midCol + 1]]
       },
       s: {
-        p1: [[midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
-        p2: [[midRow - 1, midCol], [midRow - 1, midCol + 1], [midRow, midCol - 1], [midRow, midCol]]
+        p1: [[midRow + 1, midCol + 1], [midRow + 1, midCol], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
+        p2: [[midRow - 1, midCol + 1], [midRow - 1, midCol], [midRow, midCol - 1], [midRow, midCol]]
       },
       t: {
         p1: [[midRow + 1, midCol], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
@@ -191,7 +191,6 @@ class Game {
     })
 
     const positionsAsStrings = this.activeTetromino.positions.map(el => JSON.stringify(el))
-    console.log(positionsAsStrings);
 
     const collisionChecker = this.afterTF.every(pos => {
       if (positionsAsStrings.includes(`[${pos[0]},$${pos[1]}]`)) {
