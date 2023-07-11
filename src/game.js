@@ -16,7 +16,7 @@ class Game {
         p2: [[midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1], [midRow, midCol + 2]]
       },
       j: [[midRow, midCol - 1], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
-      l: [[midRow, midCol + 1], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
+      l: [[midRow, midCol + 1], [midRow + 1, midCol + 1], [midRow + 1, midCol], [midRow + 1, midCol - 1]],
       o: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
       s: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol - 1], [midRow + 1, midCol]],
       t: [[midRow, midCol], [midRow + 1, midCol], [midRow + 1, midCol - 1], [midRow + 1, midCol + 1]],
@@ -31,7 +31,7 @@ class Game {
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
     let turnInProgress = false;
-    let timer = 100; // time between ticks in ms
+    let timer = 500; // time between ticks in ms
 
     while (!turnInProgress) {
       turnInProgress = true;
@@ -168,23 +168,23 @@ class Game {
           "[0,0]" : [0, 0]
       }
 
-      this.relation.forEach(arr => {
-        this.newArr.push(transformation[JSON.stringify(arr)])
-        // console.log("newArr = " + newArr)
-      })
-    
-      this.newArr.forEach(arr => {
-        
-        let row = arr[0] + this.anchorPoint[0];
-        let column = arr[1] + this.anchorPoint[1]
-       
-        this.afterTF.push([row, column])
-      })
+    this.relation.forEach(arr => {
+      this.newArr.push(transformation[JSON.stringify(arr)])
+    })
 
-      this.activeTetromino.positions = this.afterTF;
-      this.drawTetromino();
-        this.render.drawGrid(this.grid);
-    return this.activeTetromino.positions;
+    console.log(Array.isArray(this.newArr))
+  
+    this.newArr.forEach(arr => {
+      console.log(arr)
+      let row = arr[0] + this.anchorPoint[0];
+      let column = arr[1] + this.anchorPoint[1];
+    
+      this.afterTF.push([row, column])
+    })
+
+    this.activeTetromino.positions = this.afterTF;
+    this.drawTetromino();
+    this.render.drawGrid(this.grid);
   }
 
   // rotateTetromino() {

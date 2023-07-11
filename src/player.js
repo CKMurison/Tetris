@@ -20,7 +20,9 @@ class Player{
                     this.game.moveHorizontal('left');
                 } else if (e.key === "d") {
                     this.game.moveHorizontal('right');
-                };
+                } else if (e.key === "s") {
+                    this.game.rotateTetromino();
+                }
             }    
         }); 
     };   

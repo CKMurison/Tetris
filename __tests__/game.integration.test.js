@@ -225,59 +225,177 @@ describe('Game', () => {
     expect(game.newArr).toEqual([[-1, 0], [0, 0], [0, -1], [1, -1]])
   })
 
-  test('rotation test 4 - testing new position', () => {
+  test('rotation test 4 - testing new position inside method', () => {
     game.activePlayer = game.players[0];
     game.generateTetromino(6)
     game.rotateTetromino()
     expect(game.afterTF).toEqual([[8, 4], [9, 4], [9, 3], [10, 3]])
   })
 
-  test('rotation test 5 - testing new position', () => {
+  test('rotation test 5 - testing anchorPoint', () => {
     game.activePlayer = game.players[0];
     game.generateTetromino(6)
     game.rotateTetromino()
     expect(game.anchorPoint).toEqual([9, 4])
   })
 
-  test('rotation test 6 - testing new position', () => {
+  test('rotation test 6 - testing new position for activeTetromino', () => {
     game.activePlayer = game.players[0];
     game.generateTetromino(6)
     game.rotateTetromino()
     expect(game.activeTetromino.positions).toEqual([[8, 4], [9, 4], [9, 3], [10, 3]])
   })
 
+  test('rotation test 7 - testing placement on grid', () => {
+    game.activePlayer = game.players[0];
+    game.generateTetromino(6)
+    game.rotateTetromino()
+    expect(game.grid).toEqual(      
+      [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 7, 0, 0, 0, 0, 0],
+        [0, 0, 0, 7, 7, 0, 0, 0, 0, 0],
+        [0, 0, 0, 7, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ])
+  })
 
-  // test('press up to rotate p1', () => {
-  //   game.activePlayer = game.players[0];
-  //   game.generateTetromino(0)
-  //   const event = new KeyboardEvent('keydown', { key: 'ArrowUp' });
-  //   document.dispatchEvent(event);
-  //   console.log(game.grid);
-  //   expect(game.grid).toEqual(
-  //       [
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  //           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-  //       ]
-  //   )
-  // })
+  test('rotation test 6 (L-Piece) - testing new position for activeTetromino', () => {
+    game.activePlayer = game.players[0];
+    game.generateTetromino(2)
+    game.rotateTetromino()
+    expect(game.grid).toEqual(
+      [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 3, 3, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]
+    )
+  })
+
+  test('rotation test 6 (I-Piece P1) - testing new position for activeTetromino', () => {
+    game.activePlayer = game.players[0];
+    game.generateTetromino(0)
+    game.rotateTetromino()
+    expect(game.grid).toEqual(
+      [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]
+    )
+  })
+
+  test('rotation test 6 (I-Piece P2) - testing new position for activeTetromino', () => {
+    game.activePlayer = game.players[1];
+    game.generateTetromino(0)
+    game.rotateTetromino()
+    expect(game.grid).toEqual(
+      [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]
+    )
+  })
+
+
+  test('press up to rotate p1 (I-Piece)', () => {
+    game.activePlayer = game.players[0];
+    game.generateTetromino(3)
+    const event = new KeyboardEvent('keydown', { key: 'ArrowUp' });
+    document.dispatchEvent(event);
+    expect(game.grid).toEqual(
+        [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+    )
+  })
 
   test("Updates the position of the I-Block for Player 1", () => {
     mockTetromino = { positions: [[2, 0], [2, 1], [2, 2], [2, 3]], value: 1 }
