@@ -8,19 +8,37 @@ class Game {
     this.grid = this.#createGrid(20, 10)
     this.activeTetromino = null;
     // Hard-coded initial spawn points based upon 20x10 grid
-    let midRow = this.grid.length / 2 - 1;
-    let midCol = this.grid[0].length / 2 - 1;
+    let midRow = Math.floor(this.grid.length / 2 - 1);
+    let midCol = Math.floor(this.grid[0].length / 2 - 1);
     this.position = {
       i: {
         p1: [[midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 1, midCol + 2]],
         p2: [[midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1], [midRow, midCol + 2]]
       },
-      j: [[midRow, midCol - 1], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
-      l: [[midRow, midCol + 1], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
-      o: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
-      s: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol - 1], [midRow + 1, midCol]],
-      t: [[midRow, midCol], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
-      z: [[midRow, midCol - 1], [midRow, midCol], [midRow + 1, midCol], [midRow + 1, midCol + 1]]
+      j: {
+        p1: [[midRow + 1, midCol - 1], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
+        p2: [[midRow - 1, midCol - 1], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
+      },
+      l: {
+        p1: [[midRow + 1, midCol + 1], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
+        p2: [[midRow - 1, midCol + 1], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
+      },
+      o: {
+        p1: [[midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
+        p2: [[midRow - 1, midCol], [midRow - 1, midCol + 1], [midRow, midCol], [midRow, midCol + 1]]
+      },
+      s: {
+        p1: [[midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
+        p2: [[midRow - 1, midCol], [midRow - 1, midCol + 1], [midRow, midCol - 1], [midRow, midCol]]
+      },
+      t: {
+        p1: [[midRow + 1, midCol], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
+        p2: [[midRow - 1, midCol], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
+      },
+      z: {
+        p1: [[midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
+        p2: [[midRow - 1, midCol - 1], [midRow - 1, midCol], [midRow + 0, midCol], [midRow + 0, midCol + 1]]
+      }
     }
     this.render = render;
     this.players = [new Player(1, this), new Player(2, this)];
@@ -80,16 +98,9 @@ class Game {
     // If statement receives key and adds the corresponding tetromino to the grid
     // checkIfGameOver condition will stop the function from drawing on the grid
 
-    // TODO: randomIndex to be added as an argument to new Tetromino to change its value field
-    if (key === "i") {
-      const position = this.activePlayer === this.players[0] ? this.position.i.p1 : this.position.i.p2;
-      if (this.checkIfGameOver(position)) return false;
-      this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)), this.randomIndex + 1);
-    } else {
-      const position = this.position[key];
-      if (this.checkIfGameOver(position)) return false;
-      this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)), this.randomIndex + 1);
-    }
+    const position = this.activePlayer === this.players[0] ? this.position[key]['p1'] : this.position[key]['p2'];
+    if (this.checkIfGameOver(position)) return false;
+    this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)), this.randomIndex + 1);
 
     this.activeTetromino.positions.forEach(arr =>
       this.grid[arr[0]][arr[1]] = this.randomIndex + 1
