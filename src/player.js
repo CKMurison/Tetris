@@ -21,6 +21,14 @@ class Player{
                 };
             }    
         }); 
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'p') {
+                this.game.pauseGame();
+                console.log("spacebar has been presed")
+                console.log(this.game.isPaused);
+            }
+        })
     };   
 };
 

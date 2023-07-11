@@ -7,6 +7,7 @@ class Game {
     // We mutate this grid to spawn and update the positions of the tetrominoes
     this.grid = this.#createGrid(20, 10)
     this.activeTetromino = null;
+    this.isPaused = false;
     // Hard-coded initial spawn points based upon 20x10 grid
     let midRow = this.grid.length / 2 - 1;
     let midCol = this.grid[0].length / 2 - 1;
@@ -30,8 +31,9 @@ class Game {
   // The playLoop runs the game
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
+    console.log(this.isPaused)
     let turnInProgress = false;
-    let timer = 100; // time between ticks in ms
+    let timer = 500; // time between ticks in ms
 
     while (!turnInProgress) {
       turnInProgress = true;
@@ -41,7 +43,7 @@ class Game {
       if (generated) {
         let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         this.render.drawGrid(this.grid);
-        while (!collided) {
+        while (!collided && !this.isPaused) {
           this.moveVertical();
           this.render.drawGrid(this.grid);
           if (!test) await this.#delay(timer);
@@ -141,6 +143,14 @@ class Game {
     this.drawTetromino();
     this.render.drawGrid(this.grid);
   };
+
+  pauseGame() {
+    if (this.isPaused === false) {
+      this.isPaused = true;
+    } else if (this.isPaused === true) {
+      this.isPaused = false;
+    }
+  }
 
   clearTetromino() {
     this.activeTetromino.positions.forEach((eachCoordinate) => {
