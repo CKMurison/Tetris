@@ -8,8 +8,8 @@ class Game {
     this.grid = this.#createGrid(20, 10)
     this.activeTetromino = null;
     // Hard-coded initial spawn points based upon 20x10 grid
-    let midRow = this.grid.length / 2 - 1;
-    let midCol = this.grid[0].length / 2 - 1;
+    let midRow = Math.floor(this.grid.length / 2 - 1);
+    let midCol = Math.floor(this.grid[0].length / 2 - 1);
     this.position = {
       i: {
         p1: [[midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 1, midCol + 2]],
@@ -23,8 +23,14 @@ class Game {
         p1: [[midRow + 1, midCol + 1], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
         p2: [[midRow - 1, midCol + 1], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
       },
-      o: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
-      s: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol - 1], [midRow + 1, midCol]],
+      o: {
+        p1: [[midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
+        p2: [[midRow - 1, midCol], [midRow - 1, midCol + 1], [midRow, midCol], [midRow, midCol + 1]]
+      },
+      s: {
+        p1: [[midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
+        p2: [[midRow - 1, midCol], [midRow - 1, midCol + 1], [midRow, midCol - 1], [midRow, midCol]]
+      },
       t: [[midRow, midCol], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
       z: [[midRow, midCol - 1], [midRow, midCol], [midRow + 1, midCol], [midRow + 1, midCol + 1]]
     }
