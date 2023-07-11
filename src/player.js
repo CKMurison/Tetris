@@ -22,11 +22,10 @@ class Player{
             }    
         }); 
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'p') {
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'p' && this.activePlayer === 1) {
                 this.game.pauseGame();
-                console.log("spacebar has been presed")
-                console.log(this.game.isPaused);
+                console.log("p has been presed")
             }
         })
     };   

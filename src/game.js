@@ -37,17 +37,23 @@ class Game {
 
     while (!turnInProgress) {
       turnInProgress = true;
+      console.log()
 
       let generated = this.generateTetromino();
       
       if (generated) {
         let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         this.render.drawGrid(this.grid);
-        while (!collided && !this.isPaused) {
+        while (!collided) {
+          console.log('something')
+          if (!this.isPaused) {
           this.moveVertical();
           this.render.drawGrid(this.grid);
           if (!test) await this.#delay(timer);
           collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
+          } else if (!test) {
+            await this.#delay(timer);
+          }
         }
         this.removeCompleteLines()
         turnInProgress = false;
