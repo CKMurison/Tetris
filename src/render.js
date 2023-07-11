@@ -60,6 +60,24 @@ class Render {
     }
   }
 
+
+
+  pause() {
+    let pauseContainer = document.createElement('div')
+    pauseContainer.className = 'pause'
+    pauseContainer.textContent = 'paused'; 
+    this.mainEl.append(pauseContainer);
+    document.querySelectorAll('.cellContainer').forEach((el) => {
+      el.style.animationName = "cellAnimation";
+    })
+  };
+
+  resume() {
+    console.log('resume function ran')
+    document.querySelector('.pause').remove();
+    
+  };
+
   gameOver(player) {
     let gameOverContainer = document.createElement('div')
     gameOverContainer.className = 'gameOver'

@@ -152,9 +152,11 @@ class Game {
   pauseGame() {
     if (this.isPaused === false) {
       this.isPaused = true;
+      this.render.pause();
       console.log('Game paused');
     } else if (this.isPaused === true) {
       this.isPaused = false;
+      this.render.resume();
       console.log('Game resumed');
     }
   }
