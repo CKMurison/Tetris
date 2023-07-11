@@ -171,8 +171,6 @@ class Game {
     this.relation.forEach(arr => {
       this.newArr.push(transformation[JSON.stringify(arr)])
     })
-    ///
-    // console.log(Array.isArray(this.newArr))
   
     this.newArr.forEach(arr => {
       let row = arr[0] + this.anchorPoint[0];
@@ -181,12 +179,15 @@ class Game {
       this.afterTF.push([row, column])
     })
 
+    const positionsAsStrings = this.activeTetromino.positions.map(el => JSON.stringify(el))
+    console.log(positionsAsStrings);
+
     const collisionChecker = this.afterTF.every(pos => {
-      console.log(this.activeTetromino.positions.includes(pos))
-      if (this.activeTetromino.positions.includes(pos)) {
+      if (positionsAsStrings.includes(`[${pos[0]},$${pos[1]}]`)) {
         return true;
+      } else {
+        return this.grid[pos[0]][pos[1]] === 0
       }
-      this.grid[pos[0]][pos[1]] === 0
     })
 
     if(!collisionChecker) {

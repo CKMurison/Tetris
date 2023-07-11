@@ -28,8 +28,9 @@
                 this.game.moveHorizontal("left");
               } else if (e.key === "d") {
                 this.game.moveHorizontal("right");
+              } else if (e.key === "s") {
+                this.game.rotateTetromino();
               }
-              ;
             }
           });
         }
@@ -124,7 +125,7 @@
               p2: [[midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1], [midRow, midCol + 2]]
             },
             j: [[midRow, midCol - 1], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
-            l: [[midRow, midCol + 1], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
+            l: [[midRow, midCol + 1], [midRow + 1, midCol + 1], [midRow + 1, midCol], [midRow + 1, midCol - 1]],
             o: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
             s: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol - 1], [midRow + 1, midCol]],
             t: [[midRow, midCol], [midRow + 1, midCol], [midRow + 1, midCol - 1], [midRow + 1, midCol + 1]],
@@ -138,7 +139,7 @@
         // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
         async playLoop(test) {
           let turnInProgress = false;
-          let timer = 100;
+          let timer = 500;
           while (!turnInProgress) {
             turnInProgress = true;
             let generated = this.generateTetromino();
@@ -254,49 +255,22 @@
             let column = arr[1] + this.anchorPoint[1];
             this.afterTF.push([row, column]);
           });
+          const positionsAsStrings = this.activeTetromino.positions.map((el) => JSON.stringify(el));
+          console.log(positionsAsStrings);
+          const collisionChecker = this.afterTF.every((pos) => {
+            if (positionsAsStrings.includes(`[${pos[0]},$${pos[1]}]`)) {
+              return true;
+            } else {
+              return this.grid[pos[0]][pos[1]] === 0;
+            }
+          });
+          if (!collisionChecker) {
+            return;
+          }
           this.activeTetromino.positions = this.afterTF;
           this.drawTetromino();
           this.render.drawGrid(this.grid);
-          return this.activeTetromino.positions;
         }
-        // rotateTetromino() {
-        //   let anchorPoint = this.activeTetromino.positions[1]
-        //   let relation = [] // [0,-1] [0,0] [1,0] [1,1]
-        //   let afterTF = []
-        //   let newArr = []
-        //   this.clearTetromino();
-        //   this.activeTetromino.positions.forEach(arr => {
-        //     relation.push([arr[0] - anchorPoint[0], arr[1] - anchorPoint[1]])
-        //   })
-        //   const transformation = {
-        //     "[-1,0]": [0, 1],
-        //     "[0,1]": [1, 0],
-        //     "[1,0]": [0, -1],
-        //     "[0,-1]": [-1, 0],
-        //     "[-1,-1]": [-1, 1],
-        //     "[-1,1]": [1, 1],
-        //     "[1,1]": [1, -1],
-        //     "[1,-1]": [-1, -1],
-        //     "[-2,0]": [0, 2],
-        //     "[0,2]": [2, 0],
-        //     "[2,0]": [0, -2],
-        //     "[0,-2]": [-2, 0],
-        //     "[0,0]" : [0, 0]
-        //   }
-        //   relation.forEach(arr => {
-        //     console.log(newArr)
-        //     newArr = transformation[JSON.stringify(arr)]
-        //     console.log(newArr)
-        //     console.log(newArr[0]);
-        //     console.log(newArr[1]);
-        //     afterTF.push([newArr[0] + anchorPoint[0],newArr[1] + anchorPoint[1]])
-        //   })
-        //   this.activeTetromino.positions = afterTF;
-        //   this.drawTetromino();
-        //   this.render.drawGrid(this.grid);
-        //   console.log(this.activeTetromino.positions);
-        //   return this.activeTetromino.positions;
-        // }
         clearTetromino() {
           this.activeTetromino.positions.forEach((eachCoordinate) => {
             this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0;
