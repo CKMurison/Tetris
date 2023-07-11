@@ -223,13 +223,12 @@
           this.render.drawGrid(this.grid);
         }
         rotateTetromino() {
-          let anchorPoint = this.activeTetromino.positions[1];
-          let relation = [];
-          let afterTF = [];
-          let newArr = [];
-          this.clearTetromino();
+          this.anchorPoint = this.activeTetromino.positions[1];
+          this.relation = [];
+          this.newArr = [];
+          this.afterTF = [];
           this.activeTetromino.positions.forEach((arr) => {
-            relation.push([arr[0] - anchorPoint[0], arr[1] - anchorPoint[1]]);
+            this.relation.push([arr[0] - this.anchorPoint[0], arr[1] - this.anchorPoint[1]]);
           });
           const transformation = {
             "[-1,0]": [0, 1],
@@ -246,20 +245,55 @@
             "[0,-2]": [-2, 0],
             "[0,0]": [0, 0]
           };
-          relation.forEach((arr) => {
-            console.log(newArr);
-            newArr = transformation[JSON.stringify(arr)];
-            console.log(newArr);
-            console.log(newArr[0]);
-            console.log(newArr[1]);
-            afterTF.push([newArr[0] + anchorPoint[0], newArr[1] + anchorPoint[1]]);
+          this.relation.forEach((arr) => {
+            this.newArr.push(transformation[JSON.stringify(arr)]);
           });
-          this.activeTetromino.positions = afterTF;
-          this.drawTetromino();
-          this.render.drawGrid(this.grid);
-          console.log(this.activeTetromino.positions);
+          this.newArr.forEach((arr) => {
+            let row = arr[0] + this.anchorPoint[0];
+            let column = arr[1] + this.anchorPoint[1];
+            this.afterTF.push([row, column]);
+          });
+          this.activeTetromino.positions = this.afterTF;
           return this.activeTetromino.positions;
         }
+        // rotateTetromino() {
+        //   let anchorPoint = this.activeTetromino.positions[1]
+        //   let relation = [] // [0,-1] [0,0] [1,0] [1,1]
+        //   let afterTF = []
+        //   let newArr = []
+        //   this.clearTetromino();
+        //   this.activeTetromino.positions.forEach(arr => {
+        //     relation.push([arr[0] - anchorPoint[0], arr[1] - anchorPoint[1]])
+        //   })
+        //   const transformation = {
+        //     "[-1,0]": [0, 1],
+        //     "[0,1]": [1, 0],
+        //     "[1,0]": [0, -1],
+        //     "[0,-1]": [-1, 0],
+        //     "[-1,-1]": [-1, 1],
+        //     "[-1,1]": [1, 1],
+        //     "[1,1]": [1, -1],
+        //     "[1,-1]": [-1, -1],
+        //     "[-2,0]": [0, 2],
+        //     "[0,2]": [2, 0],
+        //     "[2,0]": [0, -2],
+        //     "[0,-2]": [-2, 0],
+        //     "[0,0]" : [0, 0]
+        //   }
+        //   relation.forEach(arr => {
+        //     console.log(newArr)
+        //     newArr = transformation[JSON.stringify(arr)]
+        //     console.log(newArr)
+        //     console.log(newArr[0]);
+        //     console.log(newArr[1]);
+        //     afterTF.push([newArr[0] + anchorPoint[0],newArr[1] + anchorPoint[1]])
+        //   })
+        //   this.activeTetromino.positions = afterTF;
+        //   this.drawTetromino();
+        //   this.render.drawGrid(this.grid);
+        //   console.log(this.activeTetromino.positions);
+        //   return this.activeTetromino.positions;
+        // }
         clearTetromino() {
           this.activeTetromino.positions.forEach((eachCoordinate) => {
             this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0;

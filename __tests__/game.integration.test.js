@@ -218,6 +218,34 @@ describe('Game', () => {
     expect(game.relation).toEqual([[0, -1], [0, 0], [1, 0], [1, 1]])
   })
 
+  test('rotation test 3 - testing transformation of relation', () => {
+    game.activePlayer = game.players[0];
+    game.generateTetromino(6)
+    game.rotateTetromino()
+    expect(game.newArr).toEqual([[-1, 0], [0, 0], [0, -1], [1, -1]])
+  })
+
+  test('rotation test 4 - testing new position', () => {
+    game.activePlayer = game.players[0];
+    game.generateTetromino(6)
+    game.rotateTetromino()
+    expect(game.afterTF).toEqual([[8, 4], [9, 4], [9, 3], [10, 3]])
+  })
+
+  test('rotation test 5 - testing new position', () => {
+    game.activePlayer = game.players[0];
+    game.generateTetromino(6)
+    game.rotateTetromino()
+    expect(game.anchorPoint).toEqual([9, 4])
+  })
+
+  test('rotation test 6 - testing new position', () => {
+    game.activePlayer = game.players[0];
+    game.generateTetromino(6)
+    game.rotateTetromino()
+    expect(game.activeTetromino.positions).toEqual([[8, 4], [9, 4], [9, 3], [10, 3]])
+  })
+
 
   // test('press up to rotate p1', () => {
   //   game.activePlayer = game.players[0];

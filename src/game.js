@@ -143,13 +143,46 @@ class Game {
   };
 
   rotateTetromino() {
-    const anchorPoint = this.activeTetromino.positions[1]
+    this.anchorPoint = this.activeTetromino.positions[1]
     this.relation = []
+    this.newArr = []
+    this.afterTF = []
     this.activeTetromino.positions.forEach(arr => {
-      this.relation.push([arr[0] - anchorPoint[0], arr[1] - anchorPoint[1]])
+      this.relation.push([arr[0] - this.anchorPoint[0], arr[1] - this.anchorPoint[1]])
     })
 
-    return this.relation
+    const transformation = {
+          "[-1,0]": [0, 1],
+          "[0,1]": [1, 0],
+          "[1,0]": [0, -1],
+          "[0,-1]": [-1, 0],
+          "[-1,-1]": [-1, 1],
+          "[-1,1]": [1, 1],
+          "[1,1]": [1, -1],
+          "[1,-1]": [-1, -1],
+          "[-2,0]": [0, 2],
+          "[0,2]": [2, 0],
+          "[2,0]": [0, -2],
+          "[0,-2]": [-2, 0],
+          "[0,0]" : [0, 0]
+      }
+
+      this.relation.forEach(arr => {
+        this.newArr.push(transformation[JSON.stringify(arr)])
+        // console.log("newArr = " + newArr)
+      })
+    
+      this.newArr.forEach(arr => {
+        
+        let row = arr[0] + this.anchorPoint[0];
+        let column = arr[1] + this.anchorPoint[1]
+       
+        this.afterTF.push([row, column])
+      })
+
+      this.activeTetromino.positions = this.afterTF;
+    
+    return this.activeTetromino.positions;
   }
 
   // rotateTetromino() {
