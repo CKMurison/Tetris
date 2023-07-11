@@ -171,17 +171,28 @@ class Game {
     this.relation.forEach(arr => {
       this.newArr.push(transformation[JSON.stringify(arr)])
     })
-
-    console.log(Array.isArray(this.newArr))
+    ///
+    // console.log(Array.isArray(this.newArr))
   
     this.newArr.forEach(arr => {
-      console.log(arr)
       let row = arr[0] + this.anchorPoint[0];
       let column = arr[1] + this.anchorPoint[1];
-    
+      
       this.afterTF.push([row, column])
     })
 
+    const collisionChecker = this.afterTF.every(pos => {
+      console.log(this.activeTetromino.positions.includes(pos))
+      if (this.activeTetromino.positions.includes(pos)) {
+        return true;
+      }
+      this.grid[pos[0]][pos[1]] === 0
+    })
+
+    if(!collisionChecker) {
+      return;
+    }
+    ///
     this.activeTetromino.positions = this.afterTF;
     this.drawTetromino();
     this.render.drawGrid(this.grid);
