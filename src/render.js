@@ -76,7 +76,7 @@ class Render {
   {
     duration: 10000,
     iterations: Infinity,
-    easing: 'linear',
+    fill: "forwards"
   }
 );
 

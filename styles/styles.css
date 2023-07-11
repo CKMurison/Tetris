@@ -82,19 +82,7 @@ div {
 
 .cellContainer {
     flex: 1;
-    animation-iteration-count: infinite;
-    animation-duration: 4s;
 }
-
-@keyframes cellAnimation {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* Loop over each cell and apply cellAnimation to them
-Maybe need a new .add or .append in the forEach in render for the cells
-to add the animation to them? */
 
 .empty {
     background-color: lightgray;
