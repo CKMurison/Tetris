@@ -25,7 +25,6 @@ class Player{
         document.addEventListener('keyup', (e) => {
             if (e.key === 'p' && this.activePlayer === 1) {
                 this.game.pauseGame();
-                console.log("p has been presed")
             }
         })
     };   

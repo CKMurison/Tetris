@@ -31,13 +31,11 @@ class Game {
   // The playLoop runs the game
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
-    console.log(this.isPaused)
     let turnInProgress = false;
     let timer = 500; // time between ticks in ms
 
     while (!turnInProgress) {
       turnInProgress = true;
-      console.log()
 
       let generated = this.generateTetromino();
       
@@ -45,7 +43,6 @@ class Game {
         let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         this.render.drawGrid(this.grid);
         while (!collided) {
-          console.log('something')
           if (!this.isPaused) {
           this.moveVertical();
           this.render.drawGrid(this.grid);
@@ -133,28 +130,32 @@ class Game {
   };
 
   moveHorizontal(input) {
-    if (this.activeTetromino === null) return;
-    if (input == 'left' ? this.activeTetromino.checkCollisionLeft(this.grid) : this.activeTetromino.checkCollisionRight(this.grid)) return;
-    
-    this.clearTetromino();
-    
-    this.activeTetromino.positions.forEach((blockPosition) => {
-      if (input === 'right') {
-        blockPosition[1] += 1;
-      } else if (input === 'left') {
-        blockPosition[1] -= 1;
-      }
-    });
-    
-    this.drawTetromino();
-    this.render.drawGrid(this.grid);
+    if(!this.isPaused) {
+      if (this.activeTetromino === null) return;
+      if (input == 'left' ? this.activeTetromino.checkCollisionLeft(this.grid) : this.activeTetromino.checkCollisionRight(this.grid)) return;
+      
+      this.clearTetromino();
+      
+      this.activeTetromino.positions.forEach((blockPosition) => {
+        if (input === 'right') {
+          blockPosition[1] += 1;
+        } else if (input === 'left') {
+          blockPosition[1] -= 1;
+        }
+      });
+      
+      this.drawTetromino();
+      this.render.drawGrid(this.grid);
+    }
   };
 
   pauseGame() {
     if (this.isPaused === false) {
       this.isPaused = true;
+      console.log('Game paused');
     } else if (this.isPaused === true) {
       this.isPaused = false;
+      console.log('Game resumed');
     }
   }
 
