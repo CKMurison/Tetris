@@ -1,7 +1,7 @@
 class Tetromino {
-    constructor(positions) {
+    constructor(positions, value) {
         this.positions = positions;
-        this.value = 1
+        this.value = value;
     }
 
     checkCollisionDown(grid) {

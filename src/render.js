@@ -36,7 +36,7 @@ class Render {
 
   findSpawnLine(grid) {
     let spawnRow = document.querySelector(`#row${grid.length / 2 - 1}`);
-    spawnRow.className += " spawnRow"; 
+    if (spawnRow !== null) spawnRow.className += " spawnRow"; 
   }
 
   #findClassName(cell) {
