@@ -227,6 +227,7 @@
           this.relation = [];
           this.newArr = [];
           this.afterTF = [];
+          this.clearTetromino();
           this.activeTetromino.positions.forEach((arr) => {
             this.relation.push([arr[0] - this.anchorPoint[0], arr[1] - this.anchorPoint[1]]);
           });
@@ -254,6 +255,8 @@
             this.afterTF.push([row, column]);
           });
           this.activeTetromino.positions = this.afterTF;
+          this.drawTetromino();
+          this.render.drawGrid(this.grid);
           return this.activeTetromino.positions;
         }
         // rotateTetromino() {
