@@ -65,6 +65,8 @@ class Render {
     gameOverContainer.className = 'gameOver'
     gameOverContainer.textContent = player === 'Player1' ? 'Player 1 Wins!' : 'Player 2 Wins!'; 
     this.mainEl.append(gameOverContainer);
+    let gameOverSound = new Audio('audio/gameOver.wav')
+    gameOverSound.play();
     document.querySelectorAll('.cellContainer').forEach((el) => {
       el.animate(
   [
@@ -74,7 +76,7 @@ class Render {
   {
     duration: 10000,
     iterations: Infinity,
-    easing: 'linear'
+    easing: 'linear',
   }
 );
 
