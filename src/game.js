@@ -146,6 +146,9 @@ class Game {
     let anchorPoint = this.activeTetromino.positions[1]
     let relation = [] // [0,-1] [0,0] [1,0] [1,1]
     let afterTF = []
+    let newArr = []
+
+    this.clearTetromino();
     this.activeTetromino.positions.forEach(arr => {
       relation.push([arr[0] - anchorPoint[0], arr[1] - anchorPoint[1]])
     })
@@ -167,10 +170,18 @@ class Game {
     }
 
     relation.forEach(arr => {
-      let newArr = transformation[JSON.stringify(arr)]
+      console.log(newArr)
+      newArr = transformation[JSON.stringify(arr)]
+      console.log(newArr)
+      console.log(newArr[0]);
+      console.log(newArr[1]);
+
       afterTF.push([newArr[0] + anchorPoint[0],newArr[1] + anchorPoint[1]])
     })
+
     this.activeTetromino.positions = afterTF;
+    this.drawTetromino();
+    this.render.drawGrid(this.grid);
     console.log(this.activeTetromino.positions);
     return this.activeTetromino.positions;
   }

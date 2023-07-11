@@ -226,6 +226,8 @@
           let anchorPoint = this.activeTetromino.positions[1];
           let relation = [];
           let afterTF = [];
+          let newArr = [];
+          this.clearTetromino();
           this.activeTetromino.positions.forEach((arr) => {
             relation.push([arr[0] - anchorPoint[0], arr[1] - anchorPoint[1]]);
           });
@@ -245,10 +247,16 @@
             "[0,0]": [0, 0]
           };
           relation.forEach((arr) => {
-            let newArr = transformation[JSON.stringify(arr)];
+            console.log(newArr);
+            newArr = transformation[JSON.stringify(arr)];
+            console.log(newArr);
+            console.log(newArr[0]);
+            console.log(newArr[1]);
             afterTF.push([newArr[0] + anchorPoint[0], newArr[1] + anchorPoint[1]]);
           });
           this.activeTetromino.positions = afterTF;
+          this.drawTetromino();
+          this.render.drawGrid(this.grid);
           console.log(this.activeTetromino.positions);
           return this.activeTetromino.positions;
         }
