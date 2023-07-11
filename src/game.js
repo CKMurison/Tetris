@@ -23,18 +23,19 @@ class Game {
       z: [[midRow, midCol - 1], [midRow, midCol], [midRow + 1, midCol], [midRow + 1, midCol + 1]]
     }
     this.render = render;
-    this.players = [new Player(), new Player()];
-    this.activePlayer = this.players[(Math.floor(Math.random() * 2))]; // Default player is random
+    this.players = [new Player(1, this), new Player(2, this)];
+    this.activePlayer = this.players[(Math.floor(Math.random() * 2))]; // Default player is player 1
   };
 
   // The playLoop runs the game
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
     let turnInProgress = false;
-    let timer = 50; // time between ticks in ms
+    let timer = 100; // time between ticks in ms
 
     while (!turnInProgress) {
       turnInProgress = true;
+
       let generated = this.generateTetromino();
 
       if (generated) {
@@ -46,10 +47,12 @@ class Game {
           if (!test) await this.#delay(timer);
           collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         }
+        this.removeCompleteLines()
         turnInProgress = false;
         this.swapPlayer();
       }
     }
+    this.render.gameOver(this.activePlayer === this.players[0] ? 'Player2' : 'Player1');
   }
 
   generateTetromino(random) {
@@ -81,11 +84,11 @@ class Game {
     if (key === "i") {
       const position = this.activePlayer === this.players[0] ? this.position.i.p1 : this.position.i.p2;
       if (this.checkIfGameOver(position)) return false;
-      this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)));
+      this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)), this.randomIndex + 1);
     } else {
       const position = this.position[key];
       if (this.checkIfGameOver(position)) return false;
-      this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)));
+      this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)), this.randomIndex + 1);
     }
 
     this.activeTetromino.positions.forEach(arr =>
@@ -122,8 +125,11 @@ class Game {
   };
 
   moveHorizontal(input) {
+    if (this.activeTetromino === null) return;
+    if (input == 'left' ? this.activeTetromino.checkCollisionLeft(this.grid) : this.activeTetromino.checkCollisionRight(this.grid)) return;
+    
     this.clearTetromino();
-
+    
     this.activeTetromino.positions.forEach((blockPosition) => {
       if (input === 'right') {
         blockPosition[1] += 1;
@@ -131,8 +137,9 @@ class Game {
         blockPosition[1] -= 1;
       }
     });
-
+    
     this.drawTetromino();
+    this.render.drawGrid(this.grid);
   };
 
   rotateTetromino() {
@@ -209,6 +216,3 @@ class Game {
 };
 
 module.exports = Game;
-
-game = new Game();
-console.log(game.rotateTetromino())

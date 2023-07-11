@@ -36,7 +36,7 @@ class Render {
 
   findSpawnLine(grid) {
     let spawnRow = document.querySelector(`#row${grid.length / 2 - 1}`);
-    spawnRow.className += " spawnRow"; 
+    if (spawnRow !== null) spawnRow.className += " spawnRow"; 
   }
 
   #findClassName(cell) {
@@ -59,6 +59,16 @@ class Render {
         return 'zBlock'
     }
   }
+
+  gameOver(player) {
+    let gameOverContainer = document.createElement('div')
+    gameOverContainer.className = 'gameOver'
+    gameOverContainer.textContent = player === 'Player1' ? 'Player 1 Wins!' : 'Player 2 Wins!'; 
+    this.mainEl.append(gameOverContainer);
+    document.querySelectorAll('.cellContainer').forEach((el) => {
+      el.style.animationName = "cellAnimation";
+    })
+  };
 }
 
 module.exports = Render;
