@@ -69,6 +69,7 @@ div {
     flex-direction: column;
     width: 40vw;
     object-fit: contain;
+    border-style: solid;
 }
 
 .rowContainer {
@@ -90,6 +91,10 @@ div {
         transform: rotate(360deg);
     }
 }
+
+/* Loop over each cell and apply cellAnimation to them
+Maybe need a new .add or .append in the forEach in render for the cells
+to add the animation to them? */
 
 .empty {
     background-color: lightgray;
