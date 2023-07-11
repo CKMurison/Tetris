@@ -75,7 +75,6 @@ class Render {
   ],
   {
     duration: 10000,
-    iterations: Infinity,
     fill: "forwards"
   }
 );
