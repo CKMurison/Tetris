@@ -31,7 +31,10 @@ class Game {
         p1: [[midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
         p2: [[midRow - 1, midCol], [midRow - 1, midCol + 1], [midRow, midCol - 1], [midRow, midCol]]
       },
-      t: [[midRow, midCol], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
+      t: {
+        p1: [[midRow + 1, midCol], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
+        p2: [[midRow - 1, midCol], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
+      },
       z: [[midRow, midCol - 1], [midRow, midCol], [midRow + 1, midCol], [midRow + 1, midCol + 1]]
     }
     this.render = render;
