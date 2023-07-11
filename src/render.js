@@ -62,7 +62,7 @@ class Render {
 
 
 
-  pause() {
+  pauseText() {
     let pauseContainer = document.createElement('div')
     pauseContainer.className = 'pause'
     pauseContainer.textContent = 'paused'; 
@@ -72,8 +72,7 @@ class Render {
     })
   };
 
-  resume() {
-    console.log('resume function ran')
+  removePauseText() {
     document.querySelector('.pause').remove();
     
   };
