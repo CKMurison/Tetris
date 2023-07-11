@@ -18,7 +18,7 @@ class Game {
       j: [[midRow, midCol - 1], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
       l: [[midRow, midCol + 1], [midRow + 1, midCol + 1], [midRow + 1, midCol], [midRow + 1, midCol - 1]],
       o: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
-      s: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol - 1], [midRow + 1, midCol]],
+      s: [[midRow, midCol + 1], [midRow, midCol], [midRow + 1, midCol - 1], [midRow + 1, midCol]],
       t: [[midRow, midCol], [midRow + 1, midCol], [midRow + 1, midCol - 1], [midRow + 1, midCol + 1]],
       z: [[midRow, midCol - 1], [midRow, midCol], [midRow + 1, midCol], [midRow + 1, midCol + 1]]
     }
