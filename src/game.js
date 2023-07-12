@@ -48,8 +48,9 @@ class Game {
   // The playLoop runs the game
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
+    this.playMusic();
     let turnInProgress = false;
-    let timer = 100; // time between ticks in ms
+    let timer = 10000; // time between ticks in ms
 
     while (!turnInProgress) {
       turnInProgress = true;
@@ -186,6 +187,23 @@ class Game {
       grid.push(row)
     }
     return grid;
+  }
+
+  playMusic() {
+    const music = new Audio('media/tetris-soundtrack.mp3');
+    music.loop = true;
+    music.volume = 0.1;
+
+    document.addEventListener("click", function() { // unmute and play the music if the user clicks anywhere in the Document
+      music.muted = false;
+      music.play();
+    });
+    console.log("playMusic() returned");
+
+    document.addEventListener("keydown", function() { // unmute and play the music if the user presses any button    
+        music.muted = false;
+        music.play();
+    });
   }
 
   async #delay(time) {
