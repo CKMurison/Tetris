@@ -528,12 +528,11 @@ it('spawns the Z-Block if player 1 is the active player', () => {
     expect(game.grid).toEqual([[1,0], [0,1], [0,1], [0,0], [0,0], [0,1]]);
   });
 
-  it('spawns the Z-Block and its shadow if player 1 is the active player', () => {
+  it('checks for shadow of i piece when an i piece for p1', () => {
     const random = 6
     game.activePlayer = game.players[0];
     game.generateTetromino(random)
     game.drawShadow();
-    // console.log(game.grid)
     expect(game.grid).toEqual(
         [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -559,4 +558,78 @@ it('spawns the Z-Block if player 1 is the active player', () => {
         ]
     )
   })
+
+  it('checks for shadow of i piece when an i piece for p2', () => {
+    const random = 6
+    game.activePlayer = game.players[1];
+    game.generateTetromino(random)
+    game.drawShadow();
+    expect(game.grid).toEqual(
+        [
+            [0, 0, 0, "s", "s", 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, "s", "s", 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 7, 7, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 7, 7, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+    )
+  })
+
+  it("checks for shadow of i piece when an i piece already exists for p1", () => {
+    game.activePlayer = game.players[0];
+    const random = 0
+    game.generateTetromino(random)
+    game.moveVertical();
+    game.moveVertical();
+    game.moveVertical();
+    game.moveVertical();
+    game.moveVertical();
+    game.moveVertical();
+    game.moveVertical();
+    game.moveVertical();
+    game.moveVertical();
+    const random2 = 0
+    game.generateTetromino(random2)
+    game.drawShadow();
+
+    expect(game.grid).toEqual(
+        [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, "s", "s", "s", "s", 0, 0, 0],
+            [0, 0, 0, 1, 1, 1, 1, 0, 0, 0]
+        ]
+    )
+})
 })

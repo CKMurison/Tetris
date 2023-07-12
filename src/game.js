@@ -245,17 +245,29 @@ class Game {
 
   drawShadow() {
     this.activeShadow = new Tetromino(JSON.parse(JSON.stringify(this.activeTetromino.positions)), "s");
-    console.log(this.activeShadow)
-    this.activeShadow.positions.forEach(coordinate => {
-      if ( this.activeShadow.checkCollisionDown(this.grid) === false ) {
-        this.grid[coordinate[0] += 1];
-        this.grid[coordinate[0][coordinate[1]]] = this.activeShadow.value;
-        console.log(this.activeShadow)
-      } else {
-        return this.grid[coordinate[0][coordinate[1]]] = this.activeShadow.value;
+    if (this.activePlayer === this.players[0]) {
+      while (this.activeShadow.checkCollisionDown(this.grid) === false) {
+        this.activeShadow.positions.forEach(coordinate => {
+          coordinate[0] += 1;
+        })
       }
-    });
+  
+      this.activeShadow.positions.forEach(coordinate => {
+        this.grid[coordinate[0]][coordinate[1]] = this.activeShadow.value;
+      })
+    } else {
+        while (this.activeShadow.checkCollisionUp(this.grid) === false) {
+          this.activeShadow.positions.forEach(coordinate => {
+            coordinate[0] -= 1;
+          })
+        }
+  
+        this.activeShadow.positions.forEach(coordinate => {
+          this.grid[coordinate[0]][coordinate[1]] = this.activeShadow.value;
+        })
+    }
   }
+    
 
   swapPlayer() {
     this.activePlayer = (this.activePlayer === this.players[1]) ? this.players[0] : this.players[1];
