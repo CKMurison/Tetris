@@ -7,6 +7,8 @@ class Game {
     // We mutate this grid to spawn and update the positions of the tetrominoes
     this.grid = this.#createGrid(20, 10)
     this.activeTetromino = null;
+    this.isPaused = false;
+    this.turnInProgress = false;
     // Hard-coded initial spawn points based upon 20x10 grid
     let midRow = Math.floor(this.grid.length / 2 - 1);
     let midCol = Math.floor(this.grid[0].length / 2 - 1);
@@ -48,11 +50,11 @@ class Game {
   // The playLoop runs the game
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
-    let turnInProgress = false;
-    let timer = 500; // time between ticks in ms
+    this.turnInProgress = false;
+    let timer = 300; // time between ticks in ms
 
-    while (!turnInProgress) {
-      turnInProgress = true;
+    while (!this.turnInProgress) {
+      this.turnInProgress = true;
 
       let generated = this.generateTetromino();
 
@@ -60,16 +62,21 @@ class Game {
         let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         this.render.drawGrid(this.grid);
         while (!collided) {
+          if (!this.isPaused) {
           this.moveVertical();
           this.render.drawGrid(this.grid);
           if (!test) await this.#delay(timer);
           collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
+          } else if (!test) {
+            await this.#delay(timer);
+          }
         }
         this.removeCompleteLines()
-        turnInProgress = false;
+        this.turnInProgress = false;
         this.swapPlayer();
       }
     }
+    this.turnInProgress = false;
     this.render.gameOver(this.activePlayer === this.players[0] ? 'Player2' : 'Player1');
   }
 
@@ -136,21 +143,23 @@ class Game {
   };
 
   moveHorizontal(input) {
-    if (this.activeTetromino === null) return;
-    if (input == 'left' ? this.activeTetromino.checkCollisionLeft(this.grid) : this.activeTetromino.checkCollisionRight(this.grid)) return;
-
-    this.clearTetromino();
-
-    this.activeTetromino.positions.forEach((blockPosition) => {
-      if (input === 'right') {
-        blockPosition[1] += 1;
-      } else if (input === 'left') {
-        blockPosition[1] -= 1;
-      }
-    });
-
-    this.drawTetromino();
-    this.render.drawGrid(this.grid);
+    if(!this.isPaused) {
+      if (this.activeTetromino === null) return;
+      if (input == 'left' ? this.activeTetromino.checkCollisionLeft(this.grid) : this.activeTetromino.checkCollisionRight(this.grid)) return;
+      
+      this.clearTetromino();
+      
+      this.activeTetromino.positions.forEach((blockPosition) => {
+        if (input === 'right') {
+          blockPosition[1] += 1;
+        } else if (input === 'left') {
+          blockPosition[1] -= 1;
+        }
+      });
+      
+      this.drawTetromino();
+      this.render.drawGrid(this.grid);
+    }
   };
 
   rotateTetromino() {
@@ -203,10 +212,22 @@ class Game {
     if(!collisionChecker) {
       return;
     }
-    ///
+
     this.activeTetromino.positions = this.afterTF;
     this.drawTetromino();
     this.render.drawGrid(this.grid);
+  }
+
+  pauseGame() {
+    if (this.isPaused === false) {
+      this.isPaused = true;
+      if(this.turnInProgress) {
+        this.render.pauseText();
+      };
+    } else if (this.isPaused === true) {
+      this.isPaused = false;
+      this.render.removePauseText();
+    }
   }
 
   clearTetromino() {
