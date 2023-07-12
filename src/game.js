@@ -222,15 +222,17 @@ class Game {
       this.afterTF.push([row, column])
     })
 
+    // possible source of disappearing tetromino bug (according to chrome's dev log)
     const positionsAsStrings = this.activeTetromino.positions.map(el => JSON.stringify(el))
 
     const collisionChecker = this.afterTF.every(pos => {
-      if (positionsAsStrings.includes(`[${pos[0]},$${pos[1]}]`)) {
+      if (positionsAsStrings.includes(`[${pos[0]},${pos[1]}]`)) {
         return true;
       } else {
         return this.grid[pos[0]][pos[1]] === 0
       }
     })
+    // 
 
     if(!collisionChecker) {
       return;
