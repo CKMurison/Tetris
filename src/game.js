@@ -63,10 +63,10 @@ class Game {
         this.render.drawGrid(this.grid);
         while (!collided) {
           if (!this.isPaused) {
-          this.moveVertical();
-          this.render.drawGrid(this.grid);
-          if (!test) await this.#delay(timer);
-          collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
+            this.moveVertical();
+            this.render.drawGrid(this.grid);
+            if (!test) await this.#delay(timer);
+            collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
           } else if (!test) {
             await this.#delay(timer);
           }
@@ -78,6 +78,15 @@ class Game {
     }
     this.turnInProgress = false;
     this.render.gameOver(this.activePlayer === this.players[0] ? 'Player2' : 'Player1');
+  }
+
+  restartGame() {
+    this.grid = this.#createGrid(20, 10);
+    this.activeTetromino = null;
+    this.isPaused = false;
+    this.turnInProgress = false;
+    this.render.drawGrid(this.grid);
+    this.playLoop();
   }
 
   generateTetromino(random) {
@@ -143,12 +152,12 @@ class Game {
   };
 
   moveHorizontal(input) {
-    if(!this.isPaused) {
+    if (!this.isPaused) {
       if (this.activeTetromino === null) return;
       if (input == 'left' ? this.activeTetromino.checkCollisionLeft(this.grid) : this.activeTetromino.checkCollisionRight(this.grid)) return;
-      
+
       this.clearTetromino();
-      
+
       this.activeTetromino.positions.forEach((blockPosition) => {
         if (input === 'right') {
           blockPosition[1] += 1;
@@ -156,7 +165,7 @@ class Game {
           blockPosition[1] -= 1;
         }
       });
-      
+
       this.drawTetromino();
       this.render.drawGrid(this.grid);
     }
@@ -173,29 +182,29 @@ class Game {
     })
 
     const transformation = {
-          "[-1,0]": [0, 1],
-          "[0,1]": [1, 0],
-          "[1,0]": [0, -1],
-          "[0,-1]": [-1, 0],
-          "[-1,-1]": [-1, 1],
-          "[-1,1]": [1, 1],
-          "[1,1]": [1, -1],
-          "[1,-1]": [-1, -1],
-          "[-2,0]": [0, 2],
-          "[0,2]": [2, 0],
-          "[2,0]": [0, -2],
-          "[0,-2]": [-2, 0],
-          "[0,0]" : [0, 0]
-      }
+      "[-1,0]": [0, 1],
+      "[0,1]": [1, 0],
+      "[1,0]": [0, -1],
+      "[0,-1]": [-1, 0],
+      "[-1,-1]": [-1, 1],
+      "[-1,1]": [1, 1],
+      "[1,1]": [1, -1],
+      "[1,-1]": [-1, -1],
+      "[-2,0]": [0, 2],
+      "[0,2]": [2, 0],
+      "[2,0]": [0, -2],
+      "[0,-2]": [-2, 0],
+      "[0,0]": [0, 0]
+    }
 
     this.relation.forEach(arr => {
       this.newArr.push(transformation[JSON.stringify(arr)])
     })
-  
+
     this.newArr.forEach(arr => {
       let row = arr[0] + this.anchorPoint[0];
       let column = arr[1] + this.anchorPoint[1];
-      
+
       this.afterTF.push([row, column])
     })
 
@@ -209,7 +218,7 @@ class Game {
       }
     })
 
-    if(!collisionChecker) {
+    if (!collisionChecker) {
       return;
     }
 
@@ -221,7 +230,7 @@ class Game {
   pauseGame() {
     if (this.isPaused === false) {
       this.isPaused = true;
-      if(this.turnInProgress) {
+      if (this.turnInProgress) {
         this.render.pauseText();
       };
     } else if (this.isPaused === true) {
