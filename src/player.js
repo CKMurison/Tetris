@@ -21,6 +21,12 @@ class Player{
                 };
             }    
         }); 
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key == " " && this.activePlayer === 1) {
+                this.game.pauseGame();
+            }
+        })
     };   
 };
 
