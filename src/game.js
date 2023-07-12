@@ -7,6 +7,7 @@ class Game {
     // We mutate this grid to spawn and update the positions of the tetrominoes
     this.grid = this.#createGrid(20, 10)
     this.activeTetromino = null;
+    this.activeShadow = null;
     this.isPaused = false;
     this.turnInProgress = false;
     // Hard-coded initial spawn points based upon 20x10 grid
@@ -239,6 +240,16 @@ class Game {
   drawTetromino() {
     this.activeTetromino.positions.forEach(coordinate => {
       this.grid[coordinate[0]][coordinate[1]] = this.activeTetromino.value;
+    });
+  }
+
+  drawShadow() {
+    this.activeTetromino.positions.forEach(coordinate => {
+      if (checkCollisionDown() === false ) {
+        this.grid[coordinate[0] + 1][coordinate[1]] = this.activeShadow.value;
+      } else {
+        return this.activeShadow.value;
+      }
     });
   }
 
