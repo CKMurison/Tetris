@@ -23,6 +23,14 @@ describe('Game', () => {
     expect(generateTetrominoSpy).toHaveBeenCalledTimes(13);
   })
 
+  test('hypothetical test', () => {
+    const generateTetrominoSpy = jest.spyOn(Game.prototype, 'restartGame')
+    game.playLoop(true);
+    game.restartGame();
+    expect(generateTetrominoSpy).toHaveBeenCalledTimes(1);
+  })
+
+
   // test("The game loop will generate a piece on each run of the loop", () => {
   //   const generateTetrominoSpy = jest.spyOn(Game.prototype, 'generateTetromino')
   //   game.playLoop(true);
