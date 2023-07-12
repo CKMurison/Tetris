@@ -51,7 +51,7 @@ class Game {
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
     this.turnInProgress = false;
-    let timer = 300; // time between ticks in ms
+    let timer = 1000; // time between ticks in ms
 
     while (!this.turnInProgress) {
       this.turnInProgress = true;
