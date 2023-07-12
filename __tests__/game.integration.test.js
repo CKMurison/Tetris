@@ -13,29 +13,13 @@ describe('Game', () => {
     game = new Game(render)
   });
 
-  xtest('hypothetical test', () => {
+  test('whether restartGame() generates a teteromino', () => {
     const generateTetrominoSpy = jest.spyOn(Game.prototype, 'generateTetromino')
     game.playLoop(true);
-    console.log(game.grid)
+    const timesCalled = generateTetrominoSpy.mock.calls.length;
     game.restartGame();
-    console.log(game.grid)
-    game.restartGame();
-    expect(generateTetrominoSpy).toHaveBeenCalledTimes(13);
+    expect(generateTetrominoSpy).toHaveBeenCalledTimes(timesCalled + 1)
   })
-
-  xtest('hypothetical test', () => {
-    const generateTetrominoSpy = jest.spyOn(Game.prototype, 'generateTetromino')
-    game.playLoop(true);
-    game.restartGame();
-    expect(generateTetrominoSpy).toHaveBeenCalledTimes(13);
-  })
-
-  // test("The game loop will generate a piece on each run of the loop", () => {
-  //   const generateTetrominoSpy = jest.spyOn(Game.prototype, 'generateTetromino')
-  //   game.playLoop(true);
-  //   expect(generateTetrominoSpy).toHaveBeenCalled();
-  // });
-
 
   test('it correctly assigns an active player', () => {
     game.playLoop(test);
