@@ -232,6 +232,7 @@ class Game {
       this.isPaused = true;
       if (this.turnInProgress) {
         this.render.pauseText();
+        this.render.restartButton();
       };
     } else if (this.isPaused === true) {
       this.isPaused = false;

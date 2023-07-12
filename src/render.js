@@ -72,6 +72,22 @@ class Render {
     })
   };
 
+  restartButton() {
+    let restartContainer = document.createElement('div');
+    restartContainer.className = 'restart';
+    restartContainer.textContent = '↻';
+  
+    // Add event listener for click event
+    restartContainer.addEventListener('click', () => {
+      // Code to execute when the button is clicked
+      // For example, you can call a function to handle the restart logic
+      game.restartButton();
+    });
+  
+    this.mainEl.append(restartContainer);
+
+  }
+
   removePauseText() {
     document.querySelector('.pause').remove();
     
