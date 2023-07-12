@@ -67,6 +67,11 @@ div {
 
 .instructionsContainer {
     flex-direction: column;
+    justify-content: space-between;
+}
+
+.playerContainer {
+    flex-direction: column;
     margin-top: 3vh;
     font-size: x-large;
     font-family: Arial, Helvetica, sans-serif;
