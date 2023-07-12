@@ -57,6 +57,8 @@ class Render {
         return 'tBlock'
       case 7:
         return 'zBlock'
+      case 's':
+        return 'shadow'
     }
   }
 

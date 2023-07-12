@@ -528,7 +528,7 @@ it('spawns the Z-Block if player 1 is the active player', () => {
     expect(game.grid).toEqual([[1,0], [0,1], [0,1], [0,0], [0,0], [0,1]]);
   });
 
-  it('checks for shadow of i piece when an i piece for p1', () => {
+  it('checks for shadow of i piece when spawned for player 1', () => {
     const random = 6
     game.activePlayer = game.players[0];
     game.generateTetromino(random)
@@ -559,7 +559,7 @@ it('spawns the Z-Block if player 1 is the active player', () => {
     )
   })
 
-  it('checks for shadow of i piece when an i piece for p2', () => {
+  it('checks for shadow of i piece when spwaned for player2', () => {
     const random = 6
     game.activePlayer = game.players[1];
     game.generateTetromino(random)

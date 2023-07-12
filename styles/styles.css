@@ -137,3 +137,7 @@ div {
 .zBlock {
     background-color: brown;
 }
+
+.shadow {
+    background-color: rgb(255, 0, 0);
+}
