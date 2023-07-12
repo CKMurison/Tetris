@@ -247,10 +247,12 @@ class Game {
     this.activeShadow = new Tetromino(JSON.parse(JSON.stringify(this.activeTetromino.positions)), "s");
     console.log(this.activeShadow)
     this.activeShadow.positions.forEach(coordinate => {
-      if (checkCollisionDown(this.grid) === false ) {
-        this.grid[coordinate[0] + 1][coordinate[1]] = this.activeShadow;
+      if ( this.activeShadow.checkCollisionDown(this.grid) === false ) {
+        // this.activeShadow.positions[coordinate[0][coordinate[1]]].map()
+        this.activeShadow.positions[coordinate[0][coordinate[1]]] = this.activeShadow.positions[coordinate[0] + 1 [coordinate[1]]] 
+        console.log(this.activeShadow)
       } else {
-        return this.activeShadow;
+        return this.grid[coordinate[0][coordinate[1]]] = this.activeShadow.value;
       }
     });
   }
