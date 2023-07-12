@@ -13,7 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "esbuild": "^0.18.11",
-    "jest-environment-jsdom": "^29.6.0"
+    "jest-environment-jsdom": "^29.6.0",
+    "web-animations-js": "^2.3.2"
   },
   "directories": {
     "test": "tests"

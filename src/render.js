@@ -1,3 +1,5 @@
+import 'web-animations-js';
+
 class Render {
   constructor() {
     this.mainEl = document.querySelector('#main-container');
@@ -61,26 +63,24 @@ class Render {
   }
 
   gameOver(player) {
-    let gameOverContainer = document.createElement('div')
-    gameOverContainer.className = 'gameOver'
-    gameOverContainer.textContent = player === 'Player1' ? 'Player 1 Wins!' : 'Player 2 Wins!'; 
+    let gameOverContainer = document.createElement('div');
+    gameOverContainer.className = 'gameOver';
+    gameOverContainer.textContent = player === 'Player1' ? 'Player 1 Wins!' : 'Player 2 Wins!';
     this.mainEl.append(gameOverContainer);
-    let gameOverSound = new Audio('audio/gameOver.wav')
+    let gameOverSound = new Audio('audio/gameOver.wav');
     gameOverSound.play();
     document.querySelectorAll('.cellContainer').forEach((el) => {
-      el.animate(
-  [
-    { transform: `translateY(${-100 + Math.random() * 200}vh) rotate(0deg)` },
-    { transform: `translateX(${-100 + Math.random() * 200}vh) rotate(850deg)` }
-  ],
-  {
-    duration: 10000,
-    fill: "forwards"
-  }
-);
-
-    })
+        el.animate([
+            { transform: `translateY(${-100 + Math.random() * 200}vh) rotate(0deg)` },
+            { transform: `translateX(${-100 + Math.random() * 200}vh) rotate(850deg)` }
+        ], {
+            duration: 10000,
+            fill: "forwards"
+        });
+    });
   };
 }
+
+
 
 module.exports = Render;
