@@ -1,4 +1,4 @@
-import 'web-animations-js';
+const
 
 class Render {
   constructor() {
