@@ -248,8 +248,8 @@ class Game {
     console.log(this.activeShadow)
     this.activeShadow.positions.forEach(coordinate => {
       if ( this.activeShadow.checkCollisionDown(this.grid) === false ) {
-        // this.activeShadow.positions[coordinate[0][coordinate[1]]].map()
-        this.activeShadow.positions[coordinate[0][coordinate[1]]] = this.activeShadow.positions[coordinate[0] + 1 [coordinate[1]]] 
+        this.grid[coordinate[0] += 1];
+        this.grid[coordinate[0][coordinate[1]]] = this.activeShadow.value;
         console.log(this.activeShadow)
       } else {
         return this.grid[coordinate[0][coordinate[1]]] = this.activeShadow.value;
