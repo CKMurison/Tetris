@@ -48,9 +48,8 @@ class Game {
   // The playLoop runs the game
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
-    this.playMusic();
     let turnInProgress = false;
-    let timer = 10000; // time between ticks in ms
+    let timer = 1000; // time between ticks in ms
 
     while (!turnInProgress) {
       turnInProgress = true;
@@ -189,18 +188,19 @@ class Game {
     return grid;
   }
 
+  // music starts if you click or press any button, but music doesn't start in Firefox by pressing the arrows (to be checked/fixed)
   playMusic() {
     const music = new Audio('media/tetris-soundtrack.mp3');
     music.loop = true;
     music.volume = 0.1;
+    music.autoplay = false;
 
     document.addEventListener("click", function() { // unmute and play the music if the user clicks anywhere in the Document
       music.muted = false;
       music.play();
     });
-    console.log("playMusic() returned");
 
-    document.addEventListener("keydown", function() { // unmute and play the music if the user presses any button    
+    document.addEventListener("keydown", function(event) { // unmute and play the music if the user presses any button   
         music.muted = false;
         music.play();
     });
