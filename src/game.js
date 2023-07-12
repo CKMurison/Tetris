@@ -45,6 +45,7 @@ class Game {
     this.render = render;
     this.players = [new Player(1, this), new Player(2, this)];
     this.activePlayer = this.players[(Math.floor(Math.random() * 2))]; // Default player is player 1
+    this.tetrominoCount = 0
   };
 
   // The playLoop runs the game
@@ -121,6 +122,7 @@ class Game {
     this.activeTetromino.positions.forEach(arr =>
       this.grid[arr[0]][arr[1]] = this.randomIndex + 1
     );
+    tetrominoCount += 1
     return true;
   }
 
