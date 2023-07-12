@@ -33,6 +33,11 @@
               }
             }
           });
+          document.addEventListener("keyup", (e) => {
+            if (e.key == " " && this.activePlayer === 1) {
+              this.game.pauseGame();
+            }
+          });
         }
       };
       module.exports = Player;
@@ -117,19 +122,39 @@
         constructor(render2) {
           this.grid = this.#createGrid(20, 10);
           this.activeTetromino = null;
-          let midRow = this.grid.length / 2 - 1;
-          let midCol = this.grid[0].length / 2 - 1;
+          this.isPaused = false;
+          this.turnInProgress = false;
+          let midRow = Math.floor(this.grid.length / 2 - 1);
+          let midCol = Math.floor(this.grid[0].length / 2 - 1);
           this.position = {
             i: {
               p1: [[midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 1, midCol + 2]],
               p2: [[midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1], [midRow, midCol + 2]]
             },
-            j: [[midRow, midCol - 1], [midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
-            l: [[midRow, midCol + 1], [midRow + 1, midCol + 1], [midRow + 1, midCol], [midRow + 1, midCol - 1]],
-            o: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol], [midRow + 1, midCol + 1]],
-            s: [[midRow, midCol], [midRow, midCol + 1], [midRow + 1, midCol - 1], [midRow + 1, midCol]],
-            t: [[midRow, midCol], [midRow + 1, midCol], [midRow + 1, midCol - 1], [midRow + 1, midCol + 1]],
-            z: [[midRow, midCol - 1], [midRow, midCol], [midRow + 1, midCol], [midRow + 1, midCol + 1]]
+            j: {
+              p1: [[midRow + 1, midCol - 1], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
+              p2: [[midRow - 1, midCol - 1], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
+            },
+            l: {
+              p1: [[midRow + 1, midCol + 1], [midRow + 2, midCol + 1], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
+              p2: [[midRow - 1, midCol + 1], [midRow, midCol + 1], [midRow, midCol - 1], [midRow, midCol]]
+            },
+            o: {
+              p1: [[midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
+              p2: [[midRow - 1, midCol], [midRow - 1, midCol + 1], [midRow, midCol], [midRow, midCol + 1]]
+            },
+            s: {
+              p1: [[midRow + 1, midCol + 1], [midRow + 1, midCol], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
+              p2: [[midRow - 1, midCol + 1], [midRow - 1, midCol], [midRow, midCol - 1], [midRow, midCol]]
+            },
+            t: {
+              p1: [[midRow + 1, midCol], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
+              p2: [[midRow - 1, midCol], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
+            },
+            z: {
+              p1: [[midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
+              p2: [[midRow - 1, midCol - 1], [midRow - 1, midCol], [midRow + 0, midCol], [midRow + 0, midCol + 1]]
+            }
           };
           this.render = render2;
           this.players = [new Player(1, this), new Player(2, this)];
@@ -138,26 +163,32 @@
         // The playLoop runs the game
         // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
         async playLoop(test) {
-          let turnInProgress = false;
-          let timer = 500;
-          while (!turnInProgress) {
-            turnInProgress = true;
+          this.turnInProgress = false;
+          let timer = 300;
+          while (!this.turnInProgress) {
+            this.turnInProgress = true;
             let generated = this.generateTetromino();
             if (generated) {
               let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
               this.render.drawGrid(this.grid);
+              this.render.displayActivePlayer(this.activePlayer === this.players[0] ? "Player2" : "Player1");
               while (!collided) {
-                this.moveVertical();
-                this.render.drawGrid(this.grid);
-                if (!test)
+                if (!this.isPaused) {
+                  this.moveVertical();
+                  this.render.drawGrid(this.grid);
+                  if (!test)
+                    await this.#delay(timer);
+                  collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
+                } else if (!test) {
                   await this.#delay(timer);
-                collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
+                }
               }
               this.removeCompleteLines();
-              turnInProgress = false;
+              this.turnInProgress = false;
               this.swapPlayer();
             }
           }
+          this.turnInProgress = false;
           this.render.gameOver(this.activePlayer === this.players[0] ? "Player2" : "Player1");
         }
         generateTetromino(random) {
@@ -173,17 +204,10 @@
             6: "z"
           };
           key = keyMap[this.randomIndex];
-          if (key === "i") {
-            const position = this.activePlayer === this.players[0] ? this.position.i.p1 : this.position.i.p2;
-            if (this.checkIfGameOver(position))
-              return false;
-            this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)), this.randomIndex + 1);
-          } else {
-            const position = this.position[key];
-            if (this.checkIfGameOver(position))
-              return false;
-            this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)), this.randomIndex + 1);
-          }
+          const position = this.activePlayer === this.players[0] ? this.position[key]["p1"] : this.position[key]["p2"];
+          if (this.checkIfGameOver(position))
+            return false;
+          this.activeTetromino = new Tetromino(JSON.parse(JSON.stringify(position)), this.randomIndex + 1);
           this.activeTetromino.positions.forEach(
             (arr) => this.grid[arr[0]][arr[1]] = this.randomIndex + 1
           );
@@ -208,20 +232,22 @@
           this.drawTetromino();
         }
         moveHorizontal(input) {
-          if (this.activeTetromino === null)
-            return;
-          if (input == "left" ? this.activeTetromino.checkCollisionLeft(this.grid) : this.activeTetromino.checkCollisionRight(this.grid))
-            return;
-          this.clearTetromino();
-          this.activeTetromino.positions.forEach((blockPosition) => {
-            if (input === "right") {
-              blockPosition[1] += 1;
-            } else if (input === "left") {
-              blockPosition[1] -= 1;
-            }
-          });
-          this.drawTetromino();
-          this.render.drawGrid(this.grid);
+          if (!this.isPaused) {
+            if (this.activeTetromino === null)
+              return;
+            if (input == "left" ? this.activeTetromino.checkCollisionLeft(this.grid) : this.activeTetromino.checkCollisionRight(this.grid))
+              return;
+            this.clearTetromino();
+            this.activeTetromino.positions.forEach((blockPosition) => {
+              if (input === "right") {
+                blockPosition[1] += 1;
+              } else if (input === "left") {
+                blockPosition[1] -= 1;
+              }
+            });
+            this.drawTetromino();
+            this.render.drawGrid(this.grid);
+          }
         }
         rotateTetromino() {
           this.anchorPoint = this.activeTetromino.positions[1];
@@ -256,7 +282,6 @@
             this.afterTF.push([row, column]);
           });
           const positionsAsStrings = this.activeTetromino.positions.map((el) => JSON.stringify(el));
-          console.log(positionsAsStrings);
           const collisionChecker = this.afterTF.every((pos) => {
             if (positionsAsStrings.includes(`[${pos[0]},$${pos[1]}]`)) {
               return true;
@@ -270,6 +295,18 @@
           this.activeTetromino.positions = this.afterTF;
           this.drawTetromino();
           this.render.drawGrid(this.grid);
+        }
+        pauseGame() {
+          if (this.isPaused === false) {
+            this.isPaused = true;
+            if (this.turnInProgress) {
+              this.render.pauseText();
+            }
+            ;
+          } else if (this.isPaused === true) {
+            this.isPaused = false;
+            this.render.removePauseText();
+          }
         }
         clearTetromino() {
           this.activeTetromino.positions.forEach((eachCoordinate) => {
@@ -365,6 +402,18 @@
               return "zBlock";
           }
         }
+        pauseText() {
+          let pauseContainer = document.createElement("div");
+          pauseContainer.className = "pause";
+          pauseContainer.textContent = "paused";
+          this.mainEl.append(pauseContainer);
+          document.querySelectorAll(".cellContainer").forEach((el) => {
+            el.style.animationName = "cellAnimation";
+          });
+        }
+        removePauseText() {
+          document.querySelector(".pause").remove();
+        }
         gameOver(player) {
           let gameOverContainer = document.createElement("div");
           gameOverContainer.className = "gameOver";
@@ -373,6 +422,15 @@
           document.querySelectorAll(".cellContainer").forEach((el) => {
             el.style.animationName = "cellAnimation";
           });
+        }
+        displayActivePlayer(player) {
+          let activePlayerContainer = document.createElement("div");
+          activePlayerContainer.className = "activePlayer";
+          activePlayerContainer.textContent = player === "Player1" ? "Player 2" : "Player 1";
+          document.querySelectorAll(".activePlayer").forEach((el) => {
+            el.remove();
+          });
+          document.body.appendChild(activePlayerContainer);
         }
       };
       module.exports = Render2;

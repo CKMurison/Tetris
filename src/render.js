@@ -86,6 +86,16 @@ class Render {
       el.style.animationName = "cellAnimation";
     })
   };
+
+  displayActivePlayer(player) {
+    let activePlayerContainer = document.createElement('div')
+    activePlayerContainer.className = 'activePlayer'
+    activePlayerContainer.textContent = player === 'Player1' ? 'Player 2' : 'Player 1';
+    document.querySelectorAll('.activePlayer').forEach((el) => {
+      el.remove();
+    });
+    document.body.appendChild(activePlayerContainer);
+  }
 }
 
 module.exports = Render;
