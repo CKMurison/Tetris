@@ -426,7 +426,7 @@
         displayActivePlayer(player) {
           let activePlayerContainer = document.createElement("div");
           activePlayerContainer.className = "activePlayer";
-          activePlayerContainer.textContent = player === "Player1" ? "Player 2" : "Player 1";
+          activePlayerContainer.textContent = player === "Player1" ? "Active player: Player 2" : "Active player: Player 1";
           document.querySelectorAll(".activePlayer").forEach((el) => {
             el.remove();
           });
