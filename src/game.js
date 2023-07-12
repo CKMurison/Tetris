@@ -22,16 +22,16 @@ class Game {
         p2: [[midRow - 1, midCol - 1], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
       },
       l: {
-        p1: [[midRow + 1, midCol + 1], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
-        p2: [[midRow - 1, midCol + 1], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
+        p1: [[midRow + 1, midCol + 1], [midRow + 2, midCol + 1], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
+        p2: [[midRow - 1, midCol + 1], [midRow, midCol + 1], [midRow, midCol - 1], [midRow, midCol]]
       },
       o: {
         p1: [[midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
         p2: [[midRow - 1, midCol], [midRow - 1, midCol + 1], [midRow, midCol], [midRow, midCol + 1]]
       },
       s: {
-        p1: [[midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
-        p2: [[midRow - 1, midCol], [midRow - 1, midCol + 1], [midRow, midCol - 1], [midRow, midCol]]
+        p1: [[midRow + 1, midCol + 1], [midRow + 1, midCol], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
+        p2: [[midRow - 1, midCol + 1], [midRow - 1, midCol], [midRow, midCol - 1], [midRow, midCol]]
       },
       t: {
         p1: [[midRow + 1, midCol], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
@@ -46,18 +46,18 @@ class Game {
     this.players = [new Player(1, this), new Player(2, this)];
     this.activePlayer = this.players[(Math.floor(Math.random() * 2))]; // Default player is player 1
   };
-  
+
   // The playLoop runs the game
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
     this.turnInProgress = false;
-    let timer = 100; // time between ticks in ms
+    let timer = 300; // time between ticks in ms
 
     while (!this.turnInProgress) {
       this.turnInProgress = true;
 
       let generated = this.generateTetromino();
-      
+
       if (generated) {
         let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         this.render.drawGrid(this.grid);
@@ -161,6 +161,62 @@ class Game {
       this.render.drawGrid(this.grid);
     }
   };
+
+  rotateTetromino() {
+    this.anchorPoint = this.activeTetromino.positions[1]
+    this.relation = []
+    this.newArr = []
+    this.afterTF = []
+    this.clearTetromino();
+    this.activeTetromino.positions.forEach(arr => {
+      this.relation.push([arr[0] - this.anchorPoint[0], arr[1] - this.anchorPoint[1]])
+    })
+
+    const transformation = {
+          "[-1,0]": [0, 1],
+          "[0,1]": [1, 0],
+          "[1,0]": [0, -1],
+          "[0,-1]": [-1, 0],
+          "[-1,-1]": [-1, 1],
+          "[-1,1]": [1, 1],
+          "[1,1]": [1, -1],
+          "[1,-1]": [-1, -1],
+          "[-2,0]": [0, 2],
+          "[0,2]": [2, 0],
+          "[2,0]": [0, -2],
+          "[0,-2]": [-2, 0],
+          "[0,0]" : [0, 0]
+      }
+
+    this.relation.forEach(arr => {
+      this.newArr.push(transformation[JSON.stringify(arr)])
+    })
+  
+    this.newArr.forEach(arr => {
+      let row = arr[0] + this.anchorPoint[0];
+      let column = arr[1] + this.anchorPoint[1];
+      
+      this.afterTF.push([row, column])
+    })
+
+    const positionsAsStrings = this.activeTetromino.positions.map(el => JSON.stringify(el))
+
+    const collisionChecker = this.afterTF.every(pos => {
+      if (positionsAsStrings.includes(`[${pos[0]},$${pos[1]}]`)) {
+        return true;
+      } else {
+        return this.grid[pos[0]][pos[1]] === 0
+      }
+    })
+
+    if(!collisionChecker) {
+      return;
+    }
+
+    this.activeTetromino.positions = this.afterTF;
+    this.drawTetromino();
+    this.render.drawGrid(this.grid);
+  }
 
   pauseGame() {
     if (this.isPaused === false) {

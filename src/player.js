@@ -12,13 +12,17 @@ class Player{
                     this.game.moveHorizontal('left');
                 } else if (e.key === "ArrowRight") {
                     this.game.moveHorizontal('right');
-                };
+                } else if (e.key === "ArrowUp") {
+                    this.game.rotateTetromino();
+                }
             } else {
                 if (e.key === "a") {
                     this.game.moveHorizontal('left');
                 } else if (e.key === "d") {
                     this.game.moveHorizontal('right');
-                };
+                } else if (e.key === "s") {
+                    this.game.rotateTetromino();
+                }
             }    
         }); 
 
@@ -31,3 +35,5 @@ class Player{
 };
 
 module.exports = Player;
+
+// Add stop gap so button is only active when the right player is interacting with the right controls (run if player = 1)
