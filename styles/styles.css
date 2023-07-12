@@ -142,3 +142,11 @@ div {
 .zBlock {
     background-color: brown;
 }
+
+.plusBlock {
+    background-color: rgb(227, 56, 225);
+}
+
+.uBlock {
+    background-color: rgb(53, 35, 35);
+}

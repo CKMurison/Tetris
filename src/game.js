@@ -1,4 +1,5 @@
 const Player = require('./player');
+const { bizarre } = require('./powerUps');
 const Tetromino = require('./tetromino');
 
 class Game {
@@ -9,37 +10,45 @@ class Game {
     this.activeTetromino = null;
     this.isPaused = false;
     this.turnInProgress = false;
-    // Hard-coded initial spawn points based upon 20x10 grid
-    let midRow = Math.floor(this.grid.length / 2 - 1);
+
+    this.midRow = Math.floor(this.grid.length / 2 - 1);
     let midCol = Math.floor(this.grid[0].length / 2 - 1);
     this.position = {
       i: {
-        p1: [[midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 1, midCol + 2]],
-        p2: [[midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1], [midRow, midCol + 2]]
+        p1: [[this.midRow + 1, midCol - 1], [this.midRow + 1, midCol], [this.midRow + 1, midCol + 1], [this.midRow + 1, midCol + 2]],
+        p2: [[this.midRow, midCol - 1], [this.midRow, midCol], [this.midRow, midCol + 1], [this.midRow, midCol + 2]]
       },
       j: {
-        p1: [[midRow + 1, midCol - 1], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
-        p2: [[midRow - 1, midCol - 1], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
+        p1: [[this.midRow + 1, midCol - 1], [this.midRow + 2, midCol - 1], [this.midRow + 2, midCol], [this.midRow + 2, midCol + 1]],
+        p2: [[this.midRow - 1, midCol - 1], [this.midRow, midCol - 1], [this.midRow, midCol], [this.midRow, midCol + 1]]
       },
       l: {
-        p1: [[midRow + 1, midCol + 1], [midRow + 2, midCol + 1], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
-        p2: [[midRow - 1, midCol + 1], [midRow, midCol + 1], [midRow, midCol - 1], [midRow, midCol]]
+        p1: [[this.midRow + 1, midCol + 1], [this.midRow + 2, midCol + 1], [this.midRow + 2, midCol - 1], [this.midRow + 2, midCol]],
+        p2: [[this.midRow - 1, midCol + 1], [this.midRow, midCol + 1], [this.midRow, midCol - 1], [this.midRow, midCol]]
       },
       o: {
-        p1: [[midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
-        p2: [[midRow - 1, midCol], [midRow - 1, midCol + 1], [midRow, midCol], [midRow, midCol + 1]]
+        p1: [[this.midRow + 1, midCol], [this.midRow + 1, midCol + 1], [this.midRow + 2, midCol], [this.midRow + 2, midCol + 1]],
+        p2: [[this.midRow - 1, midCol], [this.midRow - 1, midCol + 1], [this.midRow, midCol], [this.midRow, midCol + 1]]
       },
       s: {
-        p1: [[midRow + 1, midCol + 1], [midRow + 1, midCol], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
-        p2: [[midRow - 1, midCol + 1], [midRow - 1, midCol], [midRow, midCol - 1], [midRow, midCol]]
+        p1: [[this.midRow + 1, midCol + 1], [this.midRow + 1, midCol], [this.midRow + 2, midCol - 1], [this.midRow + 2, midCol]],
+        p2: [[this.midRow - 1, midCol + 1], [this.midRow - 1, midCol], [this.midRow, midCol - 1], [this.midRow, midCol]]
       },
       t: {
-        p1: [[midRow + 1, midCol], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
-        p2: [[midRow - 1, midCol], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
+        p1: [[this.midRow + 1, midCol], [this.midRow + 2, midCol - 1], [this.midRow + 2, midCol], [this.midRow + 2, midCol + 1]],
+        p2: [[this.midRow - 1, midCol], [this.midRow, midCol - 1], [this.midRow, midCol], [this.midRow, midCol + 1]]
       },
       z: {
-        p1: [[midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
-        p2: [[midRow - 1, midCol - 1], [midRow - 1, midCol], [midRow + 0, midCol], [midRow + 0, midCol + 1]]
+        p1: [[this.midRow + 1, midCol - 1], [this.midRow + 1, midCol], [this.midRow + 2, midCol], [this.midRow + 2, midCol + 1]],
+        p2: [[this.midRow - 1, midCol - 1], [this.midRow - 1, midCol], [this.midRow + 0, midCol], [this.midRow + 0, midCol + 1]]
+      }, 
+      plus: {
+        p1: [[this.midRow + 2, midCol - 1],[this.midRow + 2, midCol],[this.midRow + 1, midCol],[this.midRow + 3, midCol],[this.midRow + 2, midCol + 1]],
+        p2: [[this.midRow - 1, midCol - 1],[this.midRow - 1, midCol],[this.midRow, midCol],[this.midRow - 2, midCol],[this.midRow - 1, midCol + 1]]
+      },
+      u: {
+        p1: [[this.midRow + 1, midCol - 1],[this.midRow + 2, midCol],[this.midRow + 2, midCol - 1],[this.midRow + 2, midCol + 1],[this.midRow + 1, midCol + 1]],
+        p2: [[this.midRow, midCol - 1],[this.midRow - 1, midCol],[this.midRow - 1, midCol - 1],[this.midRow - 1, midCol + 1],[this.midRow, midCol + 1]]
       }
     }
     this.render = render;
@@ -51,12 +60,22 @@ class Game {
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
     this.turnInProgress = false;
-    let timer = 300; // time between ticks in ms
-
+    
     while (!this.turnInProgress) {
       this.turnInProgress = true;
+      let timer = this.activePlayer.timer; // time between ticks in ms
+      console.log(timer)
+      
+      // let generated = this.generateTetromino();
+      let generated;
+      if (this.bizarre) {
+        let random = Math.round(Math.random()+8)
+        generated = this.generateTetromino(random)
+        this.bizarre = false 
+      } else {
+        generated = this.generateTetromino()
+      }
 
-      let generated = this.generateTetromino();
 
       if (generated) {
         let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
@@ -97,7 +116,9 @@ class Game {
       3: "o",
       4: "s",
       5: "t",
-      6: "z"
+      6: "z", 
+      7: "plus",
+      8: "u"
     };
 
     key = keyMap[this.randomIndex];

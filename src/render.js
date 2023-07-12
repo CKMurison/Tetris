@@ -57,6 +57,10 @@ class Render {
         return 'tBlock'
       case 7:
         return 'zBlock'
+      case 8: 
+        return 'plusBlock'
+      case 9: 
+        return 'uBlock'
     }
   }
 
