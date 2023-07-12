@@ -191,13 +191,17 @@ class Game {
   }
 
   removeCompleteLines() {
-    this.grid.forEach((row, index) => {
-      if (row.every(cell => cell !== 0)) {
+    let index = 0
+    while (index < this.grid.length) {
+      if (this.grid[index].every(cell => cell !== 0)) {
         const halfPoint = this.grid.length / 2;
         this.grid.splice(index, 1);
         this.grid.splice(index < halfPoint ? halfPoint - 1 : halfPoint, 0, new Array(this.grid[0].length).fill(0));
+        this.activePlayer.incrementLineCounter();
+      } else {
+        index++;
       }
-    })
+    }
   }
 
   #createGrid(rows, columns) {

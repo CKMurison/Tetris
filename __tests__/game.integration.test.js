@@ -334,5 +334,39 @@ test('press left p1 twice', () => {
     expect(generateTetrominoSpy).toHaveBeenCalled();
   });
 
+  test("Clearing lines increments the linesCleared var inside player1", () => {
+    game.activePlayer = game.players[0];
+    game.grid[19] = [1,1,1,1,1,1,1,1,1,1];
+    expect(game.players[0].linesCleared).toBe(0);
+    game.removeCompleteLines();
+    expect(game.players[0].linesCleared).toBe(1);
+  });
 
+  test("Clearing lines increments the linesCleared var inside player2", () => {
+    game.activePlayer = game.players[1];
+    game.grid[0] = [1,1,1,1,1,1,1,1,1,1];
+    expect(game.players[1].linesCleared).toBe(0);
+    game.removeCompleteLines();
+    expect(game.players[1].linesCleared).toBe(1);
+  });
+
+  test("Clearing lines increments the linesCleared multiple times inside player1", () => {
+    game.activePlayer = game.players[0];
+    game.grid[19] = [1,1,1,1,1,1,1,1,1,1];
+    game.grid[18] = [1,1,1,1,1,1,1,1,1,1];
+    expect(game.players[0].linesCleared).toBe(0);
+    game.removeCompleteLines();
+    expect(game.players[0].linesCleared).toBe(2);
+  });
+
+  test("Clearing lines increments the linesCleared multiple times inside player2", () => {
+    game.activePlayer = game.players[1];
+    game.grid[0] = [1,1,1,1,1,1,1,1,1,1];
+    game.grid[1] = [1,1,1,1,1,1,1,1,1,1];
+    expect(game.players[1].linesCleared).toBe(0);
+    game.removeCompleteLines();
+    expect(game.players[1].linesCleared).toBe(2);
+  });
+
+  test("")
 });

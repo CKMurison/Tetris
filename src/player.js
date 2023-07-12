@@ -3,6 +3,8 @@ class Player{
         this.activePlayer = player;
         this.game = game;
         this.controls();
+        this.linesCleared = 0;
+        this.powerUps = [powerUps.speedUp, powerUps.bizarre, powerUps.removeBlock]
     }
 
     controls() {
@@ -27,7 +29,11 @@ class Player{
                 this.game.pauseGame();
             }
         })
-    };   
+    };
+
+    incrementLineCounter() {
+        this.linesCleared++;
+    }
 };
 
 module.exports = Player;
