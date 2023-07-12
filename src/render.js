@@ -29,7 +29,7 @@ class Render {
 
       gridContainer.append(rowContainer);
     })
-
+    
     this.mainEl.append(gridContainer);
     this.findSpawnLine(grid);
   }

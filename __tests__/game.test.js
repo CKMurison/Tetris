@@ -527,4 +527,36 @@ it('spawns the Z-Block if player 1 is the active player', () => {
     game.removeCompleteLines();
     expect(game.grid).toEqual([[1,0], [0,1], [0,1], [0,0], [0,0], [0,1]]);
   });
+
+  it('spawns the Z-Block and its shadow if player 1 is the active player', () => {
+    const random = 6
+    game.activePlayer = game.players[0];
+    game.generateTetromino(random)
+    game.drawShadow();
+    // console.log(game.grid)
+    expect(game.grid).toEqual(
+        [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 7, 7, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 7, 7, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, "s", "s", 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, "s", "s", 0, 0, 0, 0]
+        ]
+    )
+  })
 })

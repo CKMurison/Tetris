@@ -179,7 +179,6 @@ test('press left p1 twice', () => {
   const event = new KeyboardEvent('keydown', { key: 'ArrowLeft' });
   document.dispatchEvent(event);
   document.dispatchEvent(event);
-  console.log(game.grid)
   expect(game.grid).toEqual(
       [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -283,7 +282,6 @@ test('press left p1 twice', () => {
     game.activePlayer = game.players[0];
     game.generateTetromino(6)
     game.rotateTetromino()
-    console.log(game.grid)
     expect(game.grid).toEqual(      
       [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
