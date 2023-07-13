@@ -67,6 +67,14 @@ div {
     }
 }
 
+.boxTitle {
+    font-size: 26px;
+}
+
+.headers {
+    font-size: 18px;
+}
+
 .instructionsContainer {
     flex-direction: column;
     justify-content: space-between;
