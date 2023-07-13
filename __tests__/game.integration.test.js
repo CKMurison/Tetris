@@ -340,10 +340,72 @@ describe('Game', () => {
     )
   })
 
+  test("rotation gets triggered by pressing up arrow for player 1", () => {
+    game.activePlayer = game.players[0];
+    game.generateTetromino(0)
+    const event = new KeyboardEvent('keydown', { key: 'ArrowUp' });
+    document.dispatchEvent(event);
+    expect(game.grid).toEqual(
+      [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      ]
+    )
+  })
+
   test('rotation test 6 (I-Piece P2) - testing new position for activeTetromino', () => {
     game.activePlayer = game.players[1];
     game.generateTetromino(0)
     game.rotateTetromino()
+    expect(game.grid).toEqual(
+      [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      ]
+    )
+  })
+
+  test("rotation gets triggered by pressing s for player 2", () => {
+    game.activePlayer = game.players[1];
+    game.generateTetromino(0)
+    const event = new KeyboardEvent('keydown', { key: 's' });
+    document.dispatchEvent(event);
     expect(game.grid).toEqual(
       [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -532,4 +594,11 @@ describe('Game', () => {
     game.removeCompleteLines();
     expect(game.players[1].linesCleared).toBe(2);
   });
+
+  test("Spacebar correctly pauses the game", () => {
+    const pauseSpy = jest.spyOn(game, 'pauseGame');
+    const event = new KeyboardEvent('keyup', { key: ' ' });
+    document.dispatchEvent(event);
+    expect(pauseSpy).toHaveBeenCalled();
+  })
 });

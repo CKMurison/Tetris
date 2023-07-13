@@ -50,13 +50,13 @@ class Player{
           });
 
         document.addEventListener('keyup', (e) => {
-            if (e.key == " " && this.activePlayer === 1) {
+            if (e.key == " ") {
                 this.game.pauseGame();
             }
         })
 
         document.addEventListener('keyup', (e) => {
-            if (e.key == "r" && this.activePlayer === 1) {
+            if (e.key == "r") {
                 if (this.game.gameOver) {
                     this.game.gameOver = false;
                     this.game.render.removeOverlayText();
