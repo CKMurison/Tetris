@@ -31,7 +31,7 @@ class Render {
       gridContainer.append(rowContainer);
     })
 
-    this.mainEl.append(gridContainer);
+    document.querySelector('#gridElement').append(gridContainer);
     this.findSpawnLine(grid);
   }
 
@@ -58,6 +58,10 @@ class Render {
         return 'tBlock'
       case 7:
         return 'zBlock'
+      case 8: 
+        return 'plusBlock'
+      case 9: 
+        return 'uBlock'
     }
   }
 
@@ -100,15 +104,14 @@ class Render {
 
 
   musicMuted(isMuted) {
-    const musicContainer = document.querySelector('.musicMuted');
-    musicContainer.textContent = `Music Volume: ${isMuted ? 'Off' : 'On'}`;
+    const musicContainer = document.querySelector('#musicMuted');
+    musicContainer.textContent = `${isMuted ? 'Off' : 'On'}`;
   }
 
   displayActivePlayer(player) {
-    let activePlayerContainer = document.querySelector('.activePlayer');
-    activePlayerContainer.textContent = player === 'Player1' ? "Active player: Player 2" : "Active player: Player 1";
-  }
-
+    let activePlayerContainer = document.querySelector('#activePlayer');
+    activePlayerContainer.textContent = player;
+}
 }
 
 module.exports = Render;

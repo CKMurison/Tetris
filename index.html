@@ -14,16 +14,56 @@
             <img id="tetris-logo" class="logo" src="./media/battle-tetris-logo.png">
          </div>
          <div class='instructionsContainer'>
-            <span style="font-weight:bold">Player 1 Controls:</span>
-            &nbsp;&larr; : Move Left<br>
-            &nbsp;&rarr; : Move Right<br><br>
-
-            <span style="font-weight:bold">Player 2 Controls:</span>
-            &nbsp;a : Move Left<br>
-            &nbsp;d : Move Right  
+            <div class='uiContainer player2'>
+               <span style="font-weight:bold">Player 2</span>
+               <span style="font-weight:bold">Lines cleared:</span>
+               <span id="linesClearedP2">0</span>
+               <span style="font-weight:bold">Next power-up:</span>
+               <span id="nextPowerUpP2">Opponent Speed Up</span>
+               <span style="font-weight:bold">Controls:</span>
+               &nbsp;a : Move Left<br>
+               &nbsp;d : Move Right<br>
+               &nbsp;s : Rotate<br>
+               &nbsp;w : Speed up
+            </div>
+            <div class='uiContainer player1'>
+               <span style="font-weight:bold">Player 1</span>
+               <span style="font-weight:bold">Lines cleared:</span>
+               <span id="linesClearedP1">0</span>
+               <span style="font-weight:bold">Next power-up:</span>
+               <span id="nextPowerUpP1">Opponent Speed Up</span>
+               <span style="font-weight:bold">Controls:</span>
+               &nbsp;&larr; : Move Left<br>
+               &nbsp;&rarr; : Move Right<br>
+               &nbsp;&uarr; : Rotate<br>
+               &nbsp;&darr; : Speed up
+            </div>
+         </div>
+         <div id="gridElement"></div>
+         <div class="instructionsContainer">
+            <div class='uiContainer'>
+               <span style="font-weight:bold">Controls:</span>
+               &nbsp;spacebar : Pause<br>
+               &nbsp;r : Restart<br>
+               &nbsp;m : Mute
+            </div>
+            <div class="uiContainer">
+               <span style="font-weight:bold">Active Player:</span>
+               <span id="activePlayer"></span>
+               <span style="font-weight:bold">Music:</span>
+               <div id="musicMuted">On</div>
+            </div>
+            <div class="uiContainer">
+               <span style="font-weight:bold">Power-Ups</span>
+               <span style="font-weight:bold">Opponent Speed Up:</span>
+               Increases the speed at which opponents pieces will fall
+               <span style="font-weight:bold">Bizarre Tetromino:</span>
+               The next piece generated for the opponent will be a significantly more complex piece
+               <span style="font-weight:bold">Remove A Block:</span>
+               Removes a random block in the opponents side of the board
+            </div>
          </div>
 
-         <div class="musicMuted">Music Volume: On</div>
          </div>
          
          
