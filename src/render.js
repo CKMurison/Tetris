@@ -79,7 +79,7 @@ class Render {
     this.removeOverlayText();
     let restartContainer = document.createElement('div')
     restartContainer.className = 'overlay'
-    restartContainer.textContent = 'Restarting game';
+    restartContainer.innerHTML = 'Restarting game<br>Please wait';
     this.mainEl.append(restartContainer);
  };
  
@@ -114,11 +114,6 @@ class Render {
     const overlayText = document.querySelector('.overlay')
     if(overlayText !== null) overlayText.remove();
   };
-
-  musicMuted(isMuted) {
-    const musicContainer = document.querySelector('#musicMuted');
-    musicContainer.textContent = `${isMuted ? 'Off' : 'On'}`;
-  }
 
   displayActivePlayer(player) {
     let activePlayerContainer = document.querySelector('#activePlayer');

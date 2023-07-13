@@ -278,6 +278,8 @@ class Game {
     this.activeTetromino = null;
     this.isPaused = false;
     this.turnInProgress = false;
+    this.players[0].clearEventListeners();
+    this.players[1].clearEventListeners();
     this.players = [new Player(1, this), new Player(2, this)];
     this.activePlayer = this.players[(Math.floor(Math.random() * 2))];
     this.render.removeOverlayText();

@@ -1,6 +1,6 @@
 const powerUps = require('./powerUps.js')
 
-class Player{
+class Player {
     constructor(player, game) {
         this.activePlayer = player;
         this.timer = 600;
@@ -14,56 +14,7 @@ class Player{
             2: 'Remove A Block'
         }
         this.controls();
-    }
-
-    controls() {
-        document.addEventListener('keydown', this.playerMovement); 
-
-        // ArrowDown speed up the drop of the tetromino after checking for collision
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "ArrowDown" && this.activePlayer === 1) {
-              let collided =
-                this.game.activePlayer === this.game.players[0] ? this.game.activeTetromino.checkCollisionDown(this.game.grid) : this.game.activeTetromino.checkCollisionUp(this.game.grid);
-              if (!collided) {
-                this.game.moveVertical();
-                this.game.render.drawGrid(this.game.grid);
-              }
-            }
-
-            if (e.key === "w" && this.activePlayer === 2) {
-                let collided =
-                  this.game.activePlayer === this.game.players[1] ? this.game.activeTetromino.checkCollisionUp(this.game.grid) : this.game.activeTetromino.checkCollisionDown(this.game.grid);
-                if (!collided) {
-                  this.game.moveVertical();
-                  this.game.render.drawGrid(this.game.grid);
-                }
-              }
-          });
-
-        document.addEventListener('keyup', (e) => {
-            if (e.key == " " && this.activePlayer === 1) {
-                this.game.pauseGame();
-            }
-        })
-
-        document.addEventListener('keyup', (e) => {
-            if (e.key == "r" && this.activePlayer === 1) {
-                document.removeEventListener('keydown', this.playerMovement);
-                if (this.game.gameOver) {
-                    this.game.gameOver = false;
-                    this.game.render.removeOverlayText();
-                    this.game.restartGame();
-                    this.game.playLoop();
-                } else {
-                    this.game.newGame = true;
-                    this.game.isPaused = false;
-                    this.game.render.restartText();
-                }
-            }
-        })
-        
-
-    };   
+    }   
 
     incrementLineCounter() {
         this.linesCleared++;
@@ -75,26 +26,76 @@ class Player{
         document.querySelector(`#nextPowerUpP${this.activePlayer}`).textContent = this.nextPowerUpNames[this.nextPowerUp];
     }
 
-    playerMovement = (e) => {    
+    controls() {
         if (this.activePlayer === 1) {
+            document.removeEventListener('keydown', this.player1Movement);
+            document.addEventListener('keydown', this.player1Movement)
+        } else {
+            document.removeEventListener('keydown', this.player2Movement);
+            document.addEventListener('keydown', this.player2Movement)
+        }
+
+        document.removeEventListener('keyup', this.commonControls);
+        document.addEventListener('keyup', this.commonControls);
+    };
+
+    player1Movement = (e) => {    
+        if (this.game.activePlayer === this.game.players[0]) {
             if (e.key === 'ArrowLeft') {
                 this.game.moveHorizontal('left');
             } else if (e.key === "ArrowRight") {
                 this.game.moveHorizontal('right');
             } else if (e.key === "ArrowUp") {
                 this.game.rotateTetromino();
+            } else if (e.key === "ArrowDown") {
+              if (!this.game.activeTetromino.checkCollisionDown(this.game.grid)) {
+                this.game.moveVertical();
+                this.game.render.drawGrid(this.game.grid);
+              }
             }
-        } else {
+        }   
+    }
+
+    player2Movement = (e) => {
+        if (this.game.activePlayer === this.game.players[1]) {
             if (e.key === "a") {
                 this.game.moveHorizontal('left');
             } else if (e.key === "d") {
                 this.game.moveHorizontal('right');
             } else if (e.key === "s") {
                 this.game.rotateTetromino();
+            } else if (e.key === "w") {
+                if (!this.game.activeTetromino.checkCollisionUp(this.game.grid)) {
+                  this.game.moveVertical();
+                  this.game.render.drawGrid(this.game.grid);
+                }
             }
-        }    
+        }
     }
-};
+
+    commonControls = (e) => {
+        if (e.key == "r") {
+            if (this.game.gameOver) {
+                this.game.gameOver = false;
+                this.game.render.removeOverlayText();
+                this.game.restartGame();
+                this.game.playLoop();
+            } else {
+                this.game.newGame = true;
+                this.game.isPaused = false;
+                this.game.render.restartText();
+            }
+        } else if (e.key == " ") {
+            this.game.pauseGame();
+        }
+    }
+
+    clearEventListeners() {
+        document.removeEventListener('keydown', this.player1Movement);
+        document.removeEventListener('keydown', this.player2Movement);
+        document.removeEventListener('keydown', this.commonControls);
+    }
+}
 
 module.exports = Player;
 
