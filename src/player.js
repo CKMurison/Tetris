@@ -34,9 +34,17 @@ class Player{
 
         document.addEventListener('keyup', (e) => {
             if (e.key == "r" && this.activePlayer === 1) {
-                this.game.newGame = true;
-                this.game.render.restartText();
-                console.log('buttonPressed');
+                if (this.game.gameOver) {
+                    this.game.gameOver = false;
+                    this.game.render.removeOverlayText();
+                    this.game.restartGame();
+                    this.game.playLoop();
+                } else {
+                    this.game.newGame = true;
+                    this.game.isPaused = false;
+                    this.game.render.restartText();
+                    console.log('buttonPressed');
+                }
             }
         })
         

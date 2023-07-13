@@ -5,6 +5,7 @@ class Game {
   constructor(render) {
     // Generate a grid; an array of 20 arrays, each of ten zeros. See public/grid for a visual
     // We mutate this grid to spawn and update the positions of the tetrominoes
+    this.gameOver = false;
     this.grid = this.#createGrid(20, 10)
     this.activeTetromino = null;
     this.isPaused = false;
@@ -51,8 +52,9 @@ class Game {
   // The playLoop runs the game
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
+    this.gameInProgress = true;
     this.turnInProgress = false;
-    let timer = 300; // time between ticks in ms
+    let timer = 30; // time between ticks in ms
 
     while (!this.turnInProgress) {
       if(this.newGame) {
@@ -83,6 +85,7 @@ class Game {
     }
     this.turnInProgress = false;
     this.render.gameOver(this.activePlayer === this.players[0] ? 'Player2' : 'Player1');
+    this.gameOver = true;
   }
 
 
@@ -233,7 +236,7 @@ class Game {
       };
     } else if (this.isPaused === true) {
       this.isPaused = false;
-      this.render.removePauseText();
+      this.render.removeOverlayText();
     }
   }
 
@@ -244,7 +247,7 @@ class Game {
     this.turnInProgress = false;
     this.players = [new Player(1, this), new Player(2, this)];
     this.activePlayer = this.players[(Math.floor(Math.random() * 2))];
-    this.render.removeRestartText();
+    this.render.removeOverlayText();
   }
 
 

@@ -63,8 +63,9 @@ class Render {
   }
 
    pauseText() {
+    this.removeOverlayText();
     let pauseContainer = document.createElement('div')
-    pauseContainer.className = 'pause'
+    pauseContainer.className = 'overlay'
     pauseContainer.textContent = 'paused';
     this.mainEl.append(pauseContainer);
     document.querySelectorAll('.cellContainer').forEach((el) => {
@@ -72,36 +73,32 @@ class Render {
     })
   };
   
-  removePauseText() {
-    document.querySelector('.pause').remove();
-  };
-  
   restartText() {
-   let restartContainer = document.createElement('div')
-   restartContainer.className = 'restart'
-   restartContainer.textContent = 'New Game Incoming';
-   this.mainEl.append(restartContainer);
-   document.querySelectorAll('.cellContainer').forEach((el) => {
-     el.style.animationName = "cellAnimation";
-   })
+    this.removeOverlayText();
+    let restartContainer = document.createElement('div')
+    restartContainer.className = 'overlay'
+    restartContainer.textContent = 'New Game Incoming';
+    this.mainEl.append(restartContainer);
+    document.querySelectorAll('.cellContainer').forEach((el) => {
+      el.style.animationName = "cellAnimation";
+    })
  };
-
- removeRestartText() {
-  const restartText = document.querySelector('.restart')
-  if(restartText !== undefined) restartText.remove();
-};
-  
-  
-  
+ 
   gameOver(player) {
+    this.removeOverlayText();
     let gameOverContainer = document.createElement('div')
-    gameOverContainer.className = 'gameOver'
+    gameOverContainer.className = 'overlay'
     gameOverContainer.textContent = player === 'Player1' ? 'Player 1 Wins!' : 'Player 2 Wins!';
     // this.removeRestartText();
     this.mainEl.append(gameOverContainer);
     document.querySelectorAll('.cellContainer').forEach((el) => {
       el.style.animationName = "cellAnimation";
     })
+  };
+
+  removeOverlayText() {
+    const overlayText = document.querySelector('.overlay')
+    if(overlayText !== null) overlayText.remove();
   };
 }
 

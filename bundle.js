@@ -40,9 +40,17 @@
           });
           document.addEventListener("keyup", (e) => {
             if (e.key == "r" && this.activePlayer === 1) {
-              this.game.newGame = true;
-              this.game.render.restartText();
-              console.log("buttonPressed");
+              if (this.game.gameOver) {
+                this.game.gameOver = false;
+                this.game.render.removeOverlayText();
+                this.game.restartGame();
+                this.game.playLoop();
+              } else {
+                this.game.newGame = true;
+                this.game.isPaused = false;
+                this.game.render.restartText();
+                console.log("buttonPressed");
+              }
             }
           });
         }
@@ -127,6 +135,7 @@
       var Tetromino = require_tetromino();
       var Game2 = class {
         constructor(render2) {
+          this.gameOver = false;
           this.grid = this.#createGrid(20, 10);
           this.activeTetromino = null;
           this.isPaused = false;
@@ -171,8 +180,9 @@
         // The playLoop runs the game
         // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
         async playLoop(test) {
+          this.gameInProgress = true;
           this.turnInProgress = false;
-          let timer = 300;
+          let timer = 30;
           while (!this.turnInProgress) {
             if (this.newGame) {
               this.restartGame();
@@ -201,6 +211,7 @@
           }
           this.turnInProgress = false;
           this.render.gameOver(this.activePlayer === this.players[0] ? "Player2" : "Player1");
+          this.gameOver = true;
         }
         generateTetromino(random) {
           this.randomIndex = random === void 0 ? Math.floor(Math.random() * 7) : random;
@@ -316,7 +327,7 @@
             ;
           } else if (this.isPaused === true) {
             this.isPaused = false;
-            this.render.removePauseText();
+            this.render.removeOverlayText();
           }
         }
         restartGame() {
@@ -326,7 +337,7 @@
           this.turnInProgress = false;
           this.players = [new Player2(1, this), new Player2(2, this)];
           this.activePlayer = this.players[Math.floor(Math.random() * 2)];
-          this.render.removeRestartText();
+          this.render.removeOverlayText();
         }
         clearTetromino() {
           this.activeTetromino.positions.forEach((eachCoordinate) => {
@@ -424,39 +435,39 @@
           }
         }
         pauseText() {
+          this.removeOverlayText();
           let pauseContainer = document.createElement("div");
-          pauseContainer.className = "pause";
+          pauseContainer.className = "overlay";
           pauseContainer.textContent = "paused";
           this.mainEl.append(pauseContainer);
           document.querySelectorAll(".cellContainer").forEach((el) => {
             el.style.animationName = "cellAnimation";
           });
         }
-        removePauseText() {
-          document.querySelector(".pause").remove();
-        }
         restartText() {
+          this.removeOverlayText();
           let restartContainer = document.createElement("div");
-          restartContainer.className = "restart";
+          restartContainer.className = "overlay";
           restartContainer.textContent = "New Game Incoming";
           this.mainEl.append(restartContainer);
           document.querySelectorAll(".cellContainer").forEach((el) => {
             el.style.animationName = "cellAnimation";
           });
         }
-        removeRestartText() {
-          const restartText = document.querySelector(".restart");
-          if (restartText !== void 0)
-            restartText.remove();
-        }
         gameOver(player) {
+          this.removeOverlayText();
           let gameOverContainer = document.createElement("div");
-          gameOverContainer.className = "gameOver";
+          gameOverContainer.className = "overlay";
           gameOverContainer.textContent = player === "Player1" ? "Player 1 Wins!" : "Player 2 Wins!";
           this.mainEl.append(gameOverContainer);
           document.querySelectorAll(".cellContainer").forEach((el) => {
             el.style.animationName = "cellAnimation";
           });
+        }
+        removeOverlayText() {
+          const overlayText = document.querySelector(".overlay");
+          if (overlayText !== null)
+            overlayText.remove();
         }
       };
       module.exports = Render2;
