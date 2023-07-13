@@ -5,6 +5,7 @@ body {
     flex-direction: column;
     flex-wrap: wrap;
     overflow: hidden;
+    background-color: #202020;
 }
 
 div {
@@ -12,13 +13,19 @@ div {
 }
 
 .image-container {
-    left: 1em;
+    position: relative;
+    left: -50px;
     width: 200px;
     height: 200px;
     flex-direction: column;
     margin-top: 3vh;
     height: fit-content;
     padding: 5px;
+}
+
+#tetris-logo {
+    position: relative;
+    left: -30px;
 }
 
 #main-container {
@@ -52,10 +59,22 @@ div {
     }
 }
 
+.boxTitle {
+    font-size: 26px;
+    color: white
+}
+
+.headers {
+    font-size: 18px;
+    color: white
+
+}
+
 .instructionsContainer {
     flex-direction: column;
     justify-content: space-between;
     width: 17vw;
+    color: white
 }
 
 .uiContainer {
@@ -68,7 +87,7 @@ div {
     
     border-width: 3px;
     border-style: solid;
-    border-color: grey;
+    border-color: rgb(41, 115, 151);
     border-radius: 10px;
     box-shadow: 5px 5px 5px black;
 }
@@ -78,6 +97,8 @@ div {
     width: 40vw;
     object-fit: contain;
     border-style: solid;
+    border-color: rgb(41, 115, 151);
+    background-color: lightgray;
 }
 
 .rowContainer {
@@ -90,44 +111,64 @@ div {
    
 .cellContainer {
     flex: 1;
+    border: 0.1px solid rgba(0, 0, 0, 0.2);
 }
 
 .empty {
     background-color: lightgray;
+    border: 0.1px solid rgba(0, 0, 0, 0.2);
 }
 
 .iBlock {
-    background-color: blue;
-}
+    border-radius: 8px;
+    background: radial-gradient(#00ffff, #0099cc);
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
 
 .jBlock {
-    background-color: red;
-}
+    border-radius: 8px;
+    background: radial-gradient(rgba(0, 0, 255, 0.5), rgb(0, 0, 255) 90%);
+    box-shadow: 0px 0px 0.5px 0.5px rgb(0, 0, 0);
+  }
 
-.lBlock {
-    background-color: green;
-}
+  .lBlock {
+    border-radius: 8px;
+    background: radial-gradient(#ffaa00, #cc7a00);
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
 
 .oBlock {
-    background-color: yellow;
-}
+    border-radius: 8px;
+    background: radial-gradient(#ffff00, #cc9900);
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
 
-.sBlock {
-    background-color: purple;
-}
+  .sBlock {
+    border-radius: 8px;
+    background: radial-gradient(#00ff00, #009900);
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
 
-.tBlock {
-    background-color: orange;
-}
+  .tBlock {
+    border-radius: 8px;
+    background: radial-gradient(#cc0099, #800080);
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
 
-.zBlock {
-    background-color: brown;
-}
+  .zBlock {
+    border-radius: 8px;
+    background: radial-gradient(#ff0000, #cc0000);
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
 
-.plusBlock {
-    background-color: rgb(227, 56, 225);
-}
-
-.uBlock {
-    background-color: rgb(53, 35, 35);
-}
+  .plusBlock {
+    background: radial-gradient(rgb(17, 102, 41), rgb(8, 56, 22));
+    border-radius: 8px;
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
+  
+  .uBlock {
+    background: radial-gradient(rgb(133, 49, 13), rgb(79, 26, 7));
+    border-radius: 8px;
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
