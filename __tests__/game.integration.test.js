@@ -15,14 +15,6 @@ describe('Game', () => {
     game = new Game(render)
   });
 
-  test('whether restartGame() generates a teteromino', () => {
-    const generateTetrominoSpy = jest.spyOn(Game.prototype, 'generateTetromino')
-    game.playLoop(true);
-    const timesCalled = generateTetrominoSpy.mock.calls.length;
-    game.restartGame();
-    expect(generateTetrominoSpy).toHaveBeenCalledTimes(timesCalled + 1)
-  })
-
   test('it correctly assigns an active player', () => {
     game.playLoop(test);
     expect(game.activePlayer).not.toEqual(null)

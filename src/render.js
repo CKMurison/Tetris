@@ -82,7 +82,7 @@ class Render {
     this.removeOverlayText();
     let restartContainer = document.createElement('div')
     restartContainer.className = 'overlay'
-    restartContainer.textContent = 'New Game Incoming';
+    restartContainer.textContent = 'Restarting game';
     this.mainEl.append(restartContainer);
     document.querySelectorAll('.cellContainer').forEach((el) => {
       el.style.animationName = "cellAnimation";
@@ -115,6 +115,11 @@ class Render {
     const overlayText = document.querySelector('.overlay')
     if(overlayText !== null) overlayText.remove();
   };
+
+  displayActivePlayer(player) {
+    let activePlayerContainer = document.querySelector('#activePlayer');
+    activePlayerContainer.textContent = player;
+  }
 }
 
 module.exports = Render;
