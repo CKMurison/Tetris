@@ -26,6 +26,18 @@ class Player{
             }    
         }); 
 
+        // ArrowDown speed up the drop of the tetromino after checking for collision
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowDown") {
+              let collided =
+                this.game.activePlayer === this.game.players[0] ? this.game.activeTetromino.checkCollisionDown(this.game.grid) : this.game.activeTetromino.checkCollisionUp(this.game.grid);
+              if (!collided) {
+                this.game.moveVertical();
+                this.game.render.drawGrid(this.game.grid);
+              }
+            }
+          });
+
         document.addEventListener('keyup', (e) => {
             if (e.key == " " && this.activePlayer === 1) {
                 this.game.pauseGame();
