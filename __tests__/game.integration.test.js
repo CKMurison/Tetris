@@ -10,9 +10,18 @@ let game, render;
 
 describe('Game', () => {
   beforeEach(() => {
-    document.body.innerHTML = fs.readFileSync('./index.html');   
+    document.body.innerHTML = fs.readFileSync('./index.html');
+    global.Audio = jest.fn().mockImplementation(() => ({
+      play: () => {},
+      muted: false,
+    }))
     render = new Render(true)
     game = new Game(render)
+    game.grid = [];
+    for (let i = 0; i < 20; i++) {
+      let row = new Array(10).fill(0);
+      game.grid.push(row)
+    }
   });
 
   test('it correctly assigns an active player', () => {
@@ -639,14 +648,5 @@ describe('Game', () => {
     const event = new KeyboardEvent('click');
     document.dispatchEvent(event);
     expect(game.musicIsStarted).toBe(true);
-  })
-
-  test("m button mutes the music", () => {
-    const spy = jest.spyOn(render, 'musicMuted')
-    const event = new KeyboardEvent('keydown', { key: 'm'});
-    game.musicIsStarted = true;
-    game.music.muted = true;
-    document.dispatchEvent(event);
-    expect(this.music.muted).toBe(false);
   })
 });

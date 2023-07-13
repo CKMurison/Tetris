@@ -90,10 +90,10 @@ class Render {
     gameOverContainer.innerHTML = player === 'Player1' ? 'Player 1 Wins!<br>press r to restart' : 'Player 2 Wins!<br>press r to restart';
     // this.removeRestartText();
     this.mainEl.append(gameOverContainer);
-    if (this.test === true) return;
     let gameOverSound = new Audio('audio/gameOver.wav');
     gameOverSound.play();
     gameOverSound.volume = 0.2;
+    if (this.test === true) return;
     document.querySelectorAll('.cellContainer').forEach((el) => {
         el.animate([
             { transform: `translateY(${-100 + Math.random() * 200}vh) rotate(0deg)` },
@@ -109,6 +109,11 @@ class Render {
     const overlayText = document.querySelector('.overlay')
     if(overlayText !== null) overlayText.remove();
   };
+
+  musicMuted(isMuted) {
+    const musicContainer = document.querySelector('#musicMuted');
+    musicContainer.textContent = `${isMuted ? 'Off' : 'On'}`;
+  }
 
   displayActivePlayer(player) {
     let activePlayerContainer = document.querySelector('#activePlayer');

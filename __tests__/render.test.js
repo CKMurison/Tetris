@@ -58,4 +58,14 @@ describe('Render class', () => {
         render.restartText();
         expect(document.querySelector('.overlay').textContent).toBe('Restarting game')
     });
+
+    test("musicMuted correctly changes the relevant field to Off", () => {
+        render.musicMuted(true);
+        expect(document.querySelector('#musicMuted').textContent).toBe('Off');
+    })
+
+    test("musicMuted correctly changes the relevant field to On", () => {
+        render.musicMuted(false);
+        expect(document.querySelector('#musicMuted').textContent).toBe('On');
+    })
 });
