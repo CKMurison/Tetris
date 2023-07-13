@@ -5,6 +5,7 @@ body {
     flex-direction: column;
     flex-wrap: wrap;
     overflow: hidden;
+    background-color: #202020;
 }
 
 div {
@@ -75,16 +76,20 @@ div {
 
 .boxTitle {
     font-size: 26px;
+    color: white
 }
 
 .headers {
     font-size: 18px;
+    color: white
+
 }
 
 .instructionsContainer {
     flex-direction: column;
     justify-content: space-between;
     width: 17vw;
+    color: white
 }
 
 .uiContainer {
@@ -97,7 +102,7 @@ div {
     
     border-width: 3px;
     border-style: solid;
-    border-color: grey;
+    border-color: rgb(41, 115, 151);
     border-radius: 10px;
     box-shadow: 5px 5px 5px black;
 }
@@ -107,6 +112,7 @@ div {
     width: 40vw;
     object-fit: contain;
     border-style: solid;
+    border-color: rgb(41, 115, 151);
     background-color: lightgray;
 }
 
