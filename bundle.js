@@ -33,7 +33,15 @@
               }
             }
           });
-
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowDown") {
+              let collided = this.game.activePlayer === this.game.players[0] ? this.game.activeTetromino.checkCollisionDown(this.game.grid) : this.game.activeTetromino.checkCollisionUp(this.game.grid);
+              if (!collided) {
+                this.game.moveVertical();
+                this.game.render.drawGrid(this.game.grid);
+              }
+            }
+          });
           document.addEventListener("keyup", (e) => {
             if (e.key == " " && this.activePlayer === 1) {
               this.game.pauseGame();
@@ -168,7 +176,7 @@
         // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
         async playLoop(test) {
           this.turnInProgress = false;
-          let timer = 300;
+          let timer = 1e3;
           while (!this.turnInProgress) {
             this.turnInProgress = true;
             let generated = this.generateTetromino();
@@ -383,7 +391,8 @@
   var require_render = __commonJS({
     "src/render.js"(exports, module) {
       var Render2 = class {
-        constructor() {
+        constructor(test) {
+          this.test = test;
           this.mainEl = document.querySelector("#main-container");
         }
         drawGrid(grid) {
@@ -452,19 +461,28 @@
           gameOverContainer.className = "gameOver";
           gameOverContainer.textContent = player === "Player1" ? "Player 1 Wins!" : "Player 2 Wins!";
           this.mainEl.append(gameOverContainer);
+          if (this.test === true)
+            return;
+          let gameOverSound = new Audio("audio/gameOver.wav");
+          gameOverSound.play();
+          gameOverSound.volume = 0.2;
           document.querySelectorAll(".cellContainer").forEach((el) => {
-            el.style.animationName = "cellAnimation";
+            el.animate([
+              { transform: `translateY(${-100 + Math.random() * 200}vh) rotate(0deg)` },
+              { transform: `translateX(${-100 + Math.random() * 200}vh) rotate(850deg)` }
+            ], {
+              duration: 1e4,
+              fill: "forwards"
+            });
           });
         }
-
         musicMuted(isMuted) {
           const musicContainer = document.querySelector(".musicMuted");
           musicContainer.textContent = `Music Volume: ${isMuted ? "Off" : "On"}`;
-
+        }
         displayActivePlayer(player) {
           let activePlayerContainer = document.querySelector(".activePlayer");
           activePlayerContainer.textContent = player === "Player1" ? "Active player: Player 2" : "Active player: Player 1";
-
         }
       };
       module.exports = Render2;
