@@ -3,7 +3,7 @@ const powerUps = require('./powerUps.js')
 class Player{
     constructor(player, game) {
         this.activePlayer = player;
-        this.timer = 600;
+        this.timer = 60;
         this.game = game;
         this.linesCleared = 0;
         this.nextPowerUp = 0;
@@ -54,7 +54,25 @@ class Player{
                 this.game.pauseGame();
             }
         })
-    };
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key == "r" && this.activePlayer === 1) {
+                if (this.game.gameOver) {
+                    this.game.gameOver = false;
+                    this.game.render.removeOverlayText();
+                    this.game.restartGame();
+                    this.game.playLoop();
+                } else {
+                    this.game.newGame = true;
+                    this.game.isPaused = false;
+                    this.game.render.restartText();
+                    console.log('buttonPressed');
+                }
+            }
+        })
+        
+
+    };   
 
     incrementLineCounter() {
         this.linesCleared++;
