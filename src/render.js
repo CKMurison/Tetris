@@ -81,9 +81,6 @@ class Render {
     restartContainer.className = 'overlay'
     restartContainer.textContent = 'Restarting game';
     this.mainEl.append(restartContainer);
-    document.querySelectorAll('.cellContainer').forEach((el) => {
-      el.style.animationName = "cellAnimation";
-    })
  };
  
   gameOver(player) {

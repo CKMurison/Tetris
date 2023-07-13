@@ -39,6 +39,7 @@ npm run test
 
 ## Testing coverage
 * Abyssmal
+* Audio and animations have only been tested visually by running the game, as jest is currently unable to test for those objects correctly. 
 
 ## Design documents and changes
 * Original table design

@@ -49,10 +49,13 @@ describe('Render class', () => {
         expect(document.querySelector('#activePlayer').textContent).toBe('player1');
     })
 
-    test("Displays the paused screen if spacebar is pressed", () => {
+    test("pauseText correctly displays text on overlay", () => {
         render.pauseText();
-        expect(document.querySelector('.pause').textContent).toBe('paused')
+        expect(document.querySelector('.overlay').textContent).toBe('game pausedpress r to restart')
     });
 
-      
+    test("restartText correctly displays text on overlay", () => {
+        render.restartText();
+        expect(document.querySelector('.overlay').textContent).toBe('Restarting game')
+    });
 });
