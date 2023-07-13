@@ -87,6 +87,7 @@ div {
     width: 40vw;
     object-fit: contain;
     border-style: solid;
+    background-color: lightgray;
 }
 
 .rowContainer {
@@ -107,28 +108,35 @@ div {
 
 .iBlock {
     background-color: #00ffff;
+    border-radius: 8px;
 }
 
 .jBlock {
     background-color: #0000ff;
+    border-radius: 8px;
 }
 
 .lBlock {
     background-color: #ffa500;
+    border-radius: 8px;
 }
 
 .oBlock {
     background-color: #ffff00;
+    border-radius: 8px;
 }
 
 .sBlock {
     background-color: #00ff00;
+    border-radius: 8px;
 }
 
 .tBlock {
     background-color: #800080;
+    border-radius: 8px;
 }
 
 .zBlock {
     background-color: #ff0000;
+    border-radius: 8px;
 }
