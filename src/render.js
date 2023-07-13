@@ -88,12 +88,8 @@ class Render {
   };
 
   musicMuted(isMuted) {
-    let musicContainer = document.querySelector('.musicMuted')
-    if (isMuted) {
-      musicContainer.textContent = 'Music Volume: Off'; 
-    } else {
-      musicContainer.textContent = 'Music Volume: On';
-    }
+    const musicContainer = document.querySelector('.musicMuted');
+    musicContainer.textContent = `Music Volume: ${isMuted ? 'Off' : 'On'}`;
   }
 }
 
