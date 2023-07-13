@@ -6,6 +6,8 @@ const Game = require('../src/game.js');
 const Render = require('../src/render.js');
 const fs = require('fs');
 
+let game, render;
+
 describe('Game', () => {
   beforeEach(() => {
     document.body.innerHTML = fs.readFileSync('./index.html');

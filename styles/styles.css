@@ -68,6 +68,7 @@ div {
 .instructionsContainer {
     flex-direction: column;
     justify-content: space-between;
+    width: 17vw;
 }
 
 .uiContainer {

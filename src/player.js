@@ -8,7 +8,11 @@ class Player{
         this.linesCleared = 0;
         this.nextPowerUp = 0;
         this.powerUps = [powerUps.speedUp, powerUps.bizarre, powerUps.removeRandomBlock]
-        
+        this.nextPowerUpNames = {
+            0: 'Opponent Speed Up',
+            1: 'Bizarre Tetromino',
+            2: 'Remove A Block'
+        }
         this.controls();
     }
 
@@ -46,6 +50,8 @@ class Player{
             this.powerUps[this.nextPowerUp](this.game)
             this.nextPowerUp = (this.nextPowerUp+1) % this.powerUps.length
         }
+        document.querySelector(`#linesClearedP${this.activePlayer}`).textContent = this.linesCleared;
+        document.querySelector(`#nextPowerUpP${this.activePlayer}`).textContent = this.nextPowerUpNames[this.nextPowerUp];
     }
 };
 
