@@ -33,15 +33,7 @@
               }
             }
           });
-          document.addEventListener("keydown", (e) => {
-            if (e.key === "ArrowDown") {
-              let collided = this.game.activePlayer === this.game.players[0] ? this.game.activeTetromino.checkCollisionDown(this.game.grid) : this.game.activeTetromino.checkCollisionUp(this.game.grid);
-              if (!collided) {
-                this.game.moveVertical();
-                this.game.render.drawGrid(this.game.grid);
-              }
-            }
-          });
+
           document.addEventListener("keyup", (e) => {
             if (e.key == " " && this.activePlayer === 1) {
               this.game.pauseGame();
@@ -173,13 +165,14 @@
         // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
         async playLoop(test) {
           this.turnInProgress = false;
-          let timer = 1e3;
+          let timer = 300;
           while (!this.turnInProgress) {
             this.turnInProgress = true;
             let generated = this.generateTetromino();
             if (generated) {
               let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
               this.render.drawGrid(this.grid);
+              this.render.displayActivePlayer(this.activePlayer === this.players[0] ? "Player2" : "Player1");
               while (!collided) {
                 if (!this.isPaused) {
                   this.moveVertical();
@@ -430,6 +423,10 @@
           document.querySelectorAll(".cellContainer").forEach((el) => {
             el.style.animationName = "cellAnimation";
           });
+        }
+        displayActivePlayer(player) {
+          let activePlayerContainer = document.querySelector(".activePlayer");
+          activePlayerContainer.textContent = player === "Player1" ? "Active player: Player 2" : "Active player: Player 1";
         }
       };
       module.exports = Render2;
