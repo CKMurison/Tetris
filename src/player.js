@@ -3,7 +3,7 @@ const powerUps = require('./powerUps.js')
 class Player{
     constructor(player, game) {
         this.activePlayer = player;
-        this.timer = 10000000;
+        this.timer = 1000;
         this.game = game;
         this.linesCleared = 0;
         this.nextPowerUp = 0;

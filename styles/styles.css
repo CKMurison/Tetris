@@ -113,46 +113,55 @@ div {
 }
 
 .iBlock {
-    background-color: #00ffff;
     border-radius: 8px;
-}
+    background: radial-gradient(#00ffff, #0099cc);
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
 
 .jBlock {
-    background-color: #0000ff;
     border-radius: 8px;
-}
+    background: radial-gradient(rgba(0, 0, 255, 0.5), rgb(0, 0, 255) 90%);
+    box-shadow: 0px 0px 0.5px 0.5px rgb(0, 0, 0);
+  }
 
-.lBlock {
-    background-color: #ffa500;
+  .lBlock {
     border-radius: 8px;
-}
+    background: radial-gradient(#ffaa00, #cc7a00);
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
 
 .oBlock {
-    background-color: #ffff00;
     border-radius: 8px;
-}
+    background: radial-gradient(#ffff00, #cc9900);
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
 
-.sBlock {
-    background-color: #00ff00;
+  .sBlock {
     border-radius: 8px;
-}
+    background: radial-gradient(#00ff00, #009900);
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
 
-.tBlock {
-    background-color: #800080;
+  .tBlock {
     border-radius: 8px;
-}
+    background: radial-gradient(#cc0099, #800080);
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
 
-.zBlock {
-    background-color: #ff0000;
+  .zBlock {
     border-radius: 8px;
-}
+    background: radial-gradient(#ff0000, #cc0000);
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
 
-.plusBlock {
-    background-color: rgb(17, 102, 41);
+  .plusBlock {
+    background: radial-gradient(rgb(17, 102, 41), rgb(8, 56, 22));
     border-radius: 8px;
-}
-
-.uBlock {
-    background-color: rgb(133, 49, 13);
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
+  
+  .uBlock {
+    background: radial-gradient(rgb(133, 49, 13), rgb(79, 26, 7));
     border-radius: 8px;
-}
+    box-shadow: 0px 0px 0.5px 0.5px #000000;
+  }
