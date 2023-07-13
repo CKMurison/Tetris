@@ -7,10 +7,10 @@
   // src/player.js
   var require_player = __commonJS({
     "src/player.js"(exports, module) {
-      var Player = class {
-        constructor(player, game3) {
+      var Player2 = class {
+        constructor(player, game2) {
           this.activePlayer = player;
-          this.game = game3;
+          this.game = game2;
           this.controls();
         }
         controls() {
@@ -38,9 +38,16 @@
               this.game.pauseGame();
             }
           });
+          document.addEventListener("keyup", (e) => {
+            if (e.key == "r" && this.activePlayer === 1) {
+              this.game.newGame = true;
+              this.game.render.restartText();
+              console.log("buttonPressed");
+            }
+          });
         }
       };
-      module.exports = Player;
+      module.exports = Player2;
     }
   });
 
@@ -116,7 +123,7 @@
   // src/game.js
   var require_game = __commonJS({
     "src/game.js"(exports, module) {
-      var Player = require_player();
+      var Player2 = require_player();
       var Tetromino = require_tetromino();
       var Game2 = class {
         constructor(render2) {
@@ -124,6 +131,7 @@
           this.activeTetromino = null;
           this.isPaused = false;
           this.turnInProgress = false;
+          this.newGame = false;
           let midRow = Math.floor(this.grid.length / 2 - 1);
           let midCol = Math.floor(this.grid[0].length / 2 - 1);
           this.position = {
@@ -157,7 +165,7 @@
             }
           };
           this.render = render2;
-          this.players = [new Player(1, this), new Player(2, this)];
+          this.players = [new Player2(1, this), new Player2(2, this)];
           this.activePlayer = this.players[Math.floor(Math.random() * 2)];
         }
         // The playLoop runs the game
@@ -166,6 +174,10 @@
           this.turnInProgress = false;
           let timer = 300;
           while (!this.turnInProgress) {
+            if (this.newGame) {
+              this.restartGame();
+              this.newGame = false;
+            }
             this.turnInProgress = true;
             let generated = this.generateTetromino();
             if (generated) {
@@ -189,14 +201,6 @@
           }
           this.turnInProgress = false;
           this.render.gameOver(this.activePlayer === this.players[0] ? "Player2" : "Player1");
-        }
-        restartGame() {
-          this.grid = this.#createGrid(20, 10);
-          this.activeTetromino = null;
-          this.isPaused = false;
-          this.turnInProgress = false;
-          this.render.drawGrid(this.grid);
-          this.playLoop();
         }
         generateTetromino(random) {
           this.randomIndex = random === void 0 ? Math.floor(Math.random() * 7) : random;
@@ -308,13 +312,21 @@
             this.isPaused = true;
             if (this.turnInProgress) {
               this.render.pauseText();
-              this.render.restartButton();
             }
             ;
           } else if (this.isPaused === true) {
             this.isPaused = false;
             this.render.removePauseText();
           }
+        }
+        restartGame() {
+          this.grid = this.#createGrid(20, 10);
+          this.activeTetromino = null;
+          this.isPaused = false;
+          this.turnInProgress = false;
+          this.players = [new Player2(1, this), new Player2(2, this)];
+          this.activePlayer = this.players[Math.floor(Math.random() * 2)];
+          this.render.removeRestartText();
         }
         clearTetromino() {
           this.activeTetromino.positions.forEach((eachCoordinate) => {
@@ -357,6 +369,7 @@
   // src/render.js
   var require_render = __commonJS({
     "src/render.js"(exports, module) {
+      var Game2 = require_game();
       var Render2 = class {
         constructor() {
           this.mainEl = document.querySelector("#main-container");
@@ -419,17 +432,22 @@
             el.style.animationName = "cellAnimation";
           });
         }
-        restartButton() {
-          let restartContainer = document.createElement("div");
-          restartContainer.className = "restart";
-          restartContainer.textContent = "\u21BB";
-          restartContainer.addEventListener("click", () => {
-            game.restartButton();
-          });
-          this.mainEl.append(restartContainer);
-        }
         removePauseText() {
           document.querySelector(".pause").remove();
+        }
+        restartText() {
+          let restartContainer = document.createElement("div");
+          restartContainer.className = "restart";
+          restartContainer.textContent = "New Game Incoming";
+          this.mainEl.append(restartContainer);
+          document.querySelectorAll(".cellContainer").forEach((el) => {
+            el.style.animationName = "cellAnimation";
+          });
+        }
+        removeRestartText() {
+          const restartText = document.querySelector(".restart");
+          if (restartText !== void 0)
+            restartText.remove();
         }
         gameOver(player) {
           let gameOverContainer = document.createElement("div");
@@ -448,7 +466,8 @@
   // index.js
   var Game = require_game();
   var Render = require_render();
+  var Player = require_player();
   var render = new Render();
-  var game2 = new Game(render);
-  game2.playLoop();
+  var game = new Game(render);
+  game.playLoop();
 })();

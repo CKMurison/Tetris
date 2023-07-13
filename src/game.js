@@ -9,6 +9,7 @@ class Game {
     this.activeTetromino = null;
     this.isPaused = false;
     this.turnInProgress = false;
+    this.newGame = false;
     // Hard-coded initial spawn points based upon 20x10 grid
     let midRow = Math.floor(this.grid.length / 2 - 1);
     let midCol = Math.floor(this.grid[0].length / 2 - 1);
@@ -54,6 +55,10 @@ class Game {
     let timer = 300; // time between ticks in ms
 
     while (!this.turnInProgress) {
+      if(this.newGame) {
+        this.restartGame();
+        this.newGame = false;
+      }
       this.turnInProgress = true;
 
       let generated = this.generateTetromino();
@@ -80,14 +85,7 @@ class Game {
     this.render.gameOver(this.activePlayer === this.players[0] ? 'Player2' : 'Player1');
   }
 
-  restartGame() {
-    this.grid = this.#createGrid(20, 10);
-    this.activeTetromino = null;
-    this.isPaused = false;
-    this.turnInProgress = false;
-    this.render.drawGrid(this.grid);
-    this.playLoop();
-  }
+
 
   generateTetromino(random) {
     // Returns true if a tetromino has been generated successfully
@@ -232,13 +230,23 @@ class Game {
       this.isPaused = true;
       if (this.turnInProgress) {
         this.render.pauseText();
-        this.render.restartButton();
       };
     } else if (this.isPaused === true) {
       this.isPaused = false;
       this.render.removePauseText();
     }
   }
+
+  restartGame() {
+    this.grid = this.#createGrid(20, 10)
+    this.activeTetromino = null;
+    this.isPaused = false;
+    this.turnInProgress = false;
+    this.players = [new Player(1, this), new Player(2, this)];
+    this.activePlayer = this.players[(Math.floor(Math.random() * 2))];
+    this.render.removeRestartText();
+  }
+
 
   clearTetromino() {
     this.activeTetromino.positions.forEach((eachCoordinate) => {

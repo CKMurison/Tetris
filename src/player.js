@@ -31,6 +31,16 @@ class Player{
                 this.game.pauseGame();
             }
         })
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key == "r" && this.activePlayer === 1) {
+                this.game.newGame = true;
+                this.game.render.restartText();
+                console.log('buttonPressed');
+            }
+        })
+        
+
     };   
 };
 

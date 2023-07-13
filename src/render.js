@@ -62,9 +62,7 @@ class Render {
     }
   }
 
-
-
-  pauseText() {
+   pauseText() {
     let pauseContainer = document.createElement('div')
     pauseContainer.className = 'pause'
     pauseContainer.textContent = 'paused';
@@ -73,36 +71,33 @@ class Render {
       el.style.animationName = "cellAnimation";
     })
   };
-
-  restartButton() {
-    let restartContainer = document.createElement('div');
-    let button = document.createElement('button');
-    button.id = 'restart_button'
-    restartContainer.className = 'restart';
-    restartContainer.textContent = '↻';
-    restartContainer.append(button);
-
-    // Add event listener for click event
-    button.addEventListener('click', () => {
-      // Code to execute when the button is clicked
-      // For example, you can call a function to handle the restart logic
-      this.game.restartGame();
-      console.log('button clicked')
-    });
-
-    this.mainEl.appendChild(restartContainer);
-
-  }
-
+  
   removePauseText() {
     document.querySelector('.pause').remove();
-
   };
+  
+  restartText() {
+   let restartContainer = document.createElement('div')
+   restartContainer.className = 'restart'
+   restartContainer.textContent = 'New Game Incoming';
+   this.mainEl.append(restartContainer);
+   document.querySelectorAll('.cellContainer').forEach((el) => {
+     el.style.animationName = "cellAnimation";
+   })
+ };
 
+ removeRestartText() {
+  const restartText = document.querySelector('.restart')
+  if(restartText !== undefined) restartText.remove();
+};
+  
+  
+  
   gameOver(player) {
     let gameOverContainer = document.createElement('div')
     gameOverContainer.className = 'gameOver'
     gameOverContainer.textContent = player === 'Player1' ? 'Player 1 Wins!' : 'Player 2 Wins!';
+    // this.removeRestartText();
     this.mainEl.append(gameOverContainer);
     document.querySelectorAll('.cellContainer').forEach((el) => {
       el.style.animationName = "cellAnimation";
