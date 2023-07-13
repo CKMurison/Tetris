@@ -140,4 +140,5 @@ div {
 
 .shadow {
     background-color: black;
+    opacity: 0.5;
 }

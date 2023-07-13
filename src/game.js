@@ -144,8 +144,23 @@ class Game {
       }
     });
 
+    if (this.activePlayer === this.players[0]) {
+      if (this.activeTetromino.checkCollisionDown(this.grid) === false) {
+        this.drawShadow();
+      } 
+    } else  {
+      if (this.activeTetromino.checkCollisionUp(this.grid) === false) {
+        this.drawShadow();
+      } 
+    };
+
+    // const shadowCollision = this.activeTetromino.positions.every((pos) => {
+    //   return this.grid[pos[0]][pos[1]] !== 's'
+    // })
+    // if (shadowCollision) {
+    //   this.drawShadow();
+    // }
     this.drawTetromino();
-    this.drawShadow();
   };
 
   moveHorizontal(input) {

@@ -13,7 +13,7 @@ class Tetromino {
                 collision = true;
             } else if (grid[position[0] + 1][position[1]] !== 0) {
                 collision = true;
-            }
+            } 
         })
         return collision;
     }
@@ -27,7 +27,7 @@ class Tetromino {
                 collision = true;
             } else if (grid[position[0] - 1][position[1]] !== 0) {
                 collision = true;
-            }
+            } 
         })
         return collision;
     }
