@@ -104,8 +104,8 @@ class Render {
 
 
   musicMuted(isMuted) {
-    const musicContainer = document.querySelector('.musicMuted');
-    musicContainer.textContent = `Music Volume: ${isMuted ? 'Off' : 'On'}`;
+    const musicContainer = document.querySelector('#musicMuted');
+    musicContainer.textContent = `${isMuted ? 'Off' : 'On'}`;
   }
 
   displayActivePlayer(player) {
