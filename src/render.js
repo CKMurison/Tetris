@@ -86,6 +86,11 @@ class Render {
       el.style.animationName = "cellAnimation";
     })
   };
+
+  displayActivePlayer(player) {
+    let activePlayerContainer = document.querySelector('.activePlayer');
+    activePlayerContainer.textContent = player === 'Player1' ? "Active player: Player 2" : "Active player: Player 1";
+}
 }
 
 module.exports = Render;
