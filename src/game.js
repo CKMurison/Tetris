@@ -52,19 +52,23 @@ class Game {
   // Instantiate a turn-cycle loop, that breaks to allow the game to swap players
   async playLoop(test) {
     this.turnInProgress = false;
-    let timer = 300; // time between ticks in ms
+    let timer = 600; // time between ticks in ms
 
     while (!this.turnInProgress) {
       this.turnInProgress = true;
 
       let generated = this.generateTetromino();
-
+      
       if (generated) {
         let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         this.render.drawGrid(this.grid);
+        this.drawShadow();
         while (!collided) {
           if (!this.isPaused) {
+          
           this.moveVertical();
+          
+          
           this.render.drawGrid(this.grid);
           if (!test) await this.#delay(timer);
           collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
@@ -131,7 +135,7 @@ class Game {
 
   moveVertical() {
     this.clearTetromino();
-
+    this.clearShadow();
     this.activeTetromino.positions.forEach((blockPosition) => {
       if (this.activePlayer === this.players[0]) {
         blockPosition[0] += 1;
@@ -141,6 +145,7 @@ class Game {
     });
 
     this.drawTetromino();
+    this.drawShadow();
   };
 
   moveHorizontal(input) {
@@ -266,6 +271,12 @@ class Game {
           this.grid[coordinate[0]][coordinate[1]] = this.activeShadow.value;
         })
     }
+  }
+
+  clearShadow() {
+    this.activeShadow.positions.forEach((eachCoordinate) => {
+      this.grid[eachCoordinate[0]][eachCoordinate[1]] = 0
+    });
   }
     
 

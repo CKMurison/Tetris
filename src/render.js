@@ -30,6 +30,7 @@ class Render {
       gridContainer.append(rowContainer);
     })
     
+    
     this.mainEl.append(gridContainer);
     this.findSpawnLine(grid);
   }
@@ -57,7 +58,7 @@ class Render {
         return 'tBlock'
       case 7:
         return 'zBlock'
-      case 's':
+      case "s":
         return 'shadow'
     }
   }
