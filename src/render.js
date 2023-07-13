@@ -66,7 +66,7 @@ class Render {
     this.removeOverlayText();
     let pauseContainer = document.createElement('div')
     pauseContainer.className = 'overlay'
-    pauseContainer.textContent = 'paused';
+    pauseContainer.innerHTML = "game paused<br>press r to restart";
     this.mainEl.append(pauseContainer);
     document.querySelectorAll('.cellContainer').forEach((el) => {
       el.style.animationName = "cellAnimation";
@@ -88,7 +88,7 @@ class Render {
     this.removeOverlayText();
     let gameOverContainer = document.createElement('div')
     gameOverContainer.className = 'overlay'
-    gameOverContainer.textContent = player === 'Player1' ? 'Player 1 Wins!' : 'Player 2 Wins!';
+    gameOverContainer.innerHTML = player === 'Player1' ? 'Player 1 Wins!<br>press r to restart' : 'Player 2 Wins!<br>press r to restart';
     // this.removeRestartText();
     this.mainEl.append(gameOverContainer);
     document.querySelectorAll('.cellContainer').forEach((el) => {
