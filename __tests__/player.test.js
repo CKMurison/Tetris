@@ -19,6 +19,6 @@ describe('Player', () => {
     player.incrementLineCounter();
     expect(player.linesCleared).toBe(1);
     expect(player.nextPowerUp).toBe(1);
-    expect(document.querySelector(`#linesClearedP1`).textContent).toBe(1);
+    expect(document.querySelector(`#linesClearedP1`).textContent).toBe('1');
   })
 })

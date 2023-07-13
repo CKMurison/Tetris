@@ -594,11 +594,19 @@ describe('Game', () => {
     game.removeCompleteLines();
     expect(game.players[1].linesCleared).toBe(2);
   });
-
+  
   test("Spacebar correctly pauses the game", () => {
     const pauseSpy = jest.spyOn(game, 'pauseGame');
     const event = new KeyboardEvent('keyup', { key: ' ' });
     document.dispatchEvent(event);
     expect(pauseSpy).toHaveBeenCalled();
+  })
+
+  test("r correctly restarts the game", () => {
+    game.gameOver = true;
+    const spy = jest.spyOn(game, 'restartGame');
+    const event = new KeyboardEvent('keyup', { key: 'r' });
+    document.dispatchEvent(event);
+    expect(spy).toHaveBeenCalledTimes(1);
   })
 });
