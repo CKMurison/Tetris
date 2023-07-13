@@ -1,4 +1,5 @@
 const Player = require('./player');
+const { bizarre } = require('./powerUps');
 const Tetromino = require('./tetromino');
 
 class Game {
@@ -11,42 +12,55 @@ class Game {
     this.isPaused = false;
     this.turnInProgress = false;
     this.newGame = false;
+
+    this.midRow = Math.floor(this.grid.length / 2 - 1);
+    this.music = new Audio('media/tetris-soundtrack.mp3');
+    this.musicIsStarted = false;
+    this.musicIsMuted = false;
     // Hard-coded initial spawn points based upon 20x10 grid
     let midRow = Math.floor(this.grid.length / 2 - 1);
     let midCol = Math.floor(this.grid[0].length / 2 - 1);
     this.position = {
       i: {
-        p1: [[midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 1, midCol + 2]],
-        p2: [[midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1], [midRow, midCol + 2]]
+        p1: [[this.midRow + 1, midCol - 1], [this.midRow + 1, midCol], [this.midRow + 1, midCol + 1], [this.midRow + 1, midCol + 2]],
+        p2: [[this.midRow, midCol - 1], [this.midRow, midCol], [this.midRow, midCol + 1], [this.midRow, midCol + 2]]
       },
       j: {
-        p1: [[midRow + 1, midCol - 1], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
-        p2: [[midRow - 1, midCol - 1], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
+        p1: [[this.midRow + 1, midCol - 1], [this.midRow + 2, midCol - 1], [this.midRow + 2, midCol], [this.midRow + 2, midCol + 1]],
+        p2: [[this.midRow - 1, midCol - 1], [this.midRow, midCol - 1], [this.midRow, midCol], [this.midRow, midCol + 1]]
       },
       l: {
-        p1: [[midRow + 1, midCol + 1], [midRow + 2, midCol + 1], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
-        p2: [[midRow - 1, midCol + 1], [midRow, midCol + 1], [midRow, midCol - 1], [midRow, midCol]]
+        p1: [[this.midRow + 1, midCol + 1], [this.midRow + 2, midCol + 1], [this.midRow + 2, midCol - 1], [this.midRow + 2, midCol]],
+        p2: [[this.midRow - 1, midCol + 1], [this.midRow, midCol + 1], [this.midRow, midCol - 1], [this.midRow, midCol]]
       },
       o: {
-        p1: [[midRow + 1, midCol], [midRow + 1, midCol + 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
-        p2: [[midRow - 1, midCol], [midRow - 1, midCol + 1], [midRow, midCol], [midRow, midCol + 1]]
+        p1: [[this.midRow + 1, midCol], [this.midRow + 1, midCol + 1], [this.midRow + 2, midCol], [this.midRow + 2, midCol + 1]],
+        p2: [[this.midRow - 1, midCol], [this.midRow - 1, midCol + 1], [this.midRow, midCol], [this.midRow, midCol + 1]]
       },
       s: {
-        p1: [[midRow + 1, midCol + 1], [midRow + 1, midCol], [midRow + 2, midCol - 1], [midRow + 2, midCol]],
-        p2: [[midRow - 1, midCol + 1], [midRow - 1, midCol], [midRow, midCol - 1], [midRow, midCol]]
+        p1: [[this.midRow + 1, midCol + 1], [this.midRow + 1, midCol], [this.midRow + 2, midCol - 1], [this.midRow + 2, midCol]],
+        p2: [[this.midRow - 1, midCol + 1], [this.midRow - 1, midCol], [this.midRow, midCol - 1], [this.midRow, midCol]]
       },
       t: {
-        p1: [[midRow + 1, midCol], [midRow + 2, midCol - 1], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
-        p2: [[midRow - 1, midCol], [midRow, midCol - 1], [midRow, midCol], [midRow, midCol + 1]]
+        p1: [[this.midRow + 1, midCol], [this.midRow + 2, midCol], [this.midRow + 2, midCol - 1], [this.midRow + 2, midCol + 1]],
+        p2: [[this.midRow - 1, midCol], [this.midRow, midCol], [this.midRow, midCol - 1], [this.midRow, midCol + 1]]
       },
       z: {
-        p1: [[midRow + 1, midCol - 1], [midRow + 1, midCol], [midRow + 2, midCol], [midRow + 2, midCol + 1]],
-        p2: [[midRow - 1, midCol - 1], [midRow - 1, midCol], [midRow + 0, midCol], [midRow + 0, midCol + 1]]
+        p1: [[this.midRow + 1, midCol - 1], [this.midRow + 1, midCol], [this.midRow + 2, midCol], [this.midRow + 2, midCol + 1]],
+        p2: [[this.midRow - 1, midCol - 1], [this.midRow - 1, midCol], [this.midRow + 0, midCol], [this.midRow + 0, midCol + 1]]
+      }, 
+      plus: {
+        p1: [[this.midRow + 2, midCol - 1],[this.midRow + 2, midCol],[this.midRow + 1, midCol],[this.midRow + 3, midCol],[this.midRow + 2, midCol + 1]],
+        p2: [[this.midRow - 1, midCol - 1],[this.midRow - 1, midCol],[this.midRow, midCol],[this.midRow - 2, midCol],[this.midRow - 1, midCol + 1]]
+      },
+      u: {
+        p1: [[this.midRow + 1, midCol - 1],[this.midRow + 2, midCol],[this.midRow + 2, midCol - 1],[this.midRow + 2, midCol + 1],[this.midRow + 1, midCol + 1]],
+        p2: [[this.midRow, midCol - 1],[this.midRow - 1, midCol],[this.midRow - 1, midCol - 1],[this.midRow - 1, midCol + 1],[this.midRow, midCol + 1]]
       }
     }
     this.render = render;
     this.players = [new Player(1, this), new Player(2, this)];
-    this.activePlayer = this.players[(Math.floor(Math.random() * 2))]; // Default player is player 1
+    this.activePlayer = this.players[(Math.floor(Math.random() * 2))]; // initial player is random
   };
 
   // The playLoop runs the game
@@ -54,20 +68,28 @@ class Game {
   async playLoop(test) {
     this.gameInProgress = true;
     this.turnInProgress = false;
-    let timer = 30; // time between ticks in ms
-
     while (!this.turnInProgress) {
       if(this.newGame) {
         this.restartGame();
         this.newGame = false;
       }
       this.turnInProgress = true;
+      let timer = this.activePlayer.timer; // time between ticks in ms
+      
+      let generated;
+      if (this.bizarre) {
+        let random = Math.round(Math.random()+8)
+        generated = this.generateTetromino(random)
+        this.bizarre = false 
+      } else {
+        generated = this.generateTetromino()
+      }
 
-      let generated = this.generateTetromino();
 
       if (generated) {
         let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         this.render.drawGrid(this.grid);
+        this.render.displayActivePlayer(this.activePlayer === this.players[0] ? 'Player 1' : 'Player 2');
         while (!collided) {
           if (!this.isPaused) {
             this.moveVertical();
@@ -107,11 +129,13 @@ class Game {
       3: "o",
       4: "s",
       5: "t",
-      6: "z"
+      6: "z", 
+      7: "plus",
+      8: "u"
     };
 
     key = keyMap[this.randomIndex];
-
+    
     // If statement receives key and adds the corresponding tetromino to the grid
     // checkIfGameOver condition will stop the function from drawing on the grid
 
@@ -131,7 +155,6 @@ class Game {
     // Returns a boolean
 
     return tetrominoPositions.some((position) => {
-      // position = [row, column]
       let row = position[0]
       let column = position[1]
       return this.grid[row][column] !== 0;
@@ -178,6 +201,9 @@ class Game {
     this.newArr = []
     this.afterTF = []
     this.clearTetromino();
+
+    if(this.activeTetromino.value === 4) {return}
+
     this.activeTetromino.positions.forEach(arr => {
       this.relation.push([arr[0] - this.anchorPoint[0], arr[1] - this.anchorPoint[1]])
     })
@@ -209,15 +235,20 @@ class Game {
       this.afterTF.push([row, column])
     })
 
+    // possible source of disappearing tetromino bug (according to chrome's dev log)
     const positionsAsStrings = this.activeTetromino.positions.map(el => JSON.stringify(el))
 
+
     const collisionChecker = this.afterTF.every(pos => {
-      if (positionsAsStrings.includes(`[${pos[0]},$${pos[1]}]`)) {
+      if (positionsAsStrings.includes(`[${pos[0]},${pos[1]}]`)) {
         return true;
       } else {
         return this.grid[pos[0]][pos[1]] === 0
       }
     })
+    // look at afterTF 
+    // if afterTF's row is above 19 or below 0 
+    // change the collisionChecker to false
 
     if (!collisionChecker) {
       return;
@@ -268,13 +299,17 @@ class Game {
   }
 
   removeCompleteLines() {
-    this.grid.forEach((row, index) => {
-      if (row.every(cell => cell !== 0)) {
+    let index = 0
+    while (index < this.grid.length) {
+      if (this.grid[index].every(cell => cell !== 0)) {
         const halfPoint = this.grid.length / 2;
         this.grid.splice(index, 1);
         this.grid.splice(index < halfPoint ? halfPoint - 1 : halfPoint, 0, new Array(this.grid[0].length).fill(0));
+        this.activePlayer.incrementLineCounter();
+      } else {
+        index++;
       }
-    })
+    }
   }
 
   #createGrid(rows, columns) {
@@ -284,6 +319,39 @@ class Game {
       grid.push(row)
     }
     return grid;
+  }
+
+  // music starts if you click or press any button, but music doesn't start in Firefox by pressing the arrows (to be checked/fixed)
+  playMusic() {
+    this.music.loop = true;
+    this.music.autoplay = false;
+    this.music.volume = 0.1;
+    this.music.muted = false;
+
+    document.addEventListener("click", () => { 
+      if(this.musicIsStarted === false) {
+        this.musicIsStarted = true;
+        this.music.play();
+      }
+    });
+
+    document.addEventListener("keydown", () => {
+      if(this.musicIsStarted === false) {
+        this.musicIsStarted = true;
+        this.music.play();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "m" && this.musicIsStarted === true) {
+        this.music.muted = !this.music.muted;
+        this.render.musicMuted(this.music.muted);
+      } else if (event.key === "m" && this.musicIsStarted === false) {
+        this.musicIsStarted = true;
+        this.music.play();
+        this.render.musicMuted(this.music.muted);
+      }
+    });
   }
 
   async #delay(time) {

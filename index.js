@@ -5,4 +5,4 @@ const Player = require('./src/player');
 const render = new Render();
 const game = new Game(render);
 game.playLoop();
-
+game.playMusic();

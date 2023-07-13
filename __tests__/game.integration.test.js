@@ -6,10 +6,12 @@ const Game = require('../src/game.js');
 const Render = require('../src/render.js');
 const fs = require('fs');
 
+let game, render;
+
 describe('Game', () => {
   beforeEach(() => {
-    document.body.innerHTML = fs.readFileSync('./index.html');
-    render = new Render()
+    document.body.innerHTML = fs.readFileSync('./index.html');   
+    render = new Render(true)
     game = new Game(render)
   });
 
@@ -291,8 +293,7 @@ describe('Game', () => {
     game.activePlayer = game.players[0];
     game.generateTetromino(6)
     game.rotateTetromino()
-    // console.log(game.grid)
-    expect(game.grid).toEqual(
+    expect(game.grid).toEqual(      
       [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -315,36 +316,6 @@ describe('Game', () => {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       ])
-  })
-
-  xtest('rotation test 6 (L-Piece) - testing new position for activeTetromino', () => {
-    game.activePlayer = game.players[0];
-    game.generateTetromino(2)
-    game.rotateTetromino()
-    expect(game.grid).toEqual(
-      [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 3, 3, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-      ]
-    )
   })
 
   test('rotation test 6 (I-Piece P1) - testing new position for activeTetromino', () => {
@@ -536,5 +507,37 @@ describe('Game', () => {
     expect(generateTetrominoSpy).toHaveBeenCalled();
   });
 
+  test("Clearing lines increments the linesCleared var inside player1", () => {
+    game.activePlayer = game.players[0];
+    game.grid[19] = [1,1,1,1,1,1,1,1,1,1];
+    expect(game.players[0].linesCleared).toBe(0);
+    game.removeCompleteLines();
+    expect(game.players[0].linesCleared).toBe(1);
+  });
 
+  test("Clearing lines increments the linesCleared var inside player2", () => {
+    game.activePlayer = game.players[1];
+    game.grid[0] = [1,1,1,1,1,1,1,1,1,1];
+    expect(game.players[1].linesCleared).toBe(0);
+    game.removeCompleteLines();
+    expect(game.players[1].linesCleared).toBe(1);
+  });
+
+  test("Clearing lines increments the linesCleared multiple times inside player1", () => {
+    game.activePlayer = game.players[0];
+    game.grid[19] = [1,1,1,1,1,1,1,1,1,1];
+    game.grid[18] = [1,1,1,1,1,1,1,1,1,1];
+    expect(game.players[0].linesCleared).toBe(0);
+    game.removeCompleteLines();
+    expect(game.players[0].linesCleared).toBe(2);
+  });
+
+  test("Clearing lines increments the linesCleared multiple times inside player2", () => {
+    game.activePlayer = game.players[1];
+    game.grid[0] = [1,1,1,1,1,1,1,1,1,1];
+    game.grid[1] = [1,1,1,1,1,1,1,1,1,1];
+    expect(game.players[1].linesCleared).toBe(0);
+    game.removeCompleteLines();
+    expect(game.players[1].linesCleared).toBe(2);
+  });
 });

@@ -1,7 +1,8 @@
 const Game = require('./game');
 
 class Render {
-  constructor() {
+  constructor(test) {
+    this.test = test;
     this.mainEl = document.querySelector('#main-container');
   }
 
@@ -32,7 +33,7 @@ class Render {
       gridContainer.append(rowContainer);
     })
 
-    this.mainEl.append(gridContainer);
+    document.querySelector('#gridElement').append(gridContainer);
     this.findSpawnLine(grid);
   }
 
@@ -59,6 +60,10 @@ class Render {
         return 'tBlock'
       case 7:
         return 'zBlock'
+      case 8: 
+        return 'plusBlock'
+      case 9: 
+        return 'uBlock'
     }
   }
 
@@ -91,9 +96,19 @@ class Render {
     gameOverContainer.innerHTML = player === 'Player1' ? 'Player 1 Wins!<br>press r to restart' : 'Player 2 Wins!<br>press r to restart';
     // this.removeRestartText();
     this.mainEl.append(gameOverContainer);
+    if (this.test === true) return;
+    let gameOverSound = new Audio('audio/gameOver.wav');
+    gameOverSound.play();
+    gameOverSound.volume = 0.2;
     document.querySelectorAll('.cellContainer').forEach((el) => {
-      el.style.animationName = "cellAnimation";
-    })
+        el.animate([
+            { transform: `translateY(${-100 + Math.random() * 200}vh) rotate(0deg)` },
+            { transform: `translateX(${-100 + Math.random() * 200}vh) rotate(850deg)` }
+        ], {
+            duration: 10000,
+            fill: "forwards"
+        });
+    });
   };
 
   removeOverlayText() {
