@@ -105,6 +105,11 @@ class Render {
     });
   };
 
+  musicMuted(isMuted) {
+    const musicContainer = document.querySelector('#musicMuted');
+    musicContainer.textContent = `${isMuted ? 'Off' : 'On'}`;
+  }
+
   removeOverlayText() {
     const overlayText = document.querySelector('.overlay')
     if(overlayText !== null) overlayText.remove();
