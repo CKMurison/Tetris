@@ -86,6 +86,15 @@ class Render {
       el.style.animationName = "cellAnimation";
     })
   };
+
+  musicMuted(isMuted) {
+    let musicContainer = document.querySelector('.musicMuted')
+    if (isMuted) {
+      musicContainer.textContent = 'Music Volume: Off'; 
+    } else {
+      musicContainer.textContent = 'Music Volume: On';
+    }
+  }
 }
 
 module.exports = Render;

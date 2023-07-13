@@ -124,6 +124,9 @@
           this.activeTetromino = null;
           this.isPaused = false;
           this.turnInProgress = false;
+          this.music = new Audio("media/tetris-soundtrack.mp3");
+          this.musicIsStarted = false;
+          this.musicIsMuted = false;
           let midRow = Math.floor(this.grid.length / 2 - 1);
           let midCol = Math.floor(this.grid[0].length / 2 - 1);
           this.position = {
@@ -339,17 +342,31 @@
         }
         // music starts if you click or press any button, but music doesn't start in Firefox by pressing the arrows (to be checked/fixed)
         playMusic() {
-          const music = new Audio("media/tetris-soundtrack.mp3");
-          music.loop = true;
-          music.volume = 0.1;
-          music.autoplay = false;
-          document.addEventListener("click", function() {
-            music.muted = false;
-            music.play();
+          this.music.loop = true;
+          this.music.autoplay = false;
+          this.music.volume = 0.1;
+          this.music.muted = false;
+          document.addEventListener("click", () => {
+            if (this.musicIsStarted === false) {
+              this.musicIsStarted = true;
+              this.music.play();
+            }
           });
-          document.addEventListener("keydown", function(event) {
-            music.muted = false;
-            music.play();
+          document.addEventListener("keydown", () => {
+            if (this.musicIsStarted === false) {
+              this.musicIsStarted = true;
+              this.music.play();
+            }
+          });
+          document.addEventListener("keydown", (event) => {
+            if (event.key === "m" && this.musicIsStarted === true) {
+              this.music.muted = !this.music.muted;
+              this.render.musicMuted(this.music.muted);
+            } else if (event.key === "m" && this.musicIsStarted === false) {
+              this.musicIsStarted = true;
+              this.music.play();
+              this.render.musicMuted(this.music.muted);
+            }
           });
         }
         async #delay(time) {
@@ -436,6 +453,14 @@
           document.querySelectorAll(".cellContainer").forEach((el) => {
             el.style.animationName = "cellAnimation";
           });
+        }
+        musicMuted(isMuted) {
+          let musicContainer = document.querySelector(".musicMuted");
+          if (isMuted) {
+            musicContainer.textContent = "Music Volume: Off";
+          } else {
+            musicContainer.textContent = "Music Volume: On";
+          }
         }
       };
       module.exports = Render2;

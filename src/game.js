@@ -11,6 +11,7 @@ class Game {
     this.turnInProgress = false;
     this.music = new Audio('media/tetris-soundtrack.mp3');
     this.musicIsStarted = false;
+    this.musicIsMuted = false;
     // Hard-coded initial spawn points based upon 20x10 grid
     let midRow = Math.floor(this.grid.length / 2 - 1);
     let midCol = Math.floor(this.grid[0].length / 2 - 1);
@@ -291,9 +292,11 @@ class Game {
     document.addEventListener("keydown", (event) => {
       if (event.key === "m" && this.musicIsStarted === true) {
         this.music.muted = !this.music.muted;
+        this.render.musicMuted(this.music.muted);
       } else if (event.key === "m" && this.musicIsStarted === false) {
         this.musicIsStarted = true;
         this.music.play();
+        this.render.musicMuted(this.music.muted);
       }
     });
   }
