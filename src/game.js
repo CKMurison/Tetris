@@ -225,6 +225,7 @@ class Game {
     // possible source of disappearing tetromino bug (according to chrome's dev log)
     const positionsAsStrings = this.activeTetromino.positions.map(el => JSON.stringify(el))
 
+
     const collisionChecker = this.afterTF.every(pos => {
       if (positionsAsStrings.includes(`[${pos[0]},${pos[1]}]`)) {
         return true;
@@ -232,7 +233,11 @@ class Game {
         return this.grid[pos[0]][pos[1]] === 0
       }
     })
-    // 
+
+    console.log(collisionChecker)
+    // look at afterTF 
+    // if afterTF's row is above 19 or below 0 
+    // change the collisionChecker to false
 
     if(!collisionChecker) {
       return;
