@@ -602,11 +602,51 @@ describe('Game', () => {
     expect(pauseSpy).toHaveBeenCalled();
   })
 
-  test("r correctly restarts the game", () => {
+  test("r correctly restarts the game if the game is over", () => {
     game.gameOver = true;
     const spy = jest.spyOn(game, 'restartGame');
     const event = new KeyboardEvent('keyup', { key: 'r' });
     document.dispatchEvent(event);
     expect(spy).toHaveBeenCalledTimes(1);
+  })
+
+  test("r correctly restarts the game if the game is not over", () => {
+    game.gameOver = false;
+    const event = new KeyboardEvent('keyup', { key: 'r' });
+    document.dispatchEvent(event);
+    expect(game.newGame).toBe(true);
+    expect(game.isPaused).toBe(false);
+  })
+
+  test("pauseText is correctly displayed when turn is in progress", () => {
+    game.turnInProgress = true;
+    game.pauseGame();
+    expect(document.querySelector('.overlay').textContent).toEqual('game pausedpress r to restart')
+  })
+
+  test("pauseText disappears if the game is already paused", () => {
+    game.turnInProgress = true;
+    game.pauseGame();
+    game.isPaused = true;
+    game.pauseGame();
+    expect(game.isPaused).toBe(false);
+    expect(document.querySelector('.overlay')).toBe(null);
+  })
+
+  test("music starts upon click if muted", () => {
+    game.musicIsStarted = false;
+    game.playMusic();
+    const event = new KeyboardEvent('click');
+    document.dispatchEvent(event);
+    expect(game.musicIsStarted).toBe(true);
+  })
+
+  test("m button mutes the music", () => {
+    const spy = jest.spyOn(render, 'musicMuted')
+    const event = new KeyboardEvent('keydown', { key: 'm'});
+    game.musicIsStarted = true;
+    game.music.muted = true;
+    document.dispatchEvent(event);
+    expect(this.music.muted).toBe(false);
   })
 });
