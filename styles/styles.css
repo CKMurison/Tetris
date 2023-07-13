@@ -1,8 +1,10 @@
 body {
+    overflow: hidden;
     height: 100vh;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    overflow: hidden;
 }
 
 div {

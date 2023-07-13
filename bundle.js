@@ -33,6 +33,7 @@
               }
             }
           });
+
           document.addEventListener("keyup", (e) => {
             if (e.key == " " && this.activePlayer === 1) {
               this.game.pauseGame();
@@ -174,6 +175,7 @@
             if (generated) {
               let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
               this.render.drawGrid(this.grid);
+              this.render.displayActivePlayer(this.activePlayer === this.players[0] ? "Player2" : "Player1");
               while (!collided) {
                 if (!this.isPaused) {
                   this.moveVertical();
@@ -454,9 +456,15 @@
             el.style.animationName = "cellAnimation";
           });
         }
+
         musicMuted(isMuted) {
           const musicContainer = document.querySelector(".musicMuted");
           musicContainer.textContent = `Music Volume: ${isMuted ? "Off" : "On"}`;
+
+        displayActivePlayer(player) {
+          let activePlayerContainer = document.querySelector(".activePlayer");
+          activePlayerContainer.textContent = player === "Player1" ? "Active player: Player 2" : "Active player: Player 1";
+
         }
       };
       module.exports = Render2;
