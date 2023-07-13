@@ -77,7 +77,7 @@ class Game {
       if (generated) {
         let collided = this.activePlayer === this.players[0] ? this.activeTetromino.checkCollisionDown(this.grid) : this.activeTetromino.checkCollisionUp(this.grid);
         this.render.drawGrid(this.grid);
-        this.render.displayActivePlayer(this.activePlayer === this.players[0] ? 'Player2' : 'Player1');
+        this.render.displayActivePlayer(this.activePlayer === this.players[0] ? 'Player 1' : 'Player 2');
         while (!collided) {
           if (!this.isPaused) {
           this.moveVertical();

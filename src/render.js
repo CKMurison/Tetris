@@ -92,8 +92,8 @@ class Render {
   };
 
   displayActivePlayer(player) {
-    let activePlayerContainer = document.querySelector('.activePlayer');
-    activePlayerContainer.textContent = player === 'Player1' ? "Active player: Player 2" : "Active player: Player 1";
+    let activePlayerContainer = document.querySelector('#activePlayer');
+    activePlayerContainer.textContent = player;
 }
 }
 
