@@ -125,6 +125,9 @@
           this.activeTetromino = null;
           this.isPaused = false;
           this.turnInProgress = false;
+          this.music = new Audio("media/tetris-soundtrack.mp3");
+          this.musicIsStarted = false;
+          this.musicIsMuted = false;
           let midRow = Math.floor(this.grid.length / 2 - 1);
           let midCol = Math.floor(this.grid[0].length / 2 - 1);
           this.position = {
@@ -339,6 +342,35 @@
           }
           return grid;
         }
+        // music starts if you click or press any button, but music doesn't start in Firefox by pressing the arrows (to be checked/fixed)
+        playMusic() {
+          this.music.loop = true;
+          this.music.autoplay = false;
+          this.music.volume = 0.1;
+          this.music.muted = false;
+          document.addEventListener("click", () => {
+            if (this.musicIsStarted === false) {
+              this.musicIsStarted = true;
+              this.music.play();
+            }
+          });
+          document.addEventListener("keydown", () => {
+            if (this.musicIsStarted === false) {
+              this.musicIsStarted = true;
+              this.music.play();
+            }
+          });
+          document.addEventListener("keydown", (event) => {
+            if (event.key === "m" && this.musicIsStarted === true) {
+              this.music.muted = !this.music.muted;
+              this.render.musicMuted(this.music.muted);
+            } else if (event.key === "m" && this.musicIsStarted === false) {
+              this.musicIsStarted = true;
+              this.music.play();
+              this.render.musicMuted(this.music.muted);
+            }
+          });
+        }
         async #delay(time) {
           await new Promise((resolve) => setTimeout(resolve, time));
         }
@@ -424,9 +456,15 @@
             el.style.animationName = "cellAnimation";
           });
         }
+
+        musicMuted(isMuted) {
+          const musicContainer = document.querySelector(".musicMuted");
+          musicContainer.textContent = `Music Volume: ${isMuted ? "Off" : "On"}`;
+
         displayActivePlayer(player) {
           let activePlayerContainer = document.querySelector(".activePlayer");
           activePlayerContainer.textContent = player === "Player1" ? "Active player: Player 2" : "Active player: Player 1";
+
         }
       };
       module.exports = Render2;
@@ -439,4 +477,5 @@
   var render = new Render();
   var game = new Game(render);
   game.playLoop();
+  game.playMusic();
 })();

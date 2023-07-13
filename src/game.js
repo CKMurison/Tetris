@@ -9,6 +9,9 @@ class Game {
     this.activeTetromino = null;
     this.isPaused = false;
     this.turnInProgress = false;
+    this.music = new Audio('media/tetris-soundtrack.mp3');
+    this.musicIsStarted = false;
+    this.musicIsMuted = false;
     // Hard-coded initial spawn points based upon 20x10 grid
     let midRow = Math.floor(this.grid.length / 2 - 1);
     let midCol = Math.floor(this.grid[0].length / 2 - 1);
@@ -264,6 +267,39 @@ class Game {
       grid.push(row)
     }
     return grid;
+  }
+
+  // music starts if you click or press any button, but music doesn't start in Firefox by pressing the arrows (to be checked/fixed)
+  playMusic() {
+    this.music.loop = true;
+    this.music.autoplay = false;
+    this.music.volume = 0.1;
+    this.music.muted = false;
+
+    document.addEventListener("click", () => { 
+      if(this.musicIsStarted === false) {
+        this.musicIsStarted = true;
+        this.music.play();
+      }
+    });
+
+    document.addEventListener("keydown", () => {
+      if(this.musicIsStarted === false) {
+        this.musicIsStarted = true;
+        this.music.play();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "m" && this.musicIsStarted === true) {
+        this.music.muted = !this.music.muted;
+        this.render.musicMuted(this.music.muted);
+      } else if (event.key === "m" && this.musicIsStarted === false) {
+        this.musicIsStarted = true;
+        this.music.play();
+        this.render.musicMuted(this.music.muted);
+      }
+    });
   }
 
   async #delay(time) {

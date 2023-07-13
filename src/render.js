@@ -87,10 +87,17 @@ class Render {
     })
   };
 
+
+  musicMuted(isMuted) {
+    const musicContainer = document.querySelector('.musicMuted');
+    musicContainer.textContent = `Music Volume: ${isMuted ? 'Off' : 'On'}`;
+  }
+
   displayActivePlayer(player) {
     let activePlayerContainer = document.querySelector('.activePlayer');
     activePlayerContainer.textContent = player === 'Player1' ? "Active player: Player 2" : "Active player: Player 1";
-}
+  }
+
 }
 
 module.exports = Render;
