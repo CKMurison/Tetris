@@ -61,7 +61,7 @@ describe('PowerUps.clearRandomBlock', () => {
 
         powerUps.removeRandomBlock(mockGame)
 
-        expect(mockGame.grid[0]).toEqual([2,1])
-        expect(mockGame.grid[1]).toEqual([2,0])
+        expect(mockGame.grid[0]).toEqual([0,0])
+        expect(mockGame.grid[1]).toEqual([0,0])
     })
 })

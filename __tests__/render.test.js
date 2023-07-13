@@ -23,7 +23,7 @@ describe('Render class', () => {
     });
 
     it('assigns correct class to block', () => {
-        render.drawGrid([[1, 2, 3, 4, 5, 6, 7], [0, 0, 0, 0, 0, 0, 0]])
+        render.drawGrid([[1, 2, 3, 4, 5, 6, 7, 8, 9], [0, 0, 0, 0, 0, 0, 0, 0, 0]])
         
         expect(document.querySelectorAll('.jBlock').length).toBe(1);
         expect(document.querySelectorAll('.lBlock').length).toBe(1);
@@ -31,6 +31,8 @@ describe('Render class', () => {
         expect(document.querySelectorAll('.sBlock').length).toBe(1);
         expect(document.querySelectorAll('.tBlock').length).toBe(1);
         expect(document.querySelectorAll('.zBlock').length).toBe(1);
+        expect(document.querySelectorAll('.plusBlock').length).toBe(1);
+        expect(document.querySelectorAll('.uBlock').length).toBe(1);
     })
 
     it('correctly finds a spawn line', () => {
@@ -46,4 +48,11 @@ describe('Render class', () => {
         render.displayActivePlayer('player1');
         expect(document.querySelector('#activePlayer').textContent).toBe('player1');
     })
+
+    test("Displays the paused screen if spacebar is pressed", () => {
+        render.pauseText();
+        expect(document.querySelector('.pause').textContent).toBe('paused')
+    });
+
+      
 });

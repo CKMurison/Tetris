@@ -65,21 +65,15 @@ class Render {
     }
   }
 
-
-
   pauseText() {
     let pauseContainer = document.createElement('div')
     pauseContainer.className = 'pause'
-    pauseContainer.textContent = 'paused'; 
+    pauseContainer.textContent = 'paused';
     this.mainEl.append(pauseContainer);
-    document.querySelectorAll('.cellContainer').forEach((el) => {
-      el.style.animationName = "cellAnimation";
-    })
   };
 
   removePauseText() {
     document.querySelector('.pause').remove();
-    
   };
 
   gameOver(player) {
