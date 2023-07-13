@@ -8,8 +8,8 @@ const fs = require('fs');
 
 describe('Game', () => {
   beforeEach(() => {
-    document.body.innerHTML = fs.readFileSync('./index.html');
-    render = new Render()
+    document.body.innerHTML = fs.readFileSync('./index.html');   
+    render = new Render(true)
     game = new Game(render)
   });
 

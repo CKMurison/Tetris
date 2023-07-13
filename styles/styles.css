@@ -86,6 +86,7 @@ div {
     flex-direction: column;
     width: 40vw;
     object-fit: contain;
+    border-style: solid;
 }
 
 .rowContainer {
@@ -95,17 +96,9 @@ div {
 .spawnRow {
     border-bottom: 1px dotted black;
 }
-
+   
 .cellContainer {
     flex: 1;
-    animation-iteration-count: infinite;
-    animation-duration: 4s;
-}
-
-@keyframes cellAnimation {
-    100% {
-        transform: rotate(360deg);
-    }
 }
 
 .empty {
