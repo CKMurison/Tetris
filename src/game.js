@@ -35,8 +35,8 @@ class Game {
         p2: [[this.midRow - 1, midCol + 1], [this.midRow - 1, midCol], [this.midRow, midCol - 1], [this.midRow, midCol]]
       },
       t: {
-        p1: [[this.midRow + 1, midCol], [this.midRow + 2, midCol - 1], [this.midRow + 2, midCol], [this.midRow + 2, midCol + 1]],
-        p2: [[this.midRow - 1, midCol], [this.midRow, midCol - 1], [this.midRow, midCol], [this.midRow, midCol + 1]]
+        p1: [[this.midRow + 1, midCol], [this.midRow + 2, midCol], [this.midRow + 2, midCol - 1], [this.midRow + 2, midCol + 1]],
+        p2: [[this.midRow - 1, midCol], [this.midRow, midCol], [this.midRow, midCol - 1], [this.midRow, midCol + 1]]
       },
       z: {
         p1: [[this.midRow + 1, midCol - 1], [this.midRow + 1, midCol], [this.midRow + 2, midCol], [this.midRow + 2, midCol + 1]],
@@ -65,7 +65,6 @@ class Game {
       this.turnInProgress = true;
       let timer = this.activePlayer.timer; // time between ticks in ms
       
-      // let generated = this.generateTetromino();
       let generated;
       if (this.bizarre) {
         let random = Math.round(Math.random()+8)
@@ -121,7 +120,7 @@ class Game {
     };
 
     key = keyMap[this.randomIndex];
-
+    
     // If statement receives key and adds the corresponding tetromino to the grid
     // checkIfGameOver condition will stop the function from drawing on the grid
 
@@ -188,6 +187,9 @@ class Game {
     this.newArr = []
     this.afterTF = []
     this.clearTetromino();
+
+    if(this.activeTetromino.value === 4) {return}
+
     this.activeTetromino.positions.forEach(arr => {
       this.relation.push([arr[0] - this.anchorPoint[0], arr[1] - this.anchorPoint[1]])
     })
@@ -219,15 +221,22 @@ class Game {
       this.afterTF.push([row, column])
     })
 
+    // possible source of disappearing tetromino bug (according to chrome's dev log)
     const positionsAsStrings = this.activeTetromino.positions.map(el => JSON.stringify(el))
 
+
     const collisionChecker = this.afterTF.every(pos => {
-      if (positionsAsStrings.includes(`[${pos[0]},$${pos[1]}]`)) {
+      if (positionsAsStrings.includes(`[${pos[0]},${pos[1]}]`)) {
         return true;
       } else {
         return this.grid[pos[0]][pos[1]] === 0
       }
     })
+
+    console.log(collisionChecker)
+    // look at afterTF 
+    // if afterTF's row is above 19 or below 0 
+    // change the collisionChecker to false
 
     if(!collisionChecker) {
       return;
