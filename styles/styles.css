@@ -106,10 +106,12 @@ div {
    
 .cellContainer {
     flex: 1;
+    border: 0.1px solid rgba(0, 0, 0, 0.2);
 }
 
 .empty {
     background-color: lightgray;
+    border: 0.1px solid rgba(0, 0, 0, 0.2);
 }
 
 .iBlock {
