@@ -58,7 +58,7 @@ class Game {
     }
     this.render = render;
     this.players = [new Player(1, this), new Player(2, this)];
-    this.activePlayer = this.players[(Math.floor(Math.random() * 2))]; // Default player is player 1
+    this.activePlayer = this.players[(Math.floor(Math.random() * 2))]; // initial player is random
   };
 
   // The playLoop runs the game
@@ -145,7 +145,6 @@ class Game {
     // Returns a boolean
 
     return tetrominoPositions.some((position) => {
-      // position = [row, column]
       let row = position[0]
       let column = position[1]
       return this.grid[row][column] !== 0;
