@@ -1,7 +1,18 @@
+const powerUps = require('./powerUps.js')
+
 class Player{
     constructor(player, game) {
         this.activePlayer = player;
+        this.timer = 600;
         this.game = game;
+        this.linesCleared = 0;
+        this.nextPowerUp = 0;
+        this.powerUps = [powerUps.speedUp, powerUps.bizarre, powerUps.removeRandomBlock]
+        this.nextPowerUpNames = {
+            0: 'Opponent Speed Up',
+            1: 'Bizarre Tetromino',
+            2: 'Remove A Block'
+        }
         this.controls();
     }
 
@@ -43,7 +54,17 @@ class Player{
                 this.game.pauseGame();
             }
         })
-    };   
+    };
+
+    incrementLineCounter() {
+        this.linesCleared++;
+        if(this.linesCleared % 1 === 0) {
+            this.powerUps[this.nextPowerUp](this.game)
+            this.nextPowerUp = (this.nextPowerUp+1) % this.powerUps.length
+        }
+        document.querySelector(`#linesClearedP${this.activePlayer}`).textContent = this.linesCleared;
+        document.querySelector(`#nextPowerUpP${this.activePlayer}`).textContent = this.nextPowerUpNames[this.nextPowerUp];
+    }
 };
 
 module.exports = Player;

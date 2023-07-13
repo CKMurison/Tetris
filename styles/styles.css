@@ -69,12 +69,18 @@ div {
 
 .instructionsContainer {
     flex-direction: column;
+    justify-content: space-between;
+    width: 17vw;
+}
+
+.uiContainer {
+    flex-direction: column;
     margin-top: 3vh;
-    font-size: x-large;
+    font-size: large;
     font-family: Arial, Helvetica, sans-serif;
     height: fit-content;
     padding: 5px;
-
+    
     border-width: 3px;
     border-style: solid;
     border-color: grey;
@@ -131,4 +137,12 @@ div {
 
 .zBlock {
     background-color: brown;
+}
+
+.plusBlock {
+    background-color: rgb(227, 56, 225);
+}
+
+.uBlock {
+    background-color: rgb(53, 35, 35);
 }
