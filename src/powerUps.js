@@ -23,6 +23,8 @@ const powerUps = {
                 if(cell !== 0) {pos.push([i,index])}
             })
         }
+        
+        if (pos.length === 0) return;
         let rand = Math.floor(Math.random() * pos.length)
         game.grid[pos[rand][0]][pos[rand][1]] = 0
     }

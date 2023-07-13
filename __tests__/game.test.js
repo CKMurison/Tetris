@@ -647,6 +647,7 @@ it('spawns the Z-Block if player 1 is the active player', () => {
     game.grid = [[1,1], [0,1], [1,1], [1,0], [0,1], [1,0]];
     game.removeCompleteLines();
     expect(game.grid).toEqual([[0,1], [0,0], [0,0], [1,0], [0,1], [1,0]]);
+    game = new Game();
     game.grid = [[1,0], [0,1], [0,1], [1,1], [0,1], [1,1]];
     game.removeCompleteLines();
     expect(game.grid).toEqual([[1,0], [0,1], [0,1], [0,0], [0,0], [0,1]]);

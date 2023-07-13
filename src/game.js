@@ -64,7 +64,6 @@ class Game {
     while (!this.turnInProgress) {
       this.turnInProgress = true;
       let timer = this.activePlayer.timer; // time between ticks in ms
-      console.log(timer)
       
       // let generated = this.generateTetromino();
       let generated;
