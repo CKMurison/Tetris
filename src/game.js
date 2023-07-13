@@ -232,8 +232,6 @@ class Game {
         return this.grid[pos[0]][pos[1]] === 0
       }
     })
-
-    console.log(collisionChecker)
     // look at afterTF 
     // if afterTF's row is above 19 or below 0 
     // change the collisionChecker to false
