@@ -44,6 +44,6 @@ describe('Render class', () => {
 
     it('shows the correct active player', () => {
         render.displayActivePlayer('player1');
-        expect(document.querySelector('.activePlayer').textContent).toBe('Active player: Player 1');
+        expect(document.querySelector('#activePlayer').textContent).toBe('player1');
     })
 });
