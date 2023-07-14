@@ -361,7 +361,6 @@ class Game {
 
   commonControls = (e) => {
     if (e.key == "r") {
-        console.log("restart");
         if (this.gameOver) {
             this.gameOver = false;
             this.render.removeOverlayText();
@@ -373,7 +372,6 @@ class Game {
             this.render.restartText();
         }
     } else if (e.key == " ") {
-        console.log("paused");
         this.pauseGame();
     }
 }
