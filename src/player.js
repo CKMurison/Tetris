@@ -3,7 +3,7 @@ const powerUps = require('./powerUps.js')
 class Player{
     constructor(player, game) {
         this.activePlayer = player;
-        this.timer = 1000;
+        this.timer = 600;
         this.game = game;
         this.linesCleared = 0;
         this.nextPowerUp = 0;
@@ -17,25 +17,7 @@ class Player{
     }
 
     controls() {
-        document.addEventListener('keydown', (e) => {    
-            if (this.activePlayer === 1) {
-                if (e.key === 'ArrowLeft') {
-                    this.game.moveHorizontal('left');
-                } else if (e.key === "ArrowRight") {
-                    this.game.moveHorizontal('right');
-                } else if (e.key === "ArrowUp") {
-                    this.game.rotateTetromino();
-                }
-            } else {
-                if (e.key === "a") {
-                    this.game.moveHorizontal('left');
-                } else if (e.key === "d") {
-                    this.game.moveHorizontal('right');
-                } else if (e.key === "s") {
-                    this.game.rotateTetromino();
-                }
-            }    
-        }); 
+        document.addEventListener('keydown', this.playerMovement); 
 
         // ArrowDown speed up the drop of the tetromino after checking for collision
         document.addEventListener("keydown", (e) => {
@@ -66,6 +48,7 @@ class Player{
 
         document.addEventListener('keyup', (e) => {
             if (e.key == "r" && this.activePlayer === 1) {
+                document.removeEventListener('keydown', this.playerMovement);
                 if (this.game.gameOver) {
                     this.game.gameOver = false;
                     this.game.render.removeOverlayText();
@@ -75,7 +58,6 @@ class Player{
                     this.game.newGame = true;
                     this.game.isPaused = false;
                     this.game.render.restartText();
-                    console.log('buttonPressed');
                 }
             }
         })
@@ -91,6 +73,26 @@ class Player{
         }
         document.querySelector(`#linesClearedP${this.activePlayer}`).textContent = this.linesCleared;
         document.querySelector(`#nextPowerUpP${this.activePlayer}`).textContent = this.nextPowerUpNames[this.nextPowerUp];
+    }
+
+    playerMovement = (e) => {    
+        if (this.activePlayer === 1) {
+            if (e.key === 'ArrowLeft') {
+                this.game.moveHorizontal('left');
+            } else if (e.key === "ArrowRight") {
+                this.game.moveHorizontal('right');
+            } else if (e.key === "ArrowUp") {
+                this.game.rotateTetromino();
+            }
+        } else {
+            if (e.key === "a") {
+                this.game.moveHorizontal('left');
+            } else if (e.key === "d") {
+                this.game.moveHorizontal('right');
+            } else if (e.key === "s") {
+                this.game.rotateTetromino();
+            }
+        }    
     }
 };
 

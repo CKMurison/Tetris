@@ -12,7 +12,7 @@ class Game {
     this.isPaused = false;
     this.turnInProgress = false;
     this.newGame = false;
-
+    this.bizarre = false;
     this.midRow = Math.floor(this.grid.length / 2 - 1);
     this.music = new Audio('media/tetris-soundtrack.mp3');
     this.musicIsStarted = false;
@@ -77,8 +77,9 @@ class Game {
       let timer = this.activePlayer.timer; // time between ticks in ms
       
       let generated;
+      
       if (this.bizarre) {
-        let random = Math.round(Math.random()+8)
+        let random = Math.round(Math.random() + 7)
         generated = this.generateTetromino(random)
         this.bizarre = false 
       } else {

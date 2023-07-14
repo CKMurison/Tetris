@@ -10,9 +10,18 @@ let game, render;
 
 describe('Game', () => {
   beforeEach(() => {
-    document.body.innerHTML = fs.readFileSync('./index.html');   
+    document.body.innerHTML = fs.readFileSync('./index.html');
+    global.Audio = jest.fn().mockImplementation(() => ({
+      play: () => {},
+      muted: false,
+    }))
     render = new Render(true)
     game = new Game(render)
+    game.grid = [];
+    for (let i = 0; i < 20; i++) {
+      let row = new Array(10).fill(0);
+      game.grid.push(row)
+    }
   });
 
   test('it correctly assigns an active player', () => {
@@ -340,10 +349,72 @@ describe('Game', () => {
     )
   })
 
+  test("rotation gets triggered by pressing up arrow for player 1", () => {
+    game.activePlayer = game.players[0];
+    game.generateTetromino(0)
+    const event = new KeyboardEvent('keydown', { key: 'ArrowUp' });
+    document.dispatchEvent(event);
+    expect(game.grid).toEqual(
+      [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      ]
+    )
+  })
+
   test('rotation test 6 (I-Piece P2) - testing new position for activeTetromino', () => {
     game.activePlayer = game.players[1];
     game.generateTetromino(0)
     game.rotateTetromino()
+    expect(game.grid).toEqual(
+      [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      ]
+    )
+  })
+
+  test("rotation gets triggered by pressing s for player 2", () => {
+    game.activePlayer = game.players[1];
+    game.generateTetromino(0)
+    const event = new KeyboardEvent('keydown', { key: 's' });
+    document.dispatchEvent(event);
     expect(game.grid).toEqual(
       [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -532,4 +603,50 @@ describe('Game', () => {
     game.removeCompleteLines();
     expect(game.players[1].linesCleared).toBe(2);
   });
+  
+  test("Spacebar correctly pauses the game", () => {
+    const pauseSpy = jest.spyOn(game, 'pauseGame');
+    const event = new KeyboardEvent('keyup', { key: ' ' });
+    document.dispatchEvent(event);
+    expect(pauseSpy).toHaveBeenCalled();
+  })
+
+  test("r correctly restarts the game if the game is over", () => {
+    game.gameOver = true;
+    const spy = jest.spyOn(game, 'restartGame');
+    const event = new KeyboardEvent('keyup', { key: 'r' });
+    document.dispatchEvent(event);
+    expect(spy).toHaveBeenCalledTimes(1);
+  })
+
+  test("r correctly restarts the game if the game is not over", () => {
+    game.gameOver = false;
+    const event = new KeyboardEvent('keyup', { key: 'r' });
+    document.dispatchEvent(event);
+    expect(game.newGame).toBe(true);
+    expect(game.isPaused).toBe(false);
+  })
+
+  test("pauseText is correctly displayed when turn is in progress", () => {
+    game.turnInProgress = true;
+    game.pauseGame();
+    expect(document.querySelector('.overlay').textContent).toEqual('game pausedpress r to restart')
+  })
+
+  test("pauseText disappears if the game is already paused", () => {
+    game.turnInProgress = true;
+    game.pauseGame();
+    game.isPaused = true;
+    game.pauseGame();
+    expect(game.isPaused).toBe(false);
+    expect(document.querySelector('.overlay')).toBe(null);
+  })
+
+  test("music starts upon click if muted", () => {
+    game.musicIsStarted = false;
+    game.playMusic();
+    const event = new KeyboardEvent('click');
+    document.dispatchEvent(event);
+    expect(game.musicIsStarted).toBe(true);
+  })
 });

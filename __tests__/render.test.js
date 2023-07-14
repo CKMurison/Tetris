@@ -23,7 +23,7 @@ describe('Render class', () => {
     });
 
     it('assigns correct class to block', () => {
-        render.drawGrid([[1, 2, 3, 4, 5, 6, 7], [0, 0, 0, 0, 0, 0, 0]])
+        render.drawGrid([[1, 2, 3, 4, 5, 6, 7, 8, 9], [0, 0, 0, 0, 0, 0, 0, 0, 0]])
         
         expect(document.querySelectorAll('.jBlock').length).toBe(1);
         expect(document.querySelectorAll('.lBlock').length).toBe(1);
@@ -31,6 +31,8 @@ describe('Render class', () => {
         expect(document.querySelectorAll('.sBlock').length).toBe(1);
         expect(document.querySelectorAll('.tBlock').length).toBe(1);
         expect(document.querySelectorAll('.zBlock').length).toBe(1);
+        expect(document.querySelectorAll('.plusBlock').length).toBe(1);
+        expect(document.querySelectorAll('.uBlock').length).toBe(1);
     })
 
     it('correctly finds a spawn line', () => {
@@ -45,5 +47,25 @@ describe('Render class', () => {
     it('shows the correct active player', () => {
         render.displayActivePlayer('player1');
         expect(document.querySelector('#activePlayer').textContent).toBe('player1');
+    })
+
+    test("pauseText correctly displays text on overlay", () => {
+        render.pauseText();
+        expect(document.querySelector('.overlay').textContent).toBe('game pausedpress r to restart')
+    });
+
+    test("restartText correctly displays text on overlay", () => {
+        render.restartText();
+        expect(document.querySelector('.overlay').textContent).toBe('Restarting game')
+    });
+
+    test("musicMuted correctly changes the relevant field to Off", () => {
+        render.musicMuted(true);
+        expect(document.querySelector('#musicMuted').textContent).toBe('Off');
+    })
+
+    test("musicMuted correctly changes the relevant field to On", () => {
+        render.musicMuted(false);
+        expect(document.querySelector('#musicMuted').textContent).toBe('On');
     })
 });

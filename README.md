@@ -38,7 +38,9 @@ npm run test
   * JavaScript testing framework.
 
 ## Testing coverage
-* Abyssmal
+* [Link to test coverage](diagrams-and-schemas/testCoverage.png)
+* Test coverage currently stands at over 90% for statements, functions and lines covered
+* Audio and animations have only been tested visually by running the game, as jest is currently unable to test for those objects correctly, which is bringing down the overall test coverage.
 
 ## Design documents and changes
 * Original table design
