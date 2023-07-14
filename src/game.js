@@ -61,6 +61,7 @@ class Game {
     this.render = render;
     this.players = [new Player(1, this), new Player(2, this)];
     this.activePlayer = this.players[(Math.floor(Math.random() * 2))]; // initial player is random
+    document.addEventListener('keyup', this.commonControls);
   };
 
   // The playLoop runs the game
@@ -357,6 +358,25 @@ class Game {
       }
     });
   }
+
+  commonControls = (e) => {
+    if (e.key == "r") {
+        console.log("restart");
+        if (this.gameOver) {
+            this.gameOver = false;
+            this.render.removeOverlayText();
+            this.restartGame();
+            this.playLoop();
+        } else {
+            this.newGame = true;
+            this.isPaused = false;
+            this.render.restartText();
+        }
+    } else if (e.key == " ") {
+        console.log("paused");
+        this.pauseGame();
+    }
+}
 
   async #delay(time) {
     await new Promise(resolve => setTimeout(resolve, time));

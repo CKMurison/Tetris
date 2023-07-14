@@ -34,9 +34,6 @@ class Player {
             document.removeEventListener('keydown', this.player2Movement);
             document.addEventListener('keydown', this.player2Movement)
         }
-
-        document.removeEventListener('keyup', this.commonControls);
-        document.addEventListener('keyup', this.commonControls);
     };
 
     player1Movement = (e) => {    
@@ -73,27 +70,11 @@ class Player {
         }
     }
 
-    commonControls = (e) => {
-        if (e.key == "r") {
-            if (this.game.gameOver) {
-                this.game.gameOver = false;
-                this.game.render.removeOverlayText();
-                this.game.restartGame();
-                this.game.playLoop();
-            } else {
-                this.game.newGame = true;
-                this.game.isPaused = false;
-                this.game.render.restartText();
-            }
-        } else if (e.key == " ") {
-            this.game.pauseGame();
-        }
-    }
+    
 
     clearEventListeners() {
         document.removeEventListener('keydown', this.player1Movement);
         document.removeEventListener('keydown', this.player2Movement);
-        document.removeEventListener('keydown', this.commonControls);
     }
 }
 
