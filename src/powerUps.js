@@ -1,7 +1,7 @@
 const powerUps = {
     speedUp : (game) => {
         let opponent = game.activePlayer === game.players[0] ? game.players[1] : game.players[0]
-        opponent.timer -= 20
+        opponent.timer -= 50
     },
 
     bizarre : (game) => {
