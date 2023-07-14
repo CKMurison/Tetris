@@ -115,11 +115,6 @@ class Render {
     if(overlayText !== null) overlayText.remove();
   };
 
-  musicMuted(isMuted) {
-    const musicContainer = document.querySelector('#musicMuted');
-    musicContainer.textContent = `${isMuted ? 'Off' : 'On'}`;
-  }
-
   displayActivePlayer(player) {
     let activePlayerContainer = document.querySelector('#activePlayer');
     activePlayerContainer.textContent = player;
