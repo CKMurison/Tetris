@@ -56,7 +56,7 @@ describe('Render class', () => {
 
     test("restartText correctly displays text on overlay", () => {
         render.restartText();
-        expect(document.querySelector('.overlay').textContent).toBe('Restarting game')
+        expect(document.querySelector('.overlay').textContent).toBe('Restarting gamePlease wait')
     });
 
     test("musicMuted correctly changes the relevant field to Off", () => {

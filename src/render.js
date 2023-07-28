@@ -79,7 +79,7 @@ class Render {
     this.removeOverlayText();
     let restartContainer = document.createElement('div')
     restartContainer.className = 'overlay'
-    restartContainer.textContent = 'Restarting game';
+    restartContainer.innerHTML = 'Restarting game<br>Please wait';
     this.mainEl.append(restartContainer);
  };
  

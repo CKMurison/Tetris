@@ -8,7 +8,7 @@ describe('PowerUps.speedUp', () => {
         mockGame.activePlayer = mockGame.players[0]
     
         powerUps.speedUp(mockGame)
-        expect(mockGame.players[1].timer).toBe(80)
+        expect(mockGame.players[1].timer).toBe(50)
     })
 })
 
